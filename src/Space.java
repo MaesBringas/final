@@ -35,11 +35,13 @@ class Space {
         this.y = y;
     }
 
-    boolean isUseful(Room[] rooms){
+    boolean isUseful(Room room){
 
         /* For each Room, all the sequence between startX / startY and lengthX and lengthY as Wall = false */
-        for( int i = 0; i < rooms.length; i++){
-            rooms[i].;
+        for( int i = 0; i < room.getLengthX(); i++){
+            for(int u = 0; u < room.getLengthY(); u++){
+                room.getRoomSpace()[i][u].setWall(false);
+            }
         }
         return true;
     }
