@@ -9,6 +9,7 @@ import minidungeon.MiniDungeonGUI;
 
 public class Main {
     public static void main(String[] args) {
+        
         int max = 40;
         MiniDungeonGUI gui = new MiniDungeonGUI(max,max);
         Room room = new Room();
@@ -22,7 +23,7 @@ public class Main {
                 gui.md_setSquareColor(start, i, 178, 255, 102);
             }
         }
-        gui.md_setSquareImage(20,20,"heart.png");
+        gui.md_setSquareImage(20,20,"cool.png");
     }
 
     static void printRooms(Room room){
