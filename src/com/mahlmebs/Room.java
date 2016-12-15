@@ -1,5 +1,7 @@
 
-class Room {
+package com.mahlmebs;
+
+public class Room {
 
     /* Room is an array of Spaces */
 

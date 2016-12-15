@@ -1,3 +1,5 @@
+package com.mahlmebs;
+
 /* Cool main program
 * @authors mahl && mebs
 * @version 1.0

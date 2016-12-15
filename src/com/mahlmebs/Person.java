@@ -1,5 +1,6 @@
+package com.mahlmebs;
 
-class Person {
+public class Person {
 
     private int health;
     private int maxHealth;

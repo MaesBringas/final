@@ -1,5 +1,8 @@
 
-class Space {
+
+package com.mahlmebs;
+
+public class Space {
 
     private boolean isWall = true;
     private int x, y;
