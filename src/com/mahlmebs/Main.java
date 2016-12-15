@@ -15,7 +15,6 @@ public class Main {
     public static void main(String[] args) {
         Room room = new Room();
         room = room.generateRoom(max);
-        int start = room.getStartPointX();
         gui.setVisible(true);
         for(int i = 0; i < max; i++){
             for(int u = 0; u < max; u++){
@@ -32,8 +31,10 @@ public class Main {
     }
 
     static void printRooms(int startX, int startY, int lengthX, int lengthY) {
-        for (int a = startX; a < lengthX; a++) {
-            for (int b = startY; b < lengthY; b++) {
+        int sumA = startX+lengthX;
+        int sumB = startY+lengthY;
+        for (int a = startX; a < sumA; a++) {
+            for (int b = startY; b < sumB; b++) {
                 gui.md_setSquareColor(a, b, 178, 255, 102);
             }
         }
