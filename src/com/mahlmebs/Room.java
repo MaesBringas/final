@@ -57,26 +57,31 @@ public class Room {
     }
 
     Room[] generateRoom(int max, MiniDungeonGUI gui) {
-        Space[][] level = new Space[max][max];
+
         Random random = new Random();
-        int roomsGenerated = random.nextInt(20 -5 + 1) + 5;
+        int roomsGenerated = random.nextInt(30 - 7 + 1) + 7;
         System.out.println("Rooms created " + roomsGenerated);
         Room[] rooms = new Room[roomsGenerated];
 
-        for(Room item: rooms){
-            item = new Room();
-            /* At the moment we assume square rooms */
+        // Before set the rooms, we generate values randomly inside the max length
+        // Initializes all the space
+        Space[][] level = new Space[max][max];
+        for( int i = 0; i < max; i++){
+            for(int u = 0; u < max; u++){
+                level[i][u] = new Space();
+            }
+        }
+
+        // With this array, we filter and choose 5 of them with no conflicts
+        // acts on each room individually
+        for(int r  = 0; r < rooms.length; r++){
+            rooms[r] = new Room();
             int lengthX = random.nextInt((max/3) - 3 + 1) + 3;
             int lengthY = lengthX;
-            System.out.println(" x extension > " + lengthX + " y extension > " + lengthY);
             int startPointX = random.nextInt((max- 1 + 1) + 1);
             int startPointY = random.nextInt((max - 1 + 1) + 1);
-            System.out.println(" Room starts at > " + startPointX + " and " + startPointY );
-
             int sumX = lengthX + startPointX;
             int sumY = lengthY + startPointY;
-
-            // First filter
             while (sumX > max || sumY > max) {
                 System.out.println("Discarded " + sumX + " " + sumY);
                 lengthX = random.nextInt((max/4) - 3 + 1) + 3;
@@ -87,43 +92,31 @@ public class Room {
                 sumY = lengthY + startPointY;
             }
             System.out.println("Accepted " + sumX + " " + sumY);
+            rooms[r].setLengthX(lengthX);
+            rooms[r].setLengthY(lengthY);
+            rooms[r].setStartPointX(startPointX);
+            rooms[r].setStartPointY(startPointY);
 
-            for( int i = startPointX; i < lengthX; i++){
-                for(int u = startPointY; u < lengthY; u++){
-                    level[i][u] = new Space();
+
+            // We modify the space to be available to walk
+            for( int i = rooms[r].startPointX; i < sumX; i++){
+                for(int u = rooms[r].startPointY; u < sumY; u++){
                     level[i][u].setWall(false);
-//                System.out.println(roomSpace[i][u].isWall());
                 }
             }
+        }
 
-
-            sumX = lengthX + startPointX;
-            sumY = lengthY + startPointY;
-            System.out.println("Sum X > " + sumX + " Sum Y > " + sumY);
-            item.setLengthX(lengthX);
-            item.setLengthY(lengthY);
-            item.setStartPointX(startPointX);
-            item.setStartPointY(startPointY);
-
-            for(int i = 0; i < max; i++){
-                for(int u = 0; u < max; u++){
-                    if(item.getStartPointX() == i && item.getStartPointY() == u){
-                        item.printRooms(i, u, item.getLengthX(), item.getLengthY(), gui);
-                    }
+        for(int i = 0; i < max; i++){
+            for(int u = 0; u < max; u++){
+                if(level[i][u].isWall()){
+                    gui.md_setSquareColor(i, u, 96, 96, 96);
+                } else{
+                    gui.md_setSquareColor(i, u, 178, 255, 102);
                 }
+
             }
         }
         return rooms;
-    }
-
-    public void printRooms(int startX, int startY, int lengthX, int lengthY, MiniDungeonGUI gui) {
-        int sumA = startX+lengthX;
-        int sumB = startY+lengthY;
-        for (int a = startX; a < sumA; a++) {
-            for (int b = startY; b < sumB; b++) {
-                gui.md_setSquareColor(a, b, 178, 255, 102);
-            }
-        }
     }
 
     public Room[] discardRooms(Room[] rawRoom){
