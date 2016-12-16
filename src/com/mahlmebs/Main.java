@@ -9,14 +9,13 @@ import minidungeon.MiniDungeonGUI;
 
 public class Main {
     
-    static int heroId = 1;
     static int x = 20;
     static int y = 20;
     static int max = 40;
     static MiniDungeonGUI gui = new MiniDungeonGUI(max,max);
     static Hero coolHero = new Hero(20, 20);
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException{
         
         Room room = new Room ();
         Room[] rooms = room.generateRoom(max, gui);
@@ -31,7 +30,12 @@ public class Main {
         
         // In the following lines we set the hero in the correct place
         // and print some values that should be visible for the user.
-        
+    
+        // Printing our cool hero
+        gui.md_addSprite(coolHero.getId(), "cool.png", true);
+        gui.md_setSpriteVisible(coolHero.getId(), true);
+        gui.md_moveSprite(coolHero.getId(), x, y);
+        // Printing important info about the hero
         gui.md_setTextGold(coolHero.getGold());
         gui.md_setTextFood(coolHero.getFood());
         gui.md_setTextHealthCurrent(coolHero.getHealth());
@@ -39,10 +43,33 @@ public class Main {
         gui.md_setTextStrength(coolHero.getStrength());
         gui.md_setTextPerception(coolHero.getPerception());
         gui.md_setTextPlayerName(coolHero.getName());
-        gui.md_println("Introduce your name : ");
-        gui.md_addSprite(1, "cool.png", true);
-        gui.md_setSpriteVisible(1, true);
-        gui.md_moveSprite(heroId, x, y);
+        gui.md_setPortraitPlayer("herohd.png");
+        
+        
+        
+        
+        // Here we make our hero move when the arrow keys are pressed.
+        
+        while(true){
+            
+            String lastAction = gui.md_getLastAction().trim();
+            
+            if (lastAction.equals("left")){
+                gui.md_moveSprite(coolHero.getId(), --x, y);
+            }
+            if (lastAction.equals("right")){
+                gui.md_moveSprite(coolHero.getId(), ++x, y);
+            }
+            if (lastAction.equals("down")){
+                gui.md_moveSprite(coolHero.getId(), x, ++y);
+            }
+            if (lastAction.equals("up")){
+                gui.md_moveSprite(coolHero.getId(), x, --y);
+            }
+            Thread.sleep(5);
+        }
+        
+        
         
     }
     

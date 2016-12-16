@@ -8,13 +8,18 @@ public class Hero extends Person {
     private int perception = 1;
     private int strength = 1;
     private int gold = 0;
-    private String name = "Player 1";
+    private String name = "CoolHero27";
+    private int id = 1;
     
     public Hero(int health, int maxHealth) {
         setHealth(health);
         setMaxHealth(maxHealth);
         
     }
+    
+    public int getId() { return id; }
+    
+    public void setId(int id) { this.id = id; }
     
     public String getName() { return name; }
     
