@@ -8,16 +8,11 @@ package com.mahlmebs;
 import minidungeon.MiniDungeonGUI;
 
 public class Main {
-    
-    static int heroId = 1;
-    static int x = 20;
-    static int y = 20;
+
     static int max = 40;
     static MiniDungeonGUI gui = new MiniDungeonGUI(max,max);
-    static Hero coolHero = new Hero(20, 20);
     
     public static void main(String[] args) {
-        
         Room room = new Room();
         room = room.generateRoom(max);
         gui.setVisible(true);
@@ -29,23 +24,12 @@ public class Main {
             }
         }
         
-        // In the following lines we set the hero in the correct place
-        // and print some values that should be visible for the user.
-        
-        gui.md_setTextGold(coolHero.getGold());
-        gui.md_setTextFood(coolHero.getFood());
-        gui.md_setTextHealthCurrent(coolHero.getHealth());
-        gui.md_setTextHealthMax(coolHero.getMaxHealth());
-        gui.md_setTextStrength(coolHero.getStrength());
-        gui.md_setTextPerception(coolHero.getPerception());
-        gui.md_setTextPlayerName(coolHero.getName());
-        gui.md_println("Introduce your name : ");
         gui.md_addSprite(1, "cool.png", true);
         gui.md_setSpriteVisible(1, true);
-        gui.md_moveSprite(heroId, x, y);
-        
+        gui.md_moveSprite(1, 20, 20);
+
     }
-    
+
     static void printRooms(int startX, int startY, int lengthX, int lengthY) {
         int sumA = startX+lengthX;
         int sumB = startY+lengthY;
@@ -54,7 +38,5 @@ public class Main {
                 gui.md_setSquareColor(a, b, 178, 255, 102);
             }
         }
-        
     }
-    
 }
