@@ -1,6 +1,8 @@
 
 package com.mahlmebs;
 
+import minidungeon.MiniDungeonGUI;
+
 public class Room {
 
     /* Room is an array of Spaces */
@@ -24,15 +26,15 @@ public class Room {
         this.roomSpace = roomSpace;
     }
 
-    int getLengthX() {
+    private int getLengthX() {
         return lengthX;
     }
 
-    void setLengthX(int lengthX) {
+    private void setLengthX(int lengthX) {
         this.lengthX = lengthX;
     }
 
-    int getLengthY() {
+    private int getLengthY() {
         return lengthY;
     }
 
@@ -40,7 +42,7 @@ public class Room {
         this.lengthY = lengthY;
     }
 
-    public int getStartPointX() {
+    private int getStartPointX() {
         return startPointX;
     }
 
@@ -48,95 +50,79 @@ public class Room {
         this.startPointX = startPointX;
     }
 
-    public int getStartPointY() {
+    private int getStartPointY() {
         return startPointY;
     }
 
-    public void setStartPointY(int startPointY) {
+    private void setStartPointY(int startPointY) {
         this.startPointY = startPointY;
     }
 
+    Room[] generateRoom(int max, MiniDungeonGUI gui) {
+        int roomsGenerated = (int) (Math.random() * (max / 2));
+        System.out.println("Rooms created " + roomsGenerated);
+        Room[] rooms = new Room[roomsGenerated];
 
-    Room generateRoom(int max) {
-        Room room = new Room();
-        /* At the moment we assume square rooms */
-        int lengthX = (int) (Math.random() * (max / 2));
-        int lengthY = lengthX;
-        System.out.println(" x extension > " + lengthX + " y extension > " + lengthY);
+        for(Room item: rooms){
+            item = new Room();
+            /* At the moment we assume square rooms */
+            int lengthX = (int) (Math.random() * (max / 2));
+            int lengthY = lengthX;
+            System.out.println(" x extension > " + lengthX + " y extension > " + lengthY);
 
-        int startPointX = (int) (Math.random() * (max / 2));
-        int startPointY = (int) (Math.random() * (max / 2));
+            int startPointX = (int) (Math.random() * (max / 2));
+            int startPointY = (int) (Math.random() * (max / 2));
 
-        System.out.println(" Room starts at > " + startPointX + " and " + startPointY );
-        Space[][] roomSpace = new Space[lengthX][lengthY];
+            System.out.println(" Room starts at > " + startPointX + " and " + startPointY );
+            Space[][] roomSpace = new Space[lengthX][lengthY];
 
-        for( int i = startPointX; i < lengthX; i++){
-            for(int u = startPointY; u < lengthY; u++){
-                roomSpace[i][u] = new Space();
-                roomSpace[i][u].setWall(false);
+            for( int i = startPointX; i < lengthX; i++){
+                for(int u = startPointY; u < lengthY; u++){
+                    roomSpace[i][u] = new Space();
+                    roomSpace[i][u].setWall(false);
 //                System.out.println(roomSpace[i][u].isWall());
+                }
             }
-        }
 
-        int sumX = lengthX + startPointX;
-        int sumY = lengthY + startPointY;
-        while (sumX > max && sumY > max) {
-            System.out.println("Discarded " + sumX + " " + sumY);
-            lengthX = (int) (Math.random() * (max / 2));
-            lengthY = (int) (Math.random() * (max / 2));
-            startPointX = (int) (Math.random() * (max / 2));
-            startPointY = (int) (Math.random() * (max / 2));
+            int sumX = lengthX + startPointX;
+            int sumY = lengthY + startPointY;
+            while (sumX > max && sumY > max) {
+                System.out.println("Discarded " + sumX + " " + sumY);
+                lengthX = (int) (Math.random() * (max / 2));
+                lengthY = (int) (Math.random() * (max / 2));
+                startPointX = (int) (Math.random() * (max / 2));
+                startPointY = (int) (Math.random() * (max / 2));
 
+                sumX = lengthX + startPointX;
+                sumY = lengthY + startPointY;
+            }
             sumX = lengthX + startPointX;
             sumY = lengthY + startPointY;
-        }
-        sumX = lengthX + startPointX;
-        sumY = lengthY + startPointY;
-        System.out.println("Sum X > " + sumX + " Sum Y > " + sumY);
-        room.setLengthX(lengthX);
-        room.setLengthY(lengthY);
-        room.setStartPointX(startPointX);
-        room.setStartPointY(startPointY);
+            System.out.println("Sum X > " + sumX + " Sum Y > " + sumY);
+            item.setLengthX(lengthX);
+            item.setLengthY(lengthY);
+            item.setStartPointX(startPointX);
+            item.setStartPointY(startPointY);
 
-        return room;
+            for(int i = 0; i < max; i++){
+                for(int u = 0; u < max; u++){
+                    if(item.getStartPointX() == i && item.getStartPointY() == u){
+                        item.printRooms(i, u, item.getLengthX(), item.getLengthY(), gui);
+                    }
+                }
+            }
+        }
+        return rooms;
     }
 
-//    Room[] generateRooms(int max){
-//        int numberOfRooms = (int)(Math.random()*10);
-//        Room[] rawRooms = new Room[numberOfRooms];
-//        System.out.println("Number of rooms " + numberOfRooms);
-//        for(int i = 0; i < numberOfRooms; i++){
-//            int lengthX = (int)(Math.random()*(max/2));
-//            int lengthY = (int)(Math.random()*(max/2));
-//            System.out.println(i + " x extension > " + lengthX + " y extension > " + lengthY);
-//
-//            int startX = (int)(Math.random()*(max/2));
-//            int startY = (int)(Math.random()*(max/2));
-//            System.out.println(i + " X starts at > " + startX + "  and y at > " + startY);
-//
-//            int sumX = lengthX + startX;
-//            int sumY = lengthY + startY;
-//            while(lengthX+startX > max && lengthY+startY > max){
-//                System.out.println("Discarded " + sumX + " " + sumY);
-//                lengthX = (int)(Math.random()*(max/2));
-//                lengthY = (int)(Math.random()*(max/2));
-//                startX = (int)(Math.random()*(max/2));
-//                startY = (int)(Math.random()*(max/2));
-//                sumX = lengthX + startX;
-//                sumY = lengthY + startY;
-//            }
-//            sumX = lengthX + startX;
-//            sumY = lengthY + startY;
-//            System.out.println("Sum X > " + sumX + " Sum Y > " + sumY);
-//            rawRooms[i] = new Room();
-//            rawRooms[i].setStartX(startX);
-//            rawRooms[i].setStartY(startY);
-//            rawRooms[i].setX(lengthX);
-//            rawRooms[i].setY(lengthY);
-//        }
-//
-//        return rawRooms;
-//
-//    }
+    private void printRooms(int startX, int startY, int lengthX, int lengthY, MiniDungeonGUI gui) {
+        int sumA = startX+lengthX;
+        int sumB = startY+lengthY;
+        for (int a = startX; a < sumA; a++) {
+            for (int b = startY; b < sumB; b++) {
+                gui.md_setSquareColor(a, b, 178, 255, 102);
+            }
+        }
+    }
 
 }
