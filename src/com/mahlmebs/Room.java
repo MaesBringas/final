@@ -59,19 +59,34 @@ public class Room {
     Room[] generateRoom(int max, MiniDungeonGUI gui) {
         Space[][] level = new Space[max][max];
         Random random = new Random();
-        int roomsGenerated = random.nextInt(20 -1 + 1) + 1;
+        int roomsGenerated = random.nextInt(20 -5 + 1) + 5;
         System.out.println("Rooms created " + roomsGenerated);
         Room[] rooms = new Room[roomsGenerated];
 
         for(Room item: rooms){
             item = new Room();
             /* At the moment we assume square rooms */
-            int lengthX = random.nextInt((max/2) - 3 + 1) + 3;
+            int lengthX = random.nextInt((max/3) - 3 + 1) + 3;
             int lengthY = lengthX;
             System.out.println(" x extension > " + lengthX + " y extension > " + lengthY);
-            int startPointX = random.nextInt((max / 2) + 1);
-            int startPointY = random.nextInt((max / 2) + 1);
+            int startPointX = random.nextInt((max- 1 + 1) + 1);
+            int startPointY = random.nextInt((max - 1 + 1) + 1);
             System.out.println(" Room starts at > " + startPointX + " and " + startPointY );
+
+            int sumX = lengthX + startPointX;
+            int sumY = lengthY + startPointY;
+
+            // First filter
+            while (sumX > max || sumY > max) {
+                System.out.println("Discarded " + sumX + " " + sumY);
+                lengthX = random.nextInt((max/4) - 3 + 1) + 3;
+                lengthY = lengthX;
+                startPointX = random.nextInt((max- 1 + 1) + 1);
+                startPointY = random.nextInt((max- 1 + 1) + 1);
+                sumX = lengthX + startPointX;
+                sumY = lengthY + startPointY;
+            }
+            System.out.println("Accepted " + sumX + " " + sumY);
 
             for( int i = startPointX; i < lengthX; i++){
                 for(int u = startPointY; u < lengthY; u++){
@@ -81,17 +96,7 @@ public class Room {
                 }
             }
 
-            int sumX = lengthX + startPointX;
-            int sumY = lengthY + startPointY;
-            while (sumX > max && sumY > max) {
-                System.out.println("Discarded " + sumX + " " + sumY);
-                lengthX = random.nextInt((max/2) - 3 + 1) + 3;
-                lengthY = random.nextInt((max/2) - 3 + 1) + 3;
-                startPointX = random.nextInt((max / 2) + 1);
-                startPointY = random.nextInt((max / 2) + 1);
-                sumX = lengthX + startPointX;
-                sumY = lengthY + startPointY;
-            }
+
             sumX = lengthX + startPointX;
             sumY = lengthY + startPointY;
             System.out.println("Sum X > " + sumX + " Sum Y > " + sumY);
