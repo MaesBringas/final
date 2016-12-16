@@ -8,11 +8,11 @@ public class Room {
 
     /* Room is an array of Spaces */
 
-    private int lengthX;
-    private int lengthY;
-    private int startPointX;
-    private int startPointY;
-    private Space[][] roomSpace = new Space[lengthX][lengthY];
+    public int lengthX;
+    public int lengthY;
+    public int startPointX;
+    public int startPointY;
+    public Space[][] roomSpace = new Space[lengthX][lengthY];
 
     Room() {}
 
@@ -24,35 +24,35 @@ public class Room {
         this.roomSpace = roomSpace;
     }
 
-    private int getLengthX() {
+    public int getLengthX() {
         return lengthX;
     }
 
-    private void setLengthX(int lengthX) {
+    public void setLengthX(int lengthX) {
         this.lengthX = lengthX;
     }
 
-    private int getLengthY() {
+    public int getLengthY() {
         return lengthY;
     }
 
-    private void setLengthY(int lengthY) {
+    public void setLengthY(int lengthY) {
         this.lengthY = lengthY;
     }
 
-    private int getStartPointX() {
+    public int getStartPointX() {
         return startPointX;
     }
 
-    private void setStartPointX(int startPointX) {
+    public void setStartPointX(int startPointX) {
         this.startPointX = startPointX;
     }
 
-    private int getStartPointY() {
+    public int getStartPointY() {
         return startPointY;
     }
 
-    private void setStartPointY(int startPointY) {
+    public void setStartPointY(int startPointY) {
         this.startPointY = startPointY;
     }
 
@@ -111,7 +111,7 @@ public class Room {
         return rooms;
     }
 
-    private void printRooms(int startX, int startY, int lengthX, int lengthY, MiniDungeonGUI gui) {
+    public void printRooms(int startX, int startY, int lengthX, int lengthY, MiniDungeonGUI gui) {
         int sumA = startX+lengthX;
         int sumB = startY+lengthY;
         for (int a = startX; a < sumA; a++) {
@@ -121,7 +121,7 @@ public class Room {
         }
     }
 
-    private Room[] discardRooms(Room[] rawRoom){
+    public Room[] discardRooms(Room[] rawRoom){
 
         /* TODO: check Space[][] level position with Room extension */
 
@@ -129,7 +129,7 @@ public class Room {
 
     }
 
-    private void connectRooms(Room[] rooms){
+    public void connectRooms(Room[] rooms){
 
     }
 

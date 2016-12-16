@@ -18,8 +18,8 @@ public class Main {
     
     public static void main(String[] args) {
         
-        Room room = new Room();
-        room = room.generateRoom(max);
+        Room room = new Room ();
+        room = room.generateRoom(max, gui);
         gui.setVisible(true);
         for(int i = 0; i < max; i++){
             for(int u = 0; u < max; u++){
