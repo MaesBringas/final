@@ -29,6 +29,20 @@ public class Main {
             }
         }
         
+        // In the following lines we set the hero in the correct place
+        // and print some values that should be visible for the user.
+        
+        gui.md_setTextGold(coolHero.getGold());
+        gui.md_setTextFood(coolHero.getFood());
+        gui.md_setTextHealthCurrent(coolHero.getHealth());
+        gui.md_setTextHealthMax(coolHero.getMaxHealth());
+        gui.md_setTextStrength(coolHero.getStrength());
+        gui.md_setTextPerception(coolHero.getPerception());
+        gui.md_setTextPlayerName(coolHero.getName());
+        gui.md_println("Introduce your name : ");
+        gui.md_addSprite(1, "cool.png", true);
+        gui.md_setSpriteVisible(1, true);
+        gui.md_moveSprite(heroId, x, y);
         
     }
     
