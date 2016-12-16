@@ -2,8 +2,6 @@ package com.mahlmebs;
 
 import com.mahlmebs.Person;
 
-import java.awt.event.KeyEvent;
-
 public class Hero extends Person {
     
     private int food = 500;

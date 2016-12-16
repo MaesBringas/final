@@ -15,9 +15,7 @@ public class Space {
         isWall = wall;
     }
 
-    int getX() {
-        return x;
-    }
+    int getX() { return x; }
 
     void setX(int x) {
         this.x = x;
