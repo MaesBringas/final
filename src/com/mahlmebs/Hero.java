@@ -5,8 +5,8 @@ import com.mahlmebs.Person;
 public class Hero extends Person {
     
     private int food = 500;
-    private int perception = 1;
-    private int strength = 1;
+    private int perception = 4;
+    private int strength = 2;
     private int gold = 0;
     private String name = "CoolHero27";
     private int id = 1;
@@ -15,6 +15,10 @@ public class Hero extends Person {
         setHealth(health);
         setMaxHealth(maxHealth);
         
+    }
+    
+    public void lessFood(){
+        --this.food;
     }
     
     public int getId() { return id; }

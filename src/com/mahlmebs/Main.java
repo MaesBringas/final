@@ -45,32 +45,49 @@ public class Main {
         gui.md_setTextPlayerName(coolHero.getName());
         gui.md_setPortraitPlayer("herohd.png");
         
-        
-        
-        
         // Here we make our hero move when the arrow keys are pressed.
+        // taking into account to reduce its food each time he moves,
+        // and dividing his perception and strength by two when food = 0.
         
         while(true){
             
             String lastAction = gui.md_getLastAction().trim();
             
-            if (lastAction.equals("left")){
-                gui.md_moveSprite(coolHero.getId(), --x, y);
-            }
-            if (lastAction.equals("right")){
-                gui.md_moveSprite(coolHero.getId(), ++x, y);
-            }
-            if (lastAction.equals("down")){
-                gui.md_moveSprite(coolHero.getId(), x, ++y);
-            }
-            if (lastAction.equals("up")){
-                gui.md_moveSprite(coolHero.getId(), x, --y);
+            if (lastAction.length() > 0){
+            
+                if (lastAction.equals("left")){
+                    gui.md_moveSprite(coolHero.getId(), --x, y);
+                }
+                if (lastAction.equals("right")) {
+                    gui.md_moveSprite(coolHero.getId(), ++x, y);
+                }
+                if (lastAction.equals("down")) {
+                    gui.md_moveSprite(coolHero.getId(), x, ++y);
+                }
+                if (lastAction.equals("up")) {
+                    gui.md_moveSprite(coolHero.getId(), x, --y);
+                }
+                
+                // Reducing food after each movement (only if food is not already 0)
+                if (coolHero.getFood() > 0) {
+                    coolHero.lessFood();
+                    gui.md_setTextFood(coolHero.getFood());
+                }
+                
+                // Checking if food = 0, and reducing perception and strength if true
+                if (coolHero.getFood() == 0){
+                    if (coolHero.getPerception() > 1) {
+                        coolHero.setPerception(coolHero.getPerception() / 2);
+                        gui.md_setTextPerception(coolHero.getPerception());
+                    }
+                    if (coolHero.getStrength() > 1) {
+                        coolHero.setStrength(coolHero.getStrength() / 2);
+                        gui.md_setTextStrength(coolHero.getStrength());
+                    }
+                }
             }
             Thread.sleep(5);
         }
-        
-        
-        
     }
     
     static void printRooms(int startX, int startY, int lengthX, int lengthY) {
