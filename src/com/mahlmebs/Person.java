@@ -6,7 +6,7 @@ public class Person {
     private int maxHealth;
 
     Person(){}
-
+    
     public int getHealth() {
         return health;
     }

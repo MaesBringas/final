@@ -2,15 +2,33 @@ package com.mahlmebs;
 
 import com.mahlmebs.Person;
 
-public class Hero extends Person {
+import java.awt.event.KeyEvent;
 
-    private int food;
-    private int perception;
-    private int power;
+public class Hero extends Person {
     
-    public int getPower() { return power; }
+    private int food = 500;
+    private int perception = 1;
+    private int strength = 1;
+    private int gold = 0;
+    private String name = "Player 1";
     
-    public void setPower(int power) { this.power = power; }
+    public Hero(int health, int maxHealth) {
+        setHealth(health);
+        setMaxHealth(maxHealth);
+        
+    }
+    
+    public String getName() { return name; }
+    
+    public void setName(String name) { this.name = name; }
+    
+    public int getGold() { return gold; }
+    
+    public void setGold(int gold) { this.gold = gold; }
+    
+    public int getStrength() { return strength; }
+    
+    public void setStrength(int power) { this.strength = power; }
 
     public int getFood() {
         return food;
@@ -27,6 +45,6 @@ public class Hero extends Person {
     public void setPerception(int perception) {
         this.perception = perception;
     }
-
-    Hero(){}
+    
+    
 }
