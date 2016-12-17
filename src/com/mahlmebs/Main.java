@@ -175,7 +175,10 @@ public class Main {
                     coolHero.setPositionY(y-1);
                     gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
                 }
-                gui.md_println(lastAction);
+				if (lastAction.equals("new game")) {
+                	main(args);
+				}
+				gui.md_println(lastAction);
 	
 	            // Checking if the user is in the same cell as an item and activating the item function if true.
 	            // Brief explanation inside the code for goldCoins can be used to explain code for the rest of the items.
