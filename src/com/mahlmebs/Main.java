@@ -142,8 +142,7 @@ public class Main {
         gui.md_setSpriteVisible(sword.getId(), true);
         gui.md_moveSprite(sword.getId(), sword.getPositionX(), sword.getPositionY());
 	    
-	    
-	    // Declaring enemies
+	    // Declaring enemies. Three pawns and one of each for the rest of the pieces.
 	    
 	    Enemy[] enemies = new Enemy[9];
 	    enemies[0] = new Enemy("pawn");
@@ -167,9 +166,6 @@ public class Main {
 		    gui.md_moveSprite(enemies[i].getId(), enemies[i].getPositionX(), enemies[i].getPositionY());
 	    }
 	    
-		    
-	    
-	    
         // Here we make our hero move when the arrow keys are pressed,
         // taking into account to reduce its food each time he moves
         // and dividing his perception and strength by two when food = 0.
@@ -177,6 +173,16 @@ public class Main {
         while(true){
             // TODO limit the max
 
+	        // Killing the player if food or health = 0
+	        if (coolHero.getFood() == 0 || coolHero.getHealth() == 0) {
+		        gui.md_showMessageDialog("Omg! What a cool death!");
+		        int newHealth = coolHero.getMaxHealth();
+		        coolHero.setFood(500);
+		        coolHero.setHealth(newHealth);
+		        main(args);
+	        }
+	            
+	        
             String lastAction = gui.md_getLastAction().trim();
 
             if(coolHero.getPositionX() == xDoor && coolHero.getPositionY() == yDoor){
@@ -208,7 +214,7 @@ public class Main {
 				gui.md_println(lastAction);
 	
 	            // Checking if the user is in the same cell as an item and activating the item function if true.
-	            // Brief explanation inside the code for goldCoins can be used to explain code for the rest of the items.
+	            // Brief explanation inside the code for goldCoins. It can be used to explain code for the rest of the items too.
 	
 	            for (int i = 0; i < goldCoins.length; i++) {
 		            // Here we check if the hero's position coincides with an item position.
@@ -343,33 +349,35 @@ public class Main {
 	        
 		        for(int i = 0; i < 9; i++){
 			        
-				        Random ran = new Random();
-				        int ranNum = ran.nextInt(4);
+			        Random ran = new Random();
+			        int ranNum = ran.nextInt(4);
 				        
-				        if (ranNum == 0){
-					        if(!level[enemies[i].getPositionX()+1][enemies[i].getPositionY()].isWall()) {
-						        enemies[i].moveRight();
-						        gui.md_moveSprite(enemies[i].getId(), enemies[i].getPositionX(), enemies[i].getPositionY());
-					        }
+			        // Randomly choosing between moving right, left, down or up, and checking if possible.
+			        
+			        if (ranNum == 0){
+				        if(!level[enemies[i].getPositionX()+1][enemies[i].getPositionY()].isWall()) {
+					        enemies[i].moveRight();
+					        gui.md_moveSprite(enemies[i].getId(), enemies[i].getPositionX(), enemies[i].getPositionY());
 				        }
-				        if (ranNum == 1){
-					        if (!level[enemies[i].getPositionX()-1][enemies[i].getPositionY()].isWall()){
-						        enemies[i].moveLeft();
-						        gui.md_moveSprite(enemies[i].getId(), enemies[i].getPositionX(), enemies[i].getPositionY());
-					        }
+			        }
+			        if (ranNum == 1){
+				        if (!level[enemies[i].getPositionX()-1][enemies[i].getPositionY()].isWall()){
+					        enemies[i].moveLeft();
+					        gui.md_moveSprite(enemies[i].getId(), enemies[i].getPositionX(), enemies[i].getPositionY());
 				        }
-				        if (ranNum == 2){
-					        if (!level[enemies[i].getPositionX()][enemies[i].getPositionY()+1].isWall()){
-						        enemies[i].moveDown();
-						        gui.md_moveSprite(enemies[i].getId(), enemies[i].getPositionX(), enemies[i].getPositionY());
-					        }
+			        }
+			        if (ranNum == 2){
+				        if (!level[enemies[i].getPositionX()][enemies[i].getPositionY()+1].isWall()){
+					        enemies[i].moveDown();
+					        gui.md_moveSprite(enemies[i].getId(), enemies[i].getPositionX(), enemies[i].getPositionY());
 				        }
-				        if (ranNum == 3) {
-					        if (!level[enemies[i].getPositionX()][enemies[i].getPositionY() - 1].isWall()) {
-						        enemies[i].moveUp();
-						        gui.md_moveSprite(enemies[i].getId(), enemies[i].getPositionX(), enemies[i].getPositionY());
-					        }
+			        }
+			        if (ranNum == 3) {
+				        if (!level[enemies[i].getPositionX()][enemies[i].getPositionY() - 1].isWall()) {
+					        enemies[i].moveUp();
+					        gui.md_moveSprite(enemies[i].getId(), enemies[i].getPositionX(), enemies[i].getPositionY());
 				        }
+			        }
 		        }
 	        
         }

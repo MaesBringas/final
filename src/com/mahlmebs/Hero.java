@@ -17,7 +17,7 @@ public class Hero extends Person {
         setId(0);
         setStrength(1);
         setHealth(20);
-        setMaxHealth(40);
+        setMaxHealth(20);
         super.positionX = 20;
         super.positionY = 20;
         
