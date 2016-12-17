@@ -7,6 +7,8 @@ package com.mahlmebs;
 
 import minidungeon.MiniDungeonGUI;
 
+import java.util.Random;
+
 public class Main {
     
     static int max = 40;
@@ -19,7 +21,12 @@ public class Main {
         Room room = new Room ();
         Space[][] level = room.generateRooms(max, gui);
         gui.setVisible(true);
-        
+        Random random = new Random();
+        int heroStartX = random.nextInt(15 - 2 + 1) + 2;
+        int heroStartY = random.nextInt(10 - 1 + 1) + 1;
+        int[] valid = validCoordinates(level, heroStartX, heroStartY);
+        coolHero.setPositionX(valid[0]);
+        coolHero.setPositionY(valid[1]);
         // In the following lines we set the hero in the correct place
         // and print some values that should be visible for the user.
     
@@ -42,6 +49,12 @@ public class Main {
         Gold [] goldCoins = new Gold [8];
         for (int i = 0; i < goldCoins.length; i++){
             goldCoins[i] = new Gold();
+            int goldStartX = random.nextInt(10 - 5 + 1) + 5;
+            int goldStartY = random.nextInt(15 - 2 + 1) + 2;
+            valid = validCoordinates(level, goldStartX, goldStartY);
+
+            goldCoins[i].setPositionX(valid[0]);
+            goldCoins[i].setPositionY(valid[1]);
             goldCoins[i].setId(2+i); // id = 1 is avoided 'cause is the hero's one
             gui.md_addSprite(goldCoins[i].getId(), goldCoins[i].getImage(), true);
             gui.md_setSpriteVisible(goldCoins[i].getId(), true);
@@ -51,6 +64,11 @@ public class Main {
         Potion [] potions = new Potion[3];
         for (int i = 0; i < potions.length; i++){
             potions[i] = new Potion();
+            int potionStartX = random.nextInt(18 - 4 + 1) + 4;
+            int potionStartY = random.nextInt(10 - 2 + 1) + 2;
+            valid = validCoordinates(level, potionStartX, potionStartY);
+            potions[i].setPositionX(valid[0]);
+            potions[i].setPositionY(valid[1]);
             potions[i].setId(10+i); // id=1 to id=9 are avoided 'cause they are already in use.
             gui.md_addSprite(potions[i].getId(), potions[i].getImage(), true);
             gui.md_setSpriteVisible(potions[i].getId(), true);
@@ -73,27 +91,19 @@ public class Main {
                 int x = coolHero.getPositionX(); int y = coolHero.getPositionY();
 
                 if (lastAction.equals("left") && !level[x-1][y].isWall()){
-//                    int x = coolHero.getPositionX(); int y = coolHero.getPositionY();
-//                    if(!level[x-1][y].isWall()){
-                        coolHero.setPositionX(x-1);
-                        gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
-//                    }else{
-//                        System.out.println("Paré");
-//                    }
+                    coolHero.setPositionX(x-1);
+                    gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
 
                 }
                 if (lastAction.equals("right") && !level[x+1][y].isWall()) {
-//                    int x = coolHero.getPositionX(); int y = coolHero.getPositionY();
                     coolHero.setPositionX(x+1);
                     gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
                 }
                 if (lastAction.equals("down") && !level[x][y+1].isWall()) {
-//                    int x = coolHero.getPositionX(); int y = coolHero.getPositionY();
                     coolHero.setPositionY(y+1);
                     gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
                 }
                 if (lastAction.equals("up") && !level[x][y-1].isWall()) {
-//                    int x = coolHero.getPositionX(); int y = coolHero.getPositionY();
                     coolHero.setPositionY(y-1);
                     gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
                 }
@@ -167,5 +177,26 @@ public class Main {
             Thread.sleep(5);
         }
     }
-    
+
+    static int[] validCoordinates(Space[][]level, int x, int y){
+        Random random = new Random();
+        int[] validated = new int[2];
+        if(x+1 == max || y+1 == max){
+            x = random.nextInt(30 - 5 + 1) + 5;
+            y = random.nextInt(25 - 2 + 1) + 2;
+        }
+        while(level[x][y].isWall()){
+            if(x+1 == max || y+1 == max){
+                x = random.nextInt(30 - 5 + 1) + 5;
+                y = random.nextInt(25 - 2 + 1) + 2;
+            } else{
+                x++;
+                y++;
+            }
+        }
+        validated[0] = x;
+        validated[1] = y;
+        return validated;
+    }
+
 }
