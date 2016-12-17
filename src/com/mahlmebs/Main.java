@@ -17,15 +17,8 @@ public class Main {
     public static void main(String[] args) throws InterruptedException{
         
         Room room = new Room ();
-        Room[] rooms = room.generateRoom(max, gui);
+        Space[][] level = room.generateRooms(max, gui);
         gui.setVisible(true);
-        for(int i = 0; i < max; i++){
-            for(int u = 0; u < max; u++){
-                if(room.getStartPointX() == i && room.getStartPointY() == u){
-                    printRooms(i, u, room.getLengthX(), room.getLengthY());
-                }
-            }
-        }
         
         // In the following lines we set the hero in the correct place
         // and print some values that should be visible for the user.
@@ -71,28 +64,36 @@ public class Main {
         // and dividing his perception and strength by two when food = 0.
         
         while(true){
+            // TODO limit the max
+            // TODO control move if it's wall or not
             
             String lastAction = gui.md_getLastAction().trim();
             
             if (lastAction.length() > 0){
-            
-                if (lastAction.equals("left")){
-                    int x = coolHero.getPositionX(); int y = coolHero.getPositionY();
-                    coolHero.setPositionX(x-1);
-                    gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
+                int x = coolHero.getPositionX(); int y = coolHero.getPositionY();
+
+                if (lastAction.equals("left") && !level[x-1][y].isWall()){
+//                    int x = coolHero.getPositionX(); int y = coolHero.getPositionY();
+//                    if(!level[x-1][y].isWall()){
+                        coolHero.setPositionX(x-1);
+                        gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
+//                    }else{
+//                        System.out.println("Paré");
+//                    }
+
                 }
-                if (lastAction.equals("right")) {
-                    int x = coolHero.getPositionX(); int y = coolHero.getPositionY();
+                if (lastAction.equals("right") && !level[x+1][y].isWall()) {
+//                    int x = coolHero.getPositionX(); int y = coolHero.getPositionY();
                     coolHero.setPositionX(x+1);
                     gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
                 }
-                if (lastAction.equals("down")) {
-                    int x = coolHero.getPositionX(); int y = coolHero.getPositionY();
+                if (lastAction.equals("down") && !level[x][y+1].isWall()) {
+//                    int x = coolHero.getPositionX(); int y = coolHero.getPositionY();
                     coolHero.setPositionY(y+1);
                     gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
                 }
-                if (lastAction.equals("up")) {
-                    int x = coolHero.getPositionX(); int y = coolHero.getPositionY();
+                if (lastAction.equals("up") && !level[x][y-1].isWall()) {
+//                    int x = coolHero.getPositionX(); int y = coolHero.getPositionY();
                     coolHero.setPositionY(y-1);
                     gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
                 }
@@ -165,17 +166,6 @@ public class Main {
             }
             Thread.sleep(5);
         }
-    }
-    
-    static void printRooms(int startX, int startY, int lengthX, int lengthY) {
-        int sumA = startX+lengthX;
-        int sumB = startY+lengthY;
-        for (int a = startX; a < sumA; a++) {
-            for (int b = startY; b < sumB; b++) {
-                gui.md_setSquareColor(a, b, 178, 255, 102);
-            }
-        }
-        
     }
     
 }
