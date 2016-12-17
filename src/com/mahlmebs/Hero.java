@@ -10,12 +10,12 @@ public class Hero extends Person {
     
     private int food = 500;
     private int perception = 1;
-    private int strength = 1;
     private int gold = 0;
     private String name = "CoolHero27";
-    private int id = 0;
     
     public Hero() {
+        setId(0);
+        setStrength(1);
         setHealth(20);
         setMaxHealth(40);
         super.positionX = 20;

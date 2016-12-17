@@ -46,7 +46,8 @@ public class Main {
         // printing some values that should be visible for the user.
     
         // Printing the hero
-        gui.md_addSprite(coolHero.getId(), "cool.png", true);
+	    coolHero.setImage("cool.png");
+        gui.md_addSprite(coolHero.getId(), coolHero.getImage(), true);
         gui.md_setSpriteVisible(coolHero.getId(), true);
         gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
         // Printing important info about the hero
@@ -140,7 +141,33 @@ public class Main {
         gui.md_addSprite(sword.getId(), sword.getImage(), true);
         gui.md_setSpriteVisible(sword.getId(), true);
         gui.md_moveSprite(sword.getId(), sword.getPositionX(), sword.getPositionY());
-    
+	    
+	    
+	    // Declaring enemies
+	    
+	    Enemy[] enemies = new Enemy[9];
+	    enemies[0] = new Enemy("pawn");
+	    enemies[1] = new Enemy("pawn");
+	    enemies[2] = new Enemy("pawn");
+	    enemies[3] = new Enemy("bishop");
+	    enemies[4] = new Enemy("knight");
+	    enemies[5] = new Enemy("king");
+	    enemies[6] = new Enemy("queen");
+	    enemies[7] = new Enemy("rook");
+	    enemies[8] = new Enemy("secretenemy");
+	    for(int i = 0; i < 9; i++){
+		    enemies[i].setId(20+i); // id=1 to id=19 are avoided 'cause they are already in use.
+		    int enemyStartX = random.nextInt(10 - 5 + 1) + 5;
+		    int enemyStartY = random.nextInt(15 - 2 + 1) + 2;
+		    valid = validCoordinates(level, enemyStartX, enemyStartY);
+		    enemies[i].setPositionX(valid[0]);
+		    enemies[i].setPositionY(valid[1]);
+		    gui.md_addSprite(enemies[i].getId(), enemies[i].getImage(), true);
+		    gui.md_setSpriteVisible(enemies[i].getId(), true);
+		    gui.md_moveSprite(enemies[i].getId(), enemies[i].getPositionX(), enemies[i].getPositionY());
+	    }
+	    
+		    
 	    
 	    
         // Here we make our hero move when the arrow keys are pressed,
@@ -310,9 +337,45 @@ public class Main {
 	
             }
 	        Thread.sleep(5);
+	        
+	        
+	        // Enemies movement
+	        
+		        for(int i = 0; i < 9; i++){
+			        
+				        Random ran = new Random();
+				        int ranNum = ran.nextInt(4);
+				        
+				        if (ranNum == 0){
+					        if(!level[enemies[i].getPositionX()+1][enemies[i].getPositionY()].isWall()) {
+						        enemies[i].moveRight();
+						        gui.md_moveSprite(enemies[i].getId(), enemies[i].getPositionX(), enemies[i].getPositionY());
+					        }
+				        }
+				        if (ranNum == 1){
+					        if (!level[enemies[i].getPositionX()-1][enemies[i].getPositionY()].isWall()){
+						        enemies[i].moveLeft();
+						        gui.md_moveSprite(enemies[i].getId(), enemies[i].getPositionX(), enemies[i].getPositionY());
+					        }
+				        }
+				        if (ranNum == 2){
+					        if (!level[enemies[i].getPositionX()][enemies[i].getPositionY()+1].isWall()){
+						        enemies[i].moveDown();
+						        gui.md_moveSprite(enemies[i].getId(), enemies[i].getPositionX(), enemies[i].getPositionY());
+					        }
+				        }
+				        if (ranNum == 3) {
+					        if (!level[enemies[i].getPositionX()][enemies[i].getPositionY() - 1].isWall()) {
+						        enemies[i].moveUp();
+						        gui.md_moveSprite(enemies[i].getId(), enemies[i].getPositionX(), enemies[i].getPositionY());
+					        }
+				        }
+		        }
+	        
         }
         main(args);
     }
+    
 	static int[] validCoordinates(Space[][]level, int x, int y){
 		Random random = new Random();
 		int[] validated = new int[2];

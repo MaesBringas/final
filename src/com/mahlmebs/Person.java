@@ -10,6 +10,27 @@ public class Person {
     public int positionY;
     public int health;
     public int maxHealth;
+    public int strength;
+    public String image;
+    public int id;
+    public String getImage() { return image; }
+    public void setImage(String image) { this.image = image; }
+    
+    public int getStrength() {
+        return strength;
+    }
+    
+    public void setStrength(int strength) {
+        this.strength = strength;
+    }
+    
+    public int getId() {
+        return id;
+    }
+    
+    public void setId(int id) {
+        this.id = id;
+    }
     
     Person(){}
     
