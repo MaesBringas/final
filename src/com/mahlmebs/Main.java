@@ -58,13 +58,13 @@ public class Main {
         for (int i = 0; i < goldCoins.length; i++) {
             goldCoins[i] = new Gold();
             goldCoins[i].setId(1 + i); // id = 0 is avoided 'cause is the hero's one
+	        
             int goldStartX = random.nextInt(10 - 5 + 1) + 5;
             int goldStartY = random.nextInt(15 - 2 + 1) + 2;
             valid = validCoordinates(level, goldStartX, goldStartY);
-
             goldCoins[i].setPositionX(valid[0]);
             goldCoins[i].setPositionY(valid[1]);
-            goldCoins[i].setId(2+i); // id = 1 is avoided 'cause is the hero's one
+	        
             gui.md_addSprite(goldCoins[i].getId(), goldCoins[i].getImage(), true);
             gui.md_setSpriteVisible(goldCoins[i].getId(), true);
             gui.md_moveSprite(goldCoins[i].getId(), goldCoins[i].getPositionX(), goldCoins[i].getPositionY());
@@ -79,7 +79,6 @@ public class Main {
             valid = validCoordinates(level, potionStartX, potionStartY);
             potions[i].setPositionX(valid[0]);
             potions[i].setPositionY(valid[1]);
-            potions[i].setId(10+i); // id=1 to id=9 are avoided 'cause they are already in use.
             gui.md_addSprite(potions[i].getId(), potions[i].getImage(), true);
             gui.md_setSpriteVisible(potions[i].getId(), true);
             gui.md_moveSprite(potions[i].getId(), potions[i].getPositionX(), potions[i].getPositionY());
@@ -89,6 +88,11 @@ public class Main {
         for (int i = 0; i < apples.length; i++) {
             apples[i] = new Apple();
             apples[i].setId(12 + i); // id=1 to id=11 are avoided 'cause they are already in use.
+	        int applesStartX = random.nextInt(10 - 5 + 1) + 5;
+	        int applesStartY = random.nextInt(15 - 2 + 1) + 2;
+	        valid = validCoordinates(level, applesStartX, applesStartY);
+	        apples[i].setPositionX(valid[0]);
+	        apples[i].setPositionY(valid[1]);
             gui.md_addSprite(apples[i].getId(), apples[i].getImage(), true);
             gui.md_setSpriteVisible(apples[i].getId(), true);
             gui.md_moveSprite(apples[i].getId(), apples[i].getPositionX(), apples[i].getPositionY());
@@ -96,22 +100,39 @@ public class Main {
     
         Heart heart = new Heart();
         heart.setId(17); // id=1 to id=16 are avoided 'cause they are already in use.
+	    int heartStartX = random.nextInt(10 - 5 + 1) + 5;
+	    int heartStartY = random.nextInt(15 - 2 + 1) + 2;
+	    valid = validCoordinates(level, heartStartX, heartStartY);
+	    heart.setPositionX(valid[0]);
+	    heart.setPositionY(valid[1]);
         gui.md_addSprite(heart.getId(), heart.getImage(), true);
         gui.md_setSpriteVisible(heart.getId(), true);
         gui.md_moveSprite(heart.getId(), heart.getPositionX(), heart.getPositionY());
     
         Eye eye = new Eye();
         eye.setId(18); // id=1 to id=17 are avoided 'cause they are already in use.
+	    int eyeStartX = random.nextInt(10 - 5 + 1) + 5;
+	    int eyeStartY = random.nextInt(15 - 2 + 1) + 2;
+	    valid = validCoordinates(level, eyeStartX, eyeStartY);
+	    eye.setPositionX(valid[0]);
+	    eye.setPositionY(valid[1]);
         gui.md_addSprite(eye.getId(), eye.getImage(), true);
         gui.md_setSpriteVisible(eye.getId(), true);
         gui.md_moveSprite(eye.getId(), eye.getPositionX(), eye.getPositionY());
     
         Sword sword = new Sword();
         sword.setId(19); // id=1 to id=18 are avoided 'cause they are already in use.
+	    int swordStartX = random.nextInt(10 - 5 + 1) + 5;
+	    int swordStartY = random.nextInt(15 - 2 + 1) + 2;
+	    valid = validCoordinates(level, swordStartX, swordStartY);
+	    sword.setPositionX(valid[0]);
+	    sword.setPositionY(valid[1]);
         gui.md_addSprite(sword.getId(), sword.getImage(), true);
         gui.md_setSpriteVisible(sword.getId(), true);
         gui.md_moveSprite(sword.getId(), sword.getPositionX(), sword.getPositionY());
     
+	    
+	    
         // Here we make our hero move when the arrow keys are pressed,
         // taking into account to reduce its food each time he moves
         // and dividing his perception and strength by two when food = 0.
@@ -171,7 +192,7 @@ public class Main {
 				            // Activating the function of the object.
 				            coolHero.addGold();
 				            // Making the already used item disappear.
-				            gui.md_setSpriteVisible(i + 1, false);
+				            gui.md_setSpriteVisible(goldCoins[i].getId(), false);
 				            gui.md_setTextGold(coolHero.getGold());
 			            }
 		            }
