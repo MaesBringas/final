@@ -8,10 +8,10 @@ import java.util.Random;
 
 
 
-public class Potion extends Item{
+public class Apple extends Item {
 	
-	public Potion(){
-		super.image = "potion.png";
+	public Apple(){
+		super.image = "apple.png";
 		Random ran = new Random();
 		this.positionX = ran.nextInt(40);
 		this.positionY = ran.nextInt(40);

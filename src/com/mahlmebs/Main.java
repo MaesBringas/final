@@ -13,12 +13,16 @@ public class Main {
     
     static int max = 40;
     static MiniDungeonGUI gui = new MiniDungeonGUI(max,max);
-    static Hero coolHero = new Hero();
-    static int[][] gotItemsLocation = new int[11][2];
     
-    public static void main(String[] args) throws InterruptedException{
-        
-        Room room = new Room ();
+    static Hero coolHero = new Hero();
+    static int[][] gotItemsLocation = new int[21][2];
+    
+    
+    public static void main(String[] args) throws InterruptedException {
+    
+        // Printing the rooms
+    
+        Room room = new Room();
         Space[][] level = room.generateRooms(max, gui);
         gui.setVisible(true);
         Random random = new Random();
@@ -27,10 +31,11 @@ public class Main {
         int[] valid = validCoordinates(level, heroStartX, heroStartY);
         coolHero.setPositionX(valid[0]);
         coolHero.setPositionY(valid[1]);
-        // In the following lines we set the hero in the correct place
-        // and print some values that should be visible for the user.
+        
+        // Setting the hero in the correct place and
+        // printing some values that should be visible for the user.
     
-        // Printing our cool hero
+        // Printing the hero
         gui.md_addSprite(coolHero.getId(), "cool.png", true);
         gui.md_setSpriteVisible(coolHero.getId(), true);
         gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
@@ -43,12 +48,16 @@ public class Main {
         gui.md_setTextPerception(coolHero.getPerception());
         gui.md_setTextPlayerName(coolHero.getName());
         gui.md_setPortraitPlayer("herohd.png");
-        
-        //testing gold
-        
-        Gold [] goldCoins = new Gold [8];
-        for (int i = 0; i < goldCoins.length; i++){
+    
+    
+        // Creating the Items
+        // If there are more than one item of the same type,
+        // they will be considered an array of that item.
+    
+        Gold[] goldCoins = new Gold[8];
+        for (int i = 0; i < goldCoins.length; i++) {
             goldCoins[i] = new Gold();
+            goldCoins[i].setId(1 + i); // id = 0 is avoided 'cause is the hero's one
             int goldStartX = random.nextInt(10 - 5 + 1) + 5;
             int goldStartY = random.nextInt(15 - 2 + 1) + 2;
             valid = validCoordinates(level, goldStartX, goldStartY);
@@ -60,10 +69,11 @@ public class Main {
             gui.md_setSpriteVisible(goldCoins[i].getId(), true);
             gui.md_moveSprite(goldCoins[i].getId(), goldCoins[i].getPositionX(), goldCoins[i].getPositionY());
         }
-        
-        Potion [] potions = new Potion[3];
-        for (int i = 0; i < potions.length; i++){
+    
+        Potion[] potions = new Potion[3];
+        for (int i = 0; i < potions.length; i++) {
             potions[i] = new Potion();
+            potions[i].setId(9 + i); // id=1 to id=8 are avoided 'cause they are already in use.
             int potionStartX = random.nextInt(18 - 4 + 1) + 4;
             int potionStartY = random.nextInt(10 - 2 + 1) + 2;
             valid = validCoordinates(level, potionStartX, potionStartY);
@@ -74,9 +84,34 @@ public class Main {
             gui.md_setSpriteVisible(potions[i].getId(), true);
             gui.md_moveSprite(potions[i].getId(), potions[i].getPositionX(), potions[i].getPositionY());
         }
-        
-        
-        
+    
+        Apple[] apples = new Apple[5];
+        for (int i = 0; i < apples.length; i++) {
+            apples[i] = new Apple();
+            apples[i].setId(12 + i); // id=1 to id=11 are avoided 'cause they are already in use.
+            gui.md_addSprite(apples[i].getId(), apples[i].getImage(), true);
+            gui.md_setSpriteVisible(apples[i].getId(), true);
+            gui.md_moveSprite(apples[i].getId(), apples[i].getPositionX(), apples[i].getPositionY());
+        }
+    
+        Heart heart = new Heart();
+        heart.setId(17); // id=1 to id=16 are avoided 'cause they are already in use.
+        gui.md_addSprite(heart.getId(), heart.getImage(), true);
+        gui.md_setSpriteVisible(heart.getId(), true);
+        gui.md_moveSprite(heart.getId(), heart.getPositionX(), heart.getPositionY());
+    
+        Eye eye = new Eye();
+        eye.setId(18); // id=1 to id=17 are avoided 'cause they are already in use.
+        gui.md_addSprite(eye.getId(), eye.getImage(), true);
+        gui.md_setSpriteVisible(eye.getId(), true);
+        gui.md_moveSprite(eye.getId(), eye.getPositionX(), eye.getPositionY());
+    
+        Sword sword = new Sword();
+        sword.setId(19); // id=1 to id=18 are avoided 'cause they are already in use.
+        gui.md_addSprite(sword.getId(), sword.getImage(), true);
+        gui.md_setSpriteVisible(sword.getId(), true);
+        gui.md_moveSprite(sword.getId(), sword.getPositionX(), sword.getPositionY());
+    
         // Here we make our hero move when the arrow keys are pressed,
         // taking into account to reduce its food each time he moves
         // and dividing his perception and strength by two when food = 0.
@@ -91,8 +126,13 @@ public class Main {
                 int x = coolHero.getPositionX(); int y = coolHero.getPositionY();
 
                 if (lastAction.equals("left") && !level[x-1][y].isWall()){
-                    coolHero.setPositionX(x-1);
-                    gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
+//                    int x = coolHero.getPositionX(); int y = coolHero.getPositionY();
+//                    if(!level[x-1][y].isWall()){
+                        coolHero.setPositionX(x-1);
+                        gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
+//                    }else{
+//                        System.out.println("Paré");
+//                    }
 
                 }
                 if (lastAction.equals("right") && !level[x+1][y].isWall()) {
@@ -111,95 +151,157 @@ public class Main {
                     gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
                 }
                 gui.md_println(lastAction);
-                
-                for (int i=0; i < goldCoins.length + potions.length + 1; i++) {
-                    if (i < 8) {
-    
-                        // Here we check if the hero's position coincides with an item position.
-                        if (coolHero.getPositionX() == goldCoins[i].getPositionX() &&
-                            coolHero.getPositionY() == goldCoins[i].getPositionY()) {
-    
-                            // Here we check if that item has not yet been achieved.
-                            if (gotItemsLocation[i][0] != coolHero.getPositionX() &&
-                                gotItemsLocation[i][1] != coolHero.getPositionY()) {
-    
-                                // We mark the the object as achieved.
-                                gotItemsLocation[i][0] = coolHero.getPositionX();
-                                gotItemsLocation[i][1] = coolHero.getPositionY();
-    
-                                // We activate the function of the object and hide it from the player.
-                                coolHero.addGold();
-                                gui.md_setSpriteVisible(i+2, false);
-                                gui.md_setTextGold(coolHero.getGold());
-                            }
-                        }
-                    }
-                    
-                    if (i < 3) {
-    
-                        if (coolHero.getPositionX() == potions[i].getPositionX() &&
-                            coolHero.getPositionY() == potions[i].getPositionY()) {
-        
-                            // Here we check if that item has not yet been achieved.
-                            if (gotItemsLocation[i][0] != coolHero.getPositionX() &&
-                                gotItemsLocation[i][1] != coolHero.getPositionY()) {
-            
-                                // We mark the the object as achieved.
-                                gotItemsLocation[i][0] = coolHero.getPositionX();
-                                gotItemsLocation[i][1] = coolHero.getPositionY();
-            
-                                // We activate the function of the object and hide it from the player.
-                                coolHero.addHealth();
-                                gui.md_setSpriteVisible(i+10, false);
-                                gui.md_setTextHealthCurrent(coolHero.getHealth());
-                            }
-        
-                        }
-                    }
-                }
-                
-                
-                // Reducing food after each movement (only if food is not already 0)
-                if (coolHero.getFood() > 0) {
-                    coolHero.lessFood();
-                    gui.md_setTextFood(coolHero.getFood());
-                }
-                
-                // Checking if food = 0, and reducing perception and strength if true
-                if (coolHero.getFood() == 0){
-                    if (coolHero.getPerception() > 1) {
-                        coolHero.setPerception(coolHero.getPerception() / 2);
-                        gui.md_setTextPerception(coolHero.getPerception());
-                    }
-                    if (coolHero.getStrength() > 1) {
-                        coolHero.setStrength(coolHero.getStrength() / 2);
-                        gui.md_setTextStrength(coolHero.getStrength());
-                    }
-                }
+	
+	            // Checking if the user is in the same cell as an item and activating the item function if true.
+	            // Brief explanation inside the code for goldCoins can be used to explain code for the rest of the items.
+	
+	            for (int i = 0; i < goldCoins.length; i++) {
+		            // Here we check if the hero's position coincides with an item position.
+		            if (coolHero.getPositionX() == goldCoins[i].getPositionX() &&
+			            coolHero.getPositionY() == goldCoins[i].getPositionY()) {
+			
+			            // Checking if that item has not yet been achieved, using the gotItemsLocation matrix.
+			            if (gotItemsLocation[goldCoins[i].getId()][0] != coolHero.getPositionX() &&
+				            gotItemsLocation[goldCoins[i].getId()][1] != coolHero.getPositionY()) {
+				
+				            // Marking the object as achieved, using the gotItemsLocation matrix.
+				            gotItemsLocation[goldCoins[i].getId()][0] = coolHero.getPositionX();
+				            gotItemsLocation[goldCoins[i].getId()][1] = coolHero.getPositionY();
+				
+				            // Activating the function of the object.
+				            coolHero.addGold();
+				            // Making the already used item disappear.
+				            gui.md_setSpriteVisible(i + 1, false);
+				            gui.md_setTextGold(coolHero.getGold());
+			            }
+		            }
+	            }
+	
+	            for (int i = 0; i < apples.length; i++) {
+		            if (coolHero.getPositionX() == apples[i].getPositionX() &&
+			            coolHero.getPositionY() == apples[i].getPositionY()) {
+			
+			            if (gotItemsLocation[apples[i].getId()][0] != coolHero.getPositionX() &&
+				            gotItemsLocation[apples[i].getId()][1] != coolHero.getPositionY()) {
+				
+				            gotItemsLocation[apples[i].getId()][0] = coolHero.getPositionX();
+				            gotItemsLocation[apples[i].getId()][1] = coolHero.getPositionY();
+				
+				            coolHero.addApple();
+				            gui.md_setSpriteVisible(apples[i].getId(), false);
+				            gui.md_setTextFood(coolHero.getFood());
+			            }
+		            }
+	            }
+	
+	            for (int i = 0; i < potions.length; i++) {
+		            if (coolHero.getPositionX() == potions[i].getPositionX() &&
+			            coolHero.getPositionY() == potions[i].getPositionY()) {
+			
+			            if (gotItemsLocation[potions[i].getId()][0] != coolHero.getPositionX() &&
+				            gotItemsLocation[potions[i].getId()][1] != coolHero.getPositionY()) {
+				
+				            gotItemsLocation[potions[i].getId()][0] = coolHero.getPositionX();
+				            gotItemsLocation[potions[i].getId()][1] = coolHero.getPositionY();
+				
+				            coolHero.addPotion();
+				            gui.md_setSpriteVisible(potions[i].getId(), false);
+				            gui.md_setTextHealthCurrent(coolHero.getHealth());
+			            }
+			
+		            }
+	            }
+	
+	            // Here we check if the hero's position coincides with the HEART item position
+	            if (coolHero.getPositionX() == heart.getPositionX() &&
+		            coolHero.getPositionY() == heart.getPositionY()) {
+		
+		            if (gotItemsLocation[heart.getId()][0] != coolHero.getPositionX() &&
+			            gotItemsLocation[heart.getId()][1] != coolHero.getPositionY()) {
+			
+			            gotItemsLocation[heart.getId()][0] = coolHero.getPositionX();
+			            gotItemsLocation[heart.getId()][1] = coolHero.getPositionY();
+			
+			            coolHero.addHeart();
+			            gui.md_setSpriteVisible(17, false);
+			            gui.md_setTextHealthCurrent(coolHero.getHealth());
+		            }
+	            }
+	
+	            // Here we check if the hero's position coincides with the EYE position
+	            if (coolHero.getPositionX() == eye.getPositionX() &&
+		            coolHero.getPositionY() == eye.getPositionY()) {
+		
+		            if (gotItemsLocation[eye.getId()][0] != coolHero.getPositionX() &&
+			            gotItemsLocation[eye.getId()][1] != coolHero.getPositionY()) {
+			
+			            gotItemsLocation[eye.getId()][0] = coolHero.getPositionX();
+			            gotItemsLocation[eye.getId()][1] = coolHero.getPositionY();
+			
+			            coolHero.addEye();
+			            gui.md_setSpriteVisible(18, false);
+			            gui.md_setTextPerception(coolHero.getPerception());
+		            }
+	            }
+	
+	            // Here we check if the hero's position coincides with the SWORD position
+	            if (coolHero.getPositionX() == sword.getPositionX() &&
+		            coolHero.getPositionY() == sword.getPositionY()) {
+		
+		            if (gotItemsLocation[sword.getId()][0] != coolHero.getPositionX() &&
+			            gotItemsLocation[sword.getId()][1] != coolHero.getPositionY()) {
+			
+			            gotItemsLocation[sword.getId()][0] = coolHero.getPositionX();
+			            gotItemsLocation[sword.getId()][1] = coolHero.getPositionY();
+			
+			            coolHero.addSword();
+			            gui.md_setSpriteVisible(19, false);
+			            gui.md_setTextStrength(coolHero.getStrength());
+		            }
+	            }
+	
+	
+	            // Reducing food after each movement (only if food is not already 0)
+	            if (coolHero.getFood() > 0) {
+		            coolHero.lessFood();
+		            gui.md_setTextFood(coolHero.getFood());
+	            }
+	
+	            // Reducing perception and strength if food = 0,
+	            else {
+		            if (coolHero.getPerception() > 1) {
+			            coolHero.setPerception(coolHero.getPerception() / 2);
+			            gui.md_setTextPerception(coolHero.getPerception());
+		            }
+		            if (coolHero.getStrength() > 1) {
+			            coolHero.setStrength(coolHero.getStrength() / 2);
+			            gui.md_setTextStrength(coolHero.getStrength());
+		            }
+	            }
+	
             }
-            Thread.sleep(5);
+	        Thread.sleep(5);
         }
     }
-
-    static int[] validCoordinates(Space[][]level, int x, int y){
-        Random random = new Random();
-        int[] validated = new int[2];
-        if(x+1 == max || y+1 == max){
-            x = random.nextInt(30 - 5 + 1) + 5;
-            y = random.nextInt(25 - 2 + 1) + 2;
-        }
-        while(level[x][y].isWall()){
-            if(x+1 == max || y+1 == max){
-                x = random.nextInt(30 - 5 + 1) + 5;
-                y = random.nextInt(25 - 2 + 1) + 2;
-            } else{
-                x++;
-                y++;
-            }
-        }
-        validated[0] = x;
-        validated[1] = y;
-        return validated;
-    }
-
+	static int[] validCoordinates(Space[][]level, int x, int y){
+		Random random = new Random();
+		int[] validated = new int[2];
+		if(x+1 == max || y+1 == max){
+			x = random.nextInt(30 - 5 + 1) + 5;
+			y = random.nextInt(25 - 2 + 1) + 2;
+		}
+		while(level[x][y].isWall()){
+			if(x+1 == max || y+1 == max){
+				x = random.nextInt(30 - 5 + 1) + 5;
+				y = random.nextInt(25 - 2 + 1) + 2;
+			} else{
+				x++;
+				y++;
+			}
+		}
+		validated[0] = x;
+		validated[1] = y;
+		return validated;
+	}
+	
 }

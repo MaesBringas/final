@@ -1,5 +1,9 @@
 package com.mahlmebs;
 
+/* @authors mahl && mebs
+	* @version 1.0
+	* */
+
 public class Person {
     
     public int positionX;

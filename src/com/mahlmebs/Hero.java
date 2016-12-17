@@ -1,5 +1,9 @@
 package com.mahlmebs;
 
+/* @authors mahl && mebs
+	* @version 1.0
+	* */
+
 import com.mahlmebs.Person;
 
 public class Hero extends Person {
@@ -9,11 +13,11 @@ public class Hero extends Person {
     private int strength = 1;
     private int gold = 0;
     private String name = "CoolHero27";
-    private int id = 1;
+    private int id = 0;
     
     public Hero() {
         setHealth(20);
-        setMaxHealth(400);
+        setMaxHealth(40);
         super.positionX = 20;
         super.positionY = 20;
         
@@ -56,19 +60,47 @@ public class Hero extends Person {
     }
     
     
-    // Methods related to Items
+    // Declaring methods related to Items
     
+    
+    // Each gold adds 1 to the gold field of the hero
     public void addGold(){
         this.gold = this.gold + 1;
     }
     
-    public void addHealth(){
+    // Each potion adds 10 to the health field of the hero
+    public void addPotion(){
         if ((super.health+10) > super.maxHealth) {
             super.health = super.maxHealth;
         }
         else
             super.health = super.health + 10;
     }
+    
+    // Each heart adds 20 to the health field of the hero
+    public void addHeart(){
+        if ((super.health+20) > super.maxHealth) {
+            super.health = super.maxHealth;
+        }
+        else
+            super.health = super.health + 20;
+    }
+     
+    // Each apple adds 50 to the food field of the hero
+    public void addApple(){
+        this.food = this.food + 50;
+    }
+    
+    // Each eye adds 1 to the perception field of the hero
+    public void addEye(){
+        this.perception = this.perception + 1;
+    }
+    
+    // Each sword adds 1 to the strength field of the hero
+    public void addSword(){
+        this.strength = this.strength + 1;
+    }
+    
     
     
 }

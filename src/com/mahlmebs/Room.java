@@ -1,6 +1,10 @@
 
 package com.mahlmebs;
 
+/* @authors mahl && mebs
+	* @version 1.0
+	* */
+
 import minidungeon.MiniDungeonGUI;
 import java.util.Random;
 

@@ -1,8 +1,8 @@
 package com.mahlmebs;
 
-/**
- * Created by manuhortet on 17/12/16.
- */
+/* @authors mahl && mebs
+	* @version 1.0
+	* */
 
 import java.util.Random;
 

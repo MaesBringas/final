@@ -1,17 +1,14 @@
 package com.mahlmebs;
 
-/* @authors mahl && mebs
-	* @version 1.0
-	* */
-
 import java.util.Random;
 
-
-
-public class Potion extends Item{
+/**
+ * Created by manuhortet on 17/12/16.
+ */
+public class Eye extends Item {
 	
-	public Potion(){
-		super.image = "potion.png";
+	public Eye(){
+		super.image = "eye.png";
 		Random ran = new Random();
 		this.positionX = ran.nextInt(40);
 		this.positionY = ran.nextInt(40);
