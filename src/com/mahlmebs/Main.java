@@ -13,19 +13,29 @@ public class Main {
     
     static int max = 40;
     static MiniDungeonGUI gui = new MiniDungeonGUI(max,max);
-    
-    static Hero coolHero = new Hero();
+	static Random random = new Random();
+
+
+	static Hero coolHero = new Hero();
     static int[][] gotItemsLocation = new int[21][2];
     
     
     public static void main(String[] args) throws InterruptedException {
-    
+
+
         // Printing the rooms
-    
         Room room = new Room();
         Space[][] level = room.generateRooms(max, gui);
-        gui.setVisible(true);
-        Random random = new Random();
+		int xDoor = random.nextInt(40 - 1 + 1) + 1;
+		int yDoor = random.nextInt(40 - 1 + 1) + 1;
+		while(level[xDoor][yDoor].isWall()){
+			xDoor = random.nextInt(40 - 1 + 1) + 1;
+			yDoor = random.nextInt(40 - 1 + 1) + 1;
+		}
+		gui.md_setSquareColor(xDoor, yDoor, 153, 76, 0);
+
+
+		gui.setVisible(true);
         int heroStartX = random.nextInt(15 - 2 + 1) + 2;
         int heroStartY = random.nextInt(10 - 1 + 1) + 1;
         int[] valid = validCoordinates(level, heroStartX, heroStartY);
@@ -139,35 +149,29 @@ public class Main {
         
         while(true){
             // TODO limit the max
-            // TODO control move if it's wall or not
-            
+
             String lastAction = gui.md_getLastAction().trim();
+
+            if(coolHero.getPositionX() == xDoor && coolHero.getPositionY() == yDoor){
+            	break;
+			}
             
             if (lastAction.length() > 0){
                 int x = coolHero.getPositionX(); int y = coolHero.getPositionY();
 
                 if (lastAction.equals("left") && !level[x-1][y].isWall()){
-//                    int x = coolHero.getPositionX(); int y = coolHero.getPositionY();
-//                    if(!level[x-1][y].isWall()){
                         coolHero.setPositionX(x-1);
                         gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
-//                    }else{
-//                        System.out.println("Paré");
-//                    }
-
                 }
                 if (lastAction.equals("right") && !level[x+1][y].isWall()) {
-//                    int x = coolHero.getPositionX(); int y = coolHero.getPositionY();
                     coolHero.setPositionX(x+1);
                     gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
                 }
                 if (lastAction.equals("down") && !level[x][y+1].isWall()) {
-//                    int x = coolHero.getPositionX(); int y = coolHero.getPositionY();
                     coolHero.setPositionY(y+1);
                     gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
                 }
                 if (lastAction.equals("up") && !level[x][y-1].isWall()) {
-//                    int x = coolHero.getPositionX(); int y = coolHero.getPositionY();
                     coolHero.setPositionY(y-1);
                     gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
                 }
@@ -299,10 +303,12 @@ public class Main {
 			            gui.md_setTextStrength(coolHero.getStrength());
 		            }
 	            }
+
 	
             }
 	        Thread.sleep(5);
         }
+        main(args);
     }
 	static int[] validCoordinates(Space[][]level, int x, int y){
 		Random random = new Random();
