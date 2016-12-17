@@ -56,4 +56,21 @@ public class Hero extends Person {
     }
     
     
+    // Methods related to Items
+    
+    public void addGold(){
+        this.gold = this.gold + 1;
+    }
+    
+    public void addHealth(Hero coolHero){
+        int health = coolHero.getHealth();
+        if ((coolHero.getHealth()+10) > coolHero.getMaxHealth()) {
+            int newHealth = coolHero.getMaxHealth();
+            coolHero.setHealth(newHealth);
+        }
+        else
+            coolHero.setMaxHealth(health+10);
+    }
+    
+    
 }

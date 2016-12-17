@@ -1,15 +1,15 @@
 package com.mahlmebs;
 
+import java.util.Random;
+
 /**
  * Created by manuhortet on 17/12/16.
  */
 
-import java.util.Random;
-
-public class Gold extends Item {
+public class Potion extends Item{
 	
-	public Gold(){
-		this.image = "gold.png";
+	public Potion(){
+		super.image = "potion.png";
 		Random ran = new Random();
 		this.positionX = ran.nextInt(40);
 		this.positionY = ran.nextInt(40);

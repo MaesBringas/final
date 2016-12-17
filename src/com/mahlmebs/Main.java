@@ -9,11 +9,10 @@ import minidungeon.MiniDungeonGUI;
 
 public class Main {
     
-    static int x = 20;
-    static int y = 20;
     static int max = 40;
     static MiniDungeonGUI gui = new MiniDungeonGUI(max,max);
     static Hero coolHero = new Hero();
+    static int[][] gotItemsLocation = new int[11][2];
     
     public static void main(String[] args) throws InterruptedException{
         
@@ -56,6 +55,14 @@ public class Main {
             gui.md_moveSprite(goldCoins[i].getId(), goldCoins[i].getPositionX(), goldCoins[i].getPositionY());
         }
         
+        Potion [] potions = new Potion[3];
+        for (int i = 0; i < potions.length; i++){
+            potions[i] = new Potion();
+            potions[i].setId(10+i); // id=1 to id=9 are avoided 'cause they are already in use.
+            gui.md_addSprite(potions[i].getId(), potions[i].getImage(), true);
+            gui.md_setSpriteVisible(potions[i].getId(), true);
+            gui.md_moveSprite(potions[i].getId(), potions[i].getPositionX(), potions[i].getPositionY());
+        }
         
         
         
@@ -91,6 +98,50 @@ public class Main {
                 }
                 gui.md_println(lastAction);
                 
+                for (int i=2; i < goldCoins.length + potions.length; i++) {
+                    if (i < 10) {
+    
+                        // Here we check if the hero's position coincides with an item position.
+                        if (coolHero.getPositionX() == goldCoins[i - 2].getPositionX() &&
+                            coolHero.getPositionY() == goldCoins[i - 2].getPositionY()) {
+    
+                            // Here we check if that item has not yet been achieved.
+                            if (gotItemsLocation[i][0] != coolHero.getPositionX() &&
+                                gotItemsLocation[i][1] != coolHero.getPositionY()) {
+    
+                                // We mark the the object as achieved.
+                                gotItemsLocation[i][0] = coolHero.getPositionX();
+                                gotItemsLocation[i][1] = coolHero.getPositionY();
+    
+                                // We activate the function of the object and hide it from the player.
+                                coolHero.addGold();
+                                gui.md_setSpriteVisible(i, false);
+                                gui.md_setTextGold(coolHero.getGold());
+                            }
+    
+                        }
+    
+                    } else if (i < 13) {
+                        if (coolHero.getPositionX() == potions[i - 10].getPositionX() &&
+                            coolHero.getPositionY() == potions[i - 10].getPositionY()) {
+    
+                            // Here we check if that item has not yet been achieved.
+                            if (gotItemsLocation[i][0] != coolHero.getPositionX() &&
+                                gotItemsLocation[i][1] != coolHero.getPositionY()) {
+    
+                                // We mark the the object as achieved.
+                                gotItemsLocation[i][0] = coolHero.getPositionX();
+                                gotItemsLocation[i][1] = coolHero.getPositionY();
+    
+                                // We activate the function of the object and hide it from the player.
+                                coolHero.addHealth(coolHero);
+                                gui.md_setSpriteVisible(i, false);
+                                gui.md_setTextHealthCurrent(coolHero.getHealth());
+                            }
+    
+                        }
+                    }
+                }
                 
                 // Reducing food after each movement (only if food is not already 0)
                 if (coolHero.getFood() > 0) {
