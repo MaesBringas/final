@@ -96,14 +96,17 @@ public class Main {
 
                 }
                 if (lastAction.equals("right") && !level[x+1][y].isWall()) {
+//                    int x = coolHero.getPositionX(); int y = coolHero.getPositionY();
                     coolHero.setPositionX(x+1);
                     gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
                 }
                 if (lastAction.equals("down") && !level[x][y+1].isWall()) {
+//                    int x = coolHero.getPositionX(); int y = coolHero.getPositionY();
                     coolHero.setPositionY(y+1);
                     gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
                 }
                 if (lastAction.equals("up") && !level[x][y-1].isWall()) {
+//                    int x = coolHero.getPositionX(); int y = coolHero.getPositionY();
                     coolHero.setPositionY(y-1);
                     gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
                 }
