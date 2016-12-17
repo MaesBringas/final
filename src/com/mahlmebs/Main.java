@@ -13,7 +13,7 @@ public class Main {
     static int y = 20;
     static int max = 40;
     static MiniDungeonGUI gui = new MiniDungeonGUI(max,max);
-    static Hero coolHero = new Hero(20, 20);
+    static Hero coolHero = new Hero();
     
     public static void main(String[] args) throws InterruptedException{
         
@@ -34,7 +34,7 @@ public class Main {
         // Printing our cool hero
         gui.md_addSprite(coolHero.getId(), "cool.png", true);
         gui.md_setSpriteVisible(coolHero.getId(), true);
-        gui.md_moveSprite(coolHero.getId(), x, y);
+        gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
         // Printing important info about the hero
         gui.md_setTextGold(coolHero.getGold());
         gui.md_setTextFood(coolHero.getFood());
@@ -45,8 +45,22 @@ public class Main {
         gui.md_setTextPlayerName(coolHero.getName());
         gui.md_setPortraitPlayer("herohd.png");
         
-        // Here we make our hero move when the arrow keys are pressed.
-        // taking into account to reduce its food each time he moves,
+        //testing gold
+        
+        Gold [] goldCoins = new Gold [8];
+        for (int i = 0; i < goldCoins.length; i++){
+            goldCoins[i] = new Gold();
+            goldCoins[i].setId(2+i); // id = 1 is avoided 'cause is the hero's one
+            gui.md_addSprite(goldCoins[i].getId(), goldCoins[i].getImage(), true);
+            gui.md_setSpriteVisible(goldCoins[i].getId(), true);
+            gui.md_moveSprite(goldCoins[i].getId(), goldCoins[i].getPositionX(), goldCoins[i].getPositionY());
+        }
+        
+        
+        
+        
+        // Here we make our hero move when the arrow keys are pressed,
+        // taking into account to reduce its food each time he moves
         // and dividing his perception and strength by two when food = 0.
         
         while(true){
@@ -56,17 +70,27 @@ public class Main {
             if (lastAction.length() > 0){
             
                 if (lastAction.equals("left")){
-                    gui.md_moveSprite(coolHero.getId(), --x, y);
+                    int x = coolHero.getPositionX(); int y = coolHero.getPositionY();
+                    coolHero.setPositionX(x-1);
+                    gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
                 }
                 if (lastAction.equals("right")) {
-                    gui.md_moveSprite(coolHero.getId(), ++x, y);
+                    int x = coolHero.getPositionX(); int y = coolHero.getPositionY();
+                    coolHero.setPositionX(x+1);
+                    gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
                 }
                 if (lastAction.equals("down")) {
-                    gui.md_moveSprite(coolHero.getId(), x, ++y);
+                    int x = coolHero.getPositionX(); int y = coolHero.getPositionY();
+                    coolHero.setPositionY(y+1);
+                    gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
                 }
                 if (lastAction.equals("up")) {
-                    gui.md_moveSprite(coolHero.getId(), x, --y);
+                    int x = coolHero.getPositionX(); int y = coolHero.getPositionY();
+                    coolHero.setPositionY(y-1);
+                    gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
                 }
+                gui.md_println(lastAction);
+                
                 
                 // Reducing food after each movement (only if food is not already 0)
                 if (coolHero.getFood() > 0) {

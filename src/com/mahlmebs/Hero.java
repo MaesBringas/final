@@ -5,15 +5,17 @@ import com.mahlmebs.Person;
 public class Hero extends Person {
     
     private int food = 500;
-    private int perception = 4;
-    private int strength = 2;
+    private int perception = 1;
+    private int strength = 1;
     private int gold = 0;
     private String name = "CoolHero27";
     private int id = 1;
     
-    public Hero(int health, int maxHealth) {
-        setHealth(health);
-        setMaxHealth(maxHealth);
+    public Hero() {
+        setHealth(20);
+        setMaxHealth(20);
+        super.positionX = 20;
+        super.positionY = 20;
         
     }
     
