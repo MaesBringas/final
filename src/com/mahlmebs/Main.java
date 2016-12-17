@@ -98,12 +98,12 @@ public class Main {
                 }
                 gui.md_println(lastAction);
                 
-                for (int i=2; i < goldCoins.length + potions.length; i++) {
-                    if (i < 10) {
+                for (int i=0; i < goldCoins.length + potions.length + 1; i++) {
+                    if (i < 8) {
     
                         // Here we check if the hero's position coincides with an item position.
-                        if (coolHero.getPositionX() == goldCoins[i - 2].getPositionX() &&
-                            coolHero.getPositionY() == goldCoins[i - 2].getPositionY()) {
+                        if (coolHero.getPositionX() == goldCoins[i].getPositionX() &&
+                            coolHero.getPositionY() == goldCoins[i].getPositionY()) {
     
                             // Here we check if that item has not yet been achieved.
                             if (gotItemsLocation[i][0] != coolHero.getPositionX() &&
@@ -115,33 +115,35 @@ public class Main {
     
                                 // We activate the function of the object and hide it from the player.
                                 coolHero.addGold();
-                                gui.md_setSpriteVisible(i, false);
+                                gui.md_setSpriteVisible(i+2, false);
                                 gui.md_setTextGold(coolHero.getGold());
                             }
-    
                         }
+                    }
+                    
+                    if (i < 3) {
     
-                    } else if (i < 13) {
-                        if (coolHero.getPositionX() == potions[i - 10].getPositionX() &&
-                            coolHero.getPositionY() == potions[i - 10].getPositionY()) {
-    
+                        if (coolHero.getPositionX() == potions[i].getPositionX() &&
+                            coolHero.getPositionY() == potions[i].getPositionY()) {
+        
                             // Here we check if that item has not yet been achieved.
                             if (gotItemsLocation[i][0] != coolHero.getPositionX() &&
                                 gotItemsLocation[i][1] != coolHero.getPositionY()) {
-    
+            
                                 // We mark the the object as achieved.
                                 gotItemsLocation[i][0] = coolHero.getPositionX();
                                 gotItemsLocation[i][1] = coolHero.getPositionY();
-    
+            
                                 // We activate the function of the object and hide it from the player.
-                                coolHero.addHealth(coolHero);
-                                gui.md_setSpriteVisible(i, false);
+                                coolHero.addHealth();
+                                gui.md_setSpriteVisible(i+10, false);
                                 gui.md_setTextHealthCurrent(coolHero.getHealth());
                             }
-    
+        
                         }
                     }
                 }
+                
                 
                 // Reducing food after each movement (only if food is not already 0)
                 if (coolHero.getFood() > 0) {

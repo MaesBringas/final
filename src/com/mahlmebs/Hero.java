@@ -13,7 +13,7 @@ public class Hero extends Person {
     
     public Hero() {
         setHealth(20);
-        setMaxHealth(20);
+        setMaxHealth(400);
         super.positionX = 20;
         super.positionY = 20;
         
@@ -62,14 +62,12 @@ public class Hero extends Person {
         this.gold = this.gold + 1;
     }
     
-    public void addHealth(Hero coolHero){
-        int health = coolHero.getHealth();
-        if ((coolHero.getHealth()+10) > coolHero.getMaxHealth()) {
-            int newHealth = coolHero.getMaxHealth();
-            coolHero.setHealth(newHealth);
+    public void addHealth(){
+        if ((super.health+10) > super.maxHealth) {
+            super.health = super.maxHealth;
         }
         else
-            coolHero.setMaxHealth(health+10);
+            super.health = super.health + 10;
     }
     
     

@@ -4,8 +4,8 @@ public class Person {
     
     public int positionX;
     public int positionY;
-    private int health;
-    private int maxHealth;
+    public int health;
+    public int maxHealth;
     
     Person(){}
     
