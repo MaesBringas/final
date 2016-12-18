@@ -194,7 +194,6 @@ public class Main {
 						}
 					}
 				}
-			
             
             if (lastAction.length() > 0){
                 int x = coolHero.getPositionX(); int y = coolHero.getPositionY();
@@ -204,11 +203,7 @@ public class Main {
 	                for (int i = 0; i < enemies.length; i++){
 		                if (coolHero.getPositionX()-1 == enemies[i].getPositionX() &&
 			                coolHero.getPositionY() == enemies[i].getPositionY()) {
-			                int enemyHealth = enemies[i].getHealth();
-			                int damage = coolHero.getStrength();
-			                enemies[i].setHealth(enemyHealth-damage);
-			                if (enemyHealth == 0)
-				                gui.md_setSpriteVisible(enemies[i].getId(), false);
+			                fight(enemies[i].getHealth(), coolHero.getStrength(), enemies, i);
 			                break moveLeft;
 		                }
 	                }
@@ -221,12 +216,8 @@ public class Main {
 	                for (int i = 0; i < enemies.length; i++){
 		                if (coolHero.getPositionX()+1 == enemies[i].getPositionX() &&
 			                coolHero.getPositionY() == enemies[i].getPositionY()) {
-			                int enemyHealth = enemies[i].getHealth();
-			                int damage = coolHero.getStrength();
-			                enemies[i].setHealth(enemyHealth-damage);
-			                if (enemyHealth == 0)
-				                gui.md_setSpriteVisible(enemies[i].getId(), false);
-			                break moveRight;
+							fight(enemies[i].getHealth(), coolHero.getStrength(), enemies, i);
+							break moveRight;
 		                }
 	                }
                     coolHero.setPositionX(x+1);
@@ -238,12 +229,8 @@ public class Main {
 	                for (int i = 0; i < enemies.length; i++){
 		                if (coolHero.getPositionX() == enemies[i].getPositionX() &&
 			                coolHero.getPositionY()+1 == enemies[i].getPositionY()) {
-			                int enemyHealth = enemies[i].getHealth();
-			                int damage = coolHero.getStrength();
-			                enemies[i].setHealth(enemyHealth-damage);
-			                if (enemyHealth == 0)
-				                gui.md_setSpriteVisible(enemies[i].getId(), false);
-			                break moveDown;
+							fight(enemies[i].getHealth(), coolHero.getStrength(), enemies, i);
+							break moveDown;
 		                }
 	                }
                     coolHero.setPositionY(y+1);
@@ -255,12 +242,8 @@ public class Main {
 	                for (int i = 0; i < enemies.length; i++){
 		                if (coolHero.getPositionX() == enemies[i].getPositionX() &&
 			                coolHero.getPositionY()-1 == enemies[i].getPositionY()) {
-			                int enemyHealth = enemies[i].getHealth();
-			                int damage = coolHero.getStrength();
-			                enemies[i].setHealth(enemyHealth-damage);
-			                if (enemyHealth == 0)
-			                	gui.md_setSpriteVisible(enemies[i].getId(), false);
-			                break moveUp;
+							fight(enemies[i].getHealth(), coolHero.getStrength(), enemies, i);
+							break moveUp;
 		                }
 	                }
                     coolHero.setPositionY(y-1);
@@ -270,6 +253,12 @@ public class Main {
 				if (lastAction.equals("new game")) {
                 	// force loop exit to reassign objects in the new map generated
 					break;
+				}
+				if (lastAction.equals("command kebab")) {
+
+                	gui.md_showMessageDialog("lucky! you get 2x1 offer! :) ");
+                	int offer = coolHero.getFood()*2;
+                	coolHero.setFood(offer);
 				}
 				gui.md_println(lastAction);
 	
@@ -491,6 +480,15 @@ public class Main {
 		validated[0] = x;
 		validated[1] = y;
 		return validated;
+	}
+
+	static void fight(int enemyHealth, int damage, Enemy[] enemies, int i){
+		enemyHealth = enemies[i].getHealth();
+		damage = coolHero.getStrength();
+		enemies[i].setHealth(enemyHealth-damage);
+		if (enemyHealth == 0)
+			gui.md_setSpriteVisible(enemies[i].getId(), false);
+
 	}
 	
 }
