@@ -7,7 +7,17 @@ import java.util.Random;
 public class Enemy extends Person {
     
     String secretMessage;
-    
+    boolean isDead = false;
+
+    public boolean isDead() {
+        return isDead;
+    }
+
+    public void setDead(boolean dead) {
+        isDead = dead;
+    }
+
+
     public Enemy(String piece){
         
         Random ran = new Random();

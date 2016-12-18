@@ -6,7 +6,6 @@ package com.mahlmebs;
 * */
 
 import minidungeon.MiniDungeonGUI;
-
 import java.util.Random;
 
 public class Main {
@@ -20,8 +19,11 @@ public class Main {
     
     public static void main(String[] args) throws InterruptedException {
 
-	    
-	    
+        // TODO: refactor methods and duplicated code
+        // TODO: doors 2 states
+        // TODO: debug set color and perception when > 1
+        // TODO: debug messages ArrayIndexOutOfBoundsException cases
+
         // Printing the rooms.
 	    
         Room room = new Room();
@@ -68,8 +70,6 @@ public class Main {
         // Creating the Items
         // If there are more than one item of the same type,
         // they will be considered an array of that item.
-        // TODO: unified creation
-
 
 
 	    // Creating the gold.
@@ -193,7 +193,7 @@ public class Main {
 		    enemies[i].setPositionX(valid[0]);
 		    enemies[i].setPositionY(valid[1]);
 		    gui.md_addSprite(enemies[i].getId(), enemies[i].getImage(), true);
-		    gui.md_setSpriteVisible(enemies[i].getId(), true);
+//		    gui.md_setSpriteVisible(enemies[i].getId(), true);
 		    gui.md_moveSprite(enemies[i].getId(), enemies[i].getPositionX(), enemies[i].getPositionY()); }
 	    
 	    
@@ -313,6 +313,21 @@ public class Main {
                     if (lastAction.equals("left") && !level[x-1][y].isWall()){
 
                         for (int i = 0; i < enemies.length; i++){
+                            int j = coolHero.getPositionX();
+                            int k = coolHero.getPositionY();
+                            if(j == enemies[i].getPositionX() && k == goldCoins[i].getPositionY() ||
+                                    j+1 == enemies[i].getPositionX() && k == enemies[i].getPositionY() ||
+                                    j == enemies[i].getPositionX() && k+1 == enemies[i].getPositionY() ||
+                                    j-1 == enemies[i].getPositionX() && k == enemies[i].getPositionY() ||
+                                    j == enemies[i].getPositionX() && k-1 == enemies[i].getPositionY() ||
+                                    j+1 == enemies[i].getPositionX() && k+1 == enemies[i].getPositionY() ||
+                                    j+1 == enemies[i].getPositionX() && k-1 == enemies[i].getPositionY() ||
+                                    j-1 == enemies[i].getPositionX() && k+1 == enemies[i].getPositionY() ||
+                                    j-1 == enemies[i].getPositionX() && k-1 == enemies[i].getPositionY()) {
+                                if (!enemies[i].isDead()) {
+                                    gui.md_setSpriteVisible(enemies[i].getId(), true);
+                                }
+                            }
                             if (coolHero.getPositionX()-1 == enemies[i].getPositionX() &&
                                     coolHero.getPositionY() == enemies[i].getPositionY()) {
                                 if (!killedEnemies[i]) {
@@ -324,6 +339,7 @@ public class Main {
                                             gui.md_showMessageDialog(enemies[8].getSecretMessage());
                                         gui.md_setSpriteVisible(enemies[i].getId(), false);
                                         killedEnemies[i] = true;
+                                        enemies[i].setDead(true);
                                     }
                                     break moveLeft;
                                 }
@@ -339,6 +355,21 @@ public class Main {
                         movePerception(level,coolHero.getPerception(), x,y, xDoor, yDoor);
 //                        gui.md_setSquareColor(xDoor, yDoor, 153, 76, 0);
                         for (int i = 0; i < enemies.length; i++){
+                            int j = coolHero.getPositionX();
+                            int k = coolHero.getPositionY();
+                            if(j == enemies[i].getPositionX() && k == goldCoins[i].getPositionY() ||
+                                    j+1 == enemies[i].getPositionX() && k == enemies[i].getPositionY() ||
+                                    j == enemies[i].getPositionX() && k+1 == enemies[i].getPositionY() ||
+                                    j-1 == enemies[i].getPositionX() && k == enemies[i].getPositionY() ||
+                                    j == enemies[i].getPositionX() && k-1 == enemies[i].getPositionY() ||
+                                    j+1 == enemies[i].getPositionX() && k+1 == enemies[i].getPositionY() ||
+                                    j+1 == enemies[i].getPositionX() && k-1 == enemies[i].getPositionY() ||
+                                    j-1 == enemies[i].getPositionX() && k+1 == enemies[i].getPositionY() ||
+                                    j-1 == enemies[i].getPositionX() && k-1 == enemies[i].getPositionY()) {
+                                if (!enemies[i].isDead()) {
+                                    gui.md_setSpriteVisible(enemies[i].getId(), true);
+                                }
+                            }
                             if (coolHero.getPositionX()+1 == enemies[i].getPositionX() &&
                                     coolHero.getPositionY() == enemies[i].getPositionY()) {
                                 if (!killedEnemies[i]) {
@@ -350,6 +381,7 @@ public class Main {
                                             gui.md_showMessageDialog(enemies[8].getSecretMessage());
                                         gui.md_setSpriteVisible(enemies[i].getId(), false);
                                         killedEnemies[i] = true;
+                                        enemies[i].setDead(true);
                                     }
                                     break moveRight;
                                 }
@@ -364,6 +396,21 @@ public class Main {
                         movePerception(level,coolHero.getPerception(), x,y, xDoor, yDoor);
 
                         for (int i = 0; i < enemies.length; i++){
+                            int j = coolHero.getPositionX();
+                            int k = coolHero.getPositionY();
+                            if(j == enemies[i].getPositionX() && k == goldCoins[i].getPositionY() ||
+                                    j+1 == enemies[i].getPositionX() && k == enemies[i].getPositionY() ||
+                                    j == enemies[i].getPositionX() && k+1 == enemies[i].getPositionY() ||
+                                    j-1 == enemies[i].getPositionX() && k == enemies[i].getPositionY() ||
+                                    j == enemies[i].getPositionX() && k-1 == enemies[i].getPositionY() ||
+                                    j+1 == enemies[i].getPositionX() && k+1 == enemies[i].getPositionY() ||
+                                    j+1 == enemies[i].getPositionX() && k-1 == enemies[i].getPositionY() ||
+                                    j-1 == enemies[i].getPositionX() && k+1 == enemies[i].getPositionY() ||
+                                    j-1 == enemies[i].getPositionX() && k-1 == enemies[i].getPositionY()) {
+                                if (!enemies[i].isDead()) {
+                                gui.md_setSpriteVisible(enemies[i].getId(), true);
+                                }
+                            }
                             if (coolHero.getPositionX() == enemies[i].getPositionX() &&
                                     coolHero.getPositionY()+1 == enemies[i].getPositionY()) {
                                 if (!killedEnemies[i]) {
@@ -375,6 +422,7 @@ public class Main {
                                             gui.md_showMessageDialog(enemies[8].getSecretMessage());
                                         gui.md_setSpriteVisible(enemies[i].getId(), false);
                                         killedEnemies[i] = true;
+                                        enemies[i].setDead(true);
                                     }
                                     break moveDown;
                                 }
@@ -390,6 +438,21 @@ public class Main {
 //                        gui.md_setSquareColor(xDoor, yDoor, 153, 76, 0);
 
                         for (int i = 0; i < enemies.length; i++){
+                            int j = coolHero.getPositionX();
+                            int k = coolHero.getPositionY();
+                            if(j == enemies[i].getPositionX() && k == goldCoins[i].getPositionY() ||
+                                    j+1 == enemies[i].getPositionX() && k == enemies[i].getPositionY() ||
+                                    j == enemies[i].getPositionX() && k+1 == enemies[i].getPositionY() ||
+                                    j-1 == enemies[i].getPositionX() && k == enemies[i].getPositionY() ||
+                                    j == enemies[i].getPositionX() && k-1 == enemies[i].getPositionY() ||
+                                    j+1 == enemies[i].getPositionX() && k+1 == enemies[i].getPositionY() ||
+                                    j+1 == enemies[i].getPositionX() && k-1 == enemies[i].getPositionY() ||
+                                    j-1 == enemies[i].getPositionX() && k+1 == enemies[i].getPositionY() ||
+                                    j-1 == enemies[i].getPositionX() && k-1 == enemies[i].getPositionY()) {
+                                if (!enemies[i].isDead()) {
+                                    gui.md_setSpriteVisible(enemies[i].getId(), true);
+                                }
+                            }
                             if (coolHero.getPositionX() == enemies[i].getPositionX() &&
                                     coolHero.getPositionY()-1 == enemies[i].getPositionY()) {
                                 if (!killedEnemies[i]) {
@@ -401,6 +464,7 @@ public class Main {
                                             gui.md_showMessageDialog(enemies[8].getSecretMessage());
                                         gui.md_setSpriteVisible(enemies[i].getId(), false);
                                         killedEnemies[i] = true;
+                                        enemies[i].setDead(true);
                                     }
                                     break moveUp;
                                 }
