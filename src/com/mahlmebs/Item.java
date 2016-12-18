@@ -10,7 +10,18 @@ public class Item {
 	public int positionY;
 	public int positionX;
 	public String image;
-	
+	public boolean isTaken = false;
+
+
+	public boolean isTaken() {
+		return isTaken;
+	}
+
+	public void setTaken(boolean taken) {
+		isTaken = taken;
+	}
+
+
 	
 	public int getId() {
 		return id;
