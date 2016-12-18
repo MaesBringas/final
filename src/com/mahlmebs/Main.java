@@ -161,6 +161,7 @@ public class Main {
 		    gui.md_setSpriteVisible(enemies[i].getId(), true);
 		    gui.md_moveSprite(enemies[i].getId(), enemies[i].getPositionX(), enemies[i].getPositionY());
 	    }
+	    boolean[] killedEnemies = new boolean[9];
 	    
         // Here we make our hero move when the arrow keys are pressed,
         // taking into account to reduce its food each time he moves
@@ -170,7 +171,7 @@ public class Main {
             // TODO limit the max
 
 	        // Killing the player if food or health = 0
-	        if (coolHero.getFood() == 0 || coolHero.getHealth() == 0) {
+	        if (coolHero.getFood() == 0 || coolHero.getHealth() < 1) {
 		        gui.md_showMessageDialog("Omg! What a cool death!");
 		        int newHealth = coolHero.getMaxHealth();
 		        coolHero.setFood(500);
@@ -204,12 +205,16 @@ public class Main {
 	                for (int i = 0; i < enemies.length; i++){
 		                if (coolHero.getPositionX()-1 == enemies[i].getPositionX() &&
 			                coolHero.getPositionY() == enemies[i].getPositionY()) {
-			                int enemyHealth = enemies[i].getHealth();
-			                int damage = coolHero.getStrength();
-			                enemies[i].setHealth(enemyHealth-damage);
-			                if (enemyHealth == 0)
-				                gui.md_setSpriteVisible(enemies[i].getId(), false);
-			                break moveLeft;
+			                if (!killedEnemies[i]) {
+				                int enemyHealth = enemies[i].getHealth();
+				                int damage = coolHero.getStrength();
+				                enemies[i].setHealth(enemyHealth - damage);
+				                if (enemyHealth == 0) {
+					                gui.md_setSpriteVisible(enemies[i].getId(), false);
+					                killedEnemies[i] = true;
+				                }
+				                break moveLeft;
+			                }
 		                }
 	                }
 	                coolHero.setPositionX(x-1);
@@ -221,12 +226,16 @@ public class Main {
 	                for (int i = 0; i < enemies.length; i++){
 		                if (coolHero.getPositionX()+1 == enemies[i].getPositionX() &&
 			                coolHero.getPositionY() == enemies[i].getPositionY()) {
-			                int enemyHealth = enemies[i].getHealth();
-			                int damage = coolHero.getStrength();
-			                enemies[i].setHealth(enemyHealth-damage);
-			                if (enemyHealth == 0)
-				                gui.md_setSpriteVisible(enemies[i].getId(), false);
-			                break moveRight;
+			                if (!killedEnemies[i]) {
+				                int enemyHealth = enemies[i].getHealth();
+				                int damage = coolHero.getStrength();
+				                enemies[i].setHealth(enemyHealth - damage);
+				                if (enemyHealth == 0) {
+					                gui.md_setSpriteVisible(enemies[i].getId(), false);
+					                killedEnemies[i] = true;
+				                }
+				                break moveRight;
+			                }
 		                }
 	                }
                     coolHero.setPositionX(x+1);
@@ -238,12 +247,16 @@ public class Main {
 	                for (int i = 0; i < enemies.length; i++){
 		                if (coolHero.getPositionX() == enemies[i].getPositionX() &&
 			                coolHero.getPositionY()+1 == enemies[i].getPositionY()) {
-			                int enemyHealth = enemies[i].getHealth();
-			                int damage = coolHero.getStrength();
-			                enemies[i].setHealth(enemyHealth-damage);
-			                if (enemyHealth == 0)
-				                gui.md_setSpriteVisible(enemies[i].getId(), false);
-			                break moveDown;
+			                if (!killedEnemies[i]) {
+				                int enemyHealth = enemies[i].getHealth();
+				                int damage = coolHero.getStrength();
+				                enemies[i].setHealth(enemyHealth - damage);
+				                if (enemyHealth == 0) {
+					                gui.md_setSpriteVisible(enemies[i].getId(), false);
+					                killedEnemies[i] = true;
+				                }
+				                break moveDown;
+			                }
 		                }
 	                }
                     coolHero.setPositionY(y+1);
@@ -255,12 +268,16 @@ public class Main {
 	                for (int i = 0; i < enemies.length; i++){
 		                if (coolHero.getPositionX() == enemies[i].getPositionX() &&
 			                coolHero.getPositionY()-1 == enemies[i].getPositionY()) {
-			                int enemyHealth = enemies[i].getHealth();
-			                int damage = coolHero.getStrength();
-			                enemies[i].setHealth(enemyHealth-damage);
-			                if (enemyHealth == 0)
-			                	gui.md_setSpriteVisible(enemies[i].getId(), false);
-			                break moveUp;
+			                if (!killedEnemies[i]) {
+				                int enemyHealth = enemies[i].getHealth();
+				                int damage = coolHero.getStrength();
+				                enemies[i].setHealth(enemyHealth - damage);
+				                if (enemyHealth == 0) {
+					                gui.md_setSpriteVisible(enemies[i].getId(), false);
+					                killedEnemies[i] = true;
+				                }
+				                break moveUp;
+			                }
 		                }
 	                }
                     coolHero.setPositionY(y-1);
@@ -407,67 +424,74 @@ public class Main {
 	        
 	        // Moving enemies, randomly.
 	        
-		        for(int i = 0; i < 9; i++){
+	        for(int i = 0; i < 9; i++){
 			        
-			        Random ran = new Random();
-			        int ranNum = ran.nextInt(4);
+		        Random ran = new Random();
+		        int ranNum = ran.nextInt(4);
 				        
-			        // Randomly choosing between moving right, left, down or up, and checking if possible.
+		        // Randomly choosing between moving right, left, down or up, and checking if possible.
 			        
-			        if (ranNum == 0) {
-				        if (!level[enemies[i].getPositionX() + 1][enemies[i].getPositionY()].isWall()) {
-					        if (coolHero.getPositionX() == enemies[i].getPositionX() + 1 &&
-						        coolHero.getPositionY() == enemies[i].getPositionY()) {
+		        if (ranNum == 0) {
+			        if (!level[enemies[i].getPositionX() + 1][enemies[i].getPositionY()].isWall()) {
+				        if (coolHero.getPositionX() == enemies[i].getPositionX() + 1 &&
+					        coolHero.getPositionY() == enemies[i].getPositionY()) {
+					        if (!killedEnemies[i]) {
 						        enemies[i].attack(coolHero);
 						        gui.md_setTextHealthCurrent(coolHero.getHealth());
-					        }
-					        else {
-						        enemies[i].moveRight();
-						        gui.md_moveSprite(enemies[i].getId(), enemies[i].getPositionX(), enemies[i].getPositionY());
 					        }
 				        }
-			        }
-			        if (ranNum == 1){
-				        if (!level[enemies[i].getPositionX()-1][enemies[i].getPositionY()].isWall()){
-					        if (coolHero.getPositionX() == enemies[i].getPositionX() - 1 &&
-						        coolHero.getPositionY() == enemies[i].getPositionY()) {
-						        enemies[i].attack(coolHero);
-						        gui.md_setTextHealthCurrent(coolHero.getHealth());
-					        }
-					        else {
-						        enemies[i].moveLeft();
-						        gui.md_moveSprite(enemies[i].getId(), enemies[i].getPositionX(), enemies[i].getPositionY());
-					        }
-				        }
-			        }
-			        if (ranNum == 2){
-				        if (!level[enemies[i].getPositionX()][enemies[i].getPositionY()+1].isWall()){
-					        if (coolHero.getPositionX() == enemies[i].getPositionX() &&
-						        coolHero.getPositionY() == enemies[i].getPositionY()+1) {
-						        enemies[i].attack(coolHero);
-						        gui.md_setTextHealthCurrent(coolHero.getHealth());
-					        }
-					        else {
-						        enemies[i].moveDown();
-						        gui.md_moveSprite(enemies[i].getId(), enemies[i].getPositionX(), enemies[i].getPositionY());
-					        }
-				        }
-			        }
-			        if (ranNum == 3) {
-				        if (!level[enemies[i].getPositionX()][enemies[i].getPositionY() - 1].isWall()) {
-					        if (coolHero.getPositionX() == enemies[i].getPositionX() &&
-						        coolHero.getPositionY() == enemies[i].getPositionY() - 1) {
-						        enemies[i].attack(coolHero);
-						        gui.md_setTextHealthCurrent(coolHero.getHealth());
-					        }
-					        else {
-						        enemies[i].moveUp();
-						        gui.md_moveSprite(enemies[i].getId(), enemies[i].getPositionX(), enemies[i].getPositionY());
-					        }
+				        else {
+					        enemies[i].moveRight();
+					        gui.md_moveSprite(enemies[i].getId(), enemies[i].getPositionX(), enemies[i].getPositionY());
 				        }
 			        }
 		        }
-	        
+		        if (ranNum == 1){
+			        if (!level[enemies[i].getPositionX()-1][enemies[i].getPositionY()].isWall()){
+				        if (coolHero.getPositionX() == enemies[i].getPositionX() - 1 &&
+					        coolHero.getPositionY() == enemies[i].getPositionY()) {
+					        if (!killedEnemies[i]) {
+						        enemies[i].attack(coolHero);
+						        gui.md_setTextHealthCurrent(coolHero.getHealth());
+					        }
+				        }
+				        else {
+					        enemies[i].moveLeft();
+					        gui.md_moveSprite(enemies[i].getId(), enemies[i].getPositionX(), enemies[i].getPositionY());
+				        }
+			        }
+		        }
+		        if (ranNum == 2){
+			        if (!level[enemies[i].getPositionX()][enemies[i].getPositionY()+1].isWall()){
+				        if (coolHero.getPositionX() == enemies[i].getPositionX() &&
+					        coolHero.getPositionY() == enemies[i].getPositionY()+1) {
+					        if (!killedEnemies[i]) {
+						        enemies[i].attack(coolHero);
+						        gui.md_setTextHealthCurrent(coolHero.getHealth());
+					        }
+				        }
+				        else {
+					        enemies[i].moveDown();
+					        gui.md_moveSprite(enemies[i].getId(), enemies[i].getPositionX(), enemies[i].getPositionY());
+				        }
+			        }
+		        }
+		        if (ranNum == 3) {
+			        if (!level[enemies[i].getPositionX()][enemies[i].getPositionY() - 1].isWall()) {
+				        if (coolHero.getPositionX() == enemies[i].getPositionX() &&
+					        coolHero.getPositionY() == enemies[i].getPositionY() - 1) {
+					        if (!killedEnemies[i]) {
+						        enemies[i].attack(coolHero);
+						        gui.md_setTextHealthCurrent(coolHero.getHealth());
+					        }
+				        }
+				        else {
+					        enemies[i].moveUp();
+					        gui.md_moveSprite(enemies[i].getId(), enemies[i].getPositionX(), enemies[i].getPositionY());
+				        }
+			        }
+		        }
+	        }
         }
         main(args);
     }
