@@ -34,8 +34,6 @@ public class Main {
 			xDoor = random.nextInt((max-1) - 1 + 1) + 1;
 			yDoor = random.nextInt((max-1) - 1 + 1) + 1;
 		}
-//		gui.md_setSquareColor(xDoor, yDoor, 153, 76, 0);
-
 		gui.setVisible(true);
         int heroStartX = random.nextInt(15 - 2 + 1) + 2;
         int heroStartY = random.nextInt(10 - 1 + 1) + 1;
@@ -43,8 +41,7 @@ public class Main {
         coolHero.setPositionX(valid[0]);
         coolHero.setPositionY(valid[1]);
         
-	    
-	    
+
         // Printing the hero
 	    
 	    coolHero.setImage("cool.png");
@@ -73,104 +70,29 @@ public class Main {
 
 
 	    // Creating the gold.
-	    
-        Gold[] goldCoins = new Gold[8];
-        for (int i = 0; i < goldCoins.length; i++) {
-            goldCoins[i] = new Gold();
-            goldCoins[i].setId(1 + i); // id = 0 is avoided 'cause is the hero's one
-	        
-            int goldStartX = random.nextInt(10 - 5 + 1) + 5;
-            int goldStartY = random.nextInt(15 - 2 + 1) + 2;
-            valid = validCoordinates(level, goldStartX, goldStartY);
-            goldCoins[i].setPositionX(valid[0]);
-            goldCoins[i].setPositionY(valid[1]);
-	        
-            gui.md_addSprite(goldCoins[i].getId(), goldCoins[i].getImage(), true);
-            gui.md_setSpriteVisible(goldCoins[i].getId(), false);
-            gui.md_moveSprite(goldCoins[i].getId(), goldCoins[i].getPositionX(), goldCoins[i].getPositionY());
-        }
-    
-        
+	    Gold gold = new Gold();
+
+        Gold[] goldCoins = gold.giveMeGold(level, 8, gui);
         
         // Creating the potions.
-	    
-        Potion[] potions = new Potion[3];
-        for (int i = 0; i < potions.length; i++) {
-            potions[i] = new Potion();
-            potions[i].setId(9 + i); // id=1 to id=8 are avoided 'cause they are already in use.
-            int potionStartX = random.nextInt(18 - 4 + 1) + 4;
-            int potionStartY = random.nextInt(10 - 2 + 1) + 2;
-            valid = validCoordinates(level, potionStartX, potionStartY);
-            potions[i].setPositionX(valid[0]);
-            potions[i].setPositionY(valid[1]);
-            gui.md_addSprite(potions[i].getId(), potions[i].getImage(), true);
-//            gui.md_setSpriteVisible(potions[i].getId(), true);
-            gui.md_moveSprite(potions[i].getId(), potions[i].getPositionX(), potions[i].getPositionY());
-        }
-    
-        
+	    Potion potion = new Potion();
+        Potion[] potions = potion.giveMePotions(level,3,gui);
         
         // Creating the apples.
-	    
-        Apple[] apples = new Apple[5];
-        for (int i = 0; i < apples.length; i++) {
-            apples[i] = new Apple();
-            apples[i].setId(12 + i); // id=1 to id=11 are avoided 'cause they are already in use.
-	        int applesStartX = random.nextInt(35 - 2 + 1) + 2;
-	        int applesStartY = random.nextInt(35 - 2 + 1) + 2;
-	        valid = validCoordinates(level, applesStartX, applesStartY);
-	        apples[i].setPositionX(valid[0]);
-	        apples[i].setPositionY(valid[1]);
-            gui.md_addSprite(apples[i].getId(), apples[i].getImage(), true);
-//            gui.md_setSpriteVisible(apples[i].getId(), true);
-            gui.md_moveSprite(apples[i].getId(), apples[i].getPositionX(), apples[i].getPositionY()); }
-    
+	    Apple mac = new Apple();
+        Apple[] apples = mac.giveMeMacs(level,3,gui);
         
-        
-        // Creating the hearts.
-	    
+        // Creating the heart.
         Heart heart = new Heart();
-        heart.setId(17); // id=1 to id=16 are avoided 'cause they are already in use.
-	    int heartStartX = random.nextInt(10 - 5 + 1) + 5;
-	    int heartStartY = random.nextInt(15 - 2 + 1) + 2;
-	    valid = validCoordinates(level, heartStartX, heartStartY);
-	    heart.setPositionX(valid[0]);
-	    heart.setPositionY(valid[1]);
-        gui.md_addSprite(heart.getId(), heart.getImage(), true);
-//        gui.md_setSpriteVisible(heart.getId(), true);
-        gui.md_moveSprite(heart.getId(), heart.getPositionX(), heart.getPositionY());
-    
+        heart = heart.giveMeAHeart(level, gui);
 	    
-	    
-	    // Creating the eyes.
-	    
+	    // Creating the eye.
         Eye eye = new Eye();
-        eye.setId(18); // id=1 to id=17 are avoided 'cause they are already in use.
-	    int eyeStartX = random.nextInt(10 - 5 + 1) + 5;
-	    int eyeStartY = random.nextInt(15 - 2 + 1) + 2;
-	    valid = validCoordinates(level, eyeStartX, eyeStartY);
-	    eye.setPositionX(valid[0]);
-	    eye.setPositionY(valid[1]);
-        gui.md_addSprite(eye.getId(), eye.getImage(), true);
-//        gui.md_setSpriteVisible(eye.getId(), true);
-        gui.md_moveSprite(eye.getId(), eye.getPositionX(), eye.getPositionY());
-    
+        eye = eye.giveMeAnEye(level,gui);
 	    
-	    
-	    // Creating the swords.
-	    
+	    // Creating the sword.
         Sword sword = new Sword();
-        sword.setId(19); // id=1 to id=18 are avoided 'cause they are already in use.
-	    int swordStartX = random.nextInt(10 - 5 + 1) + 5;
-	    int swordStartY = random.nextInt(15 - 2 + 1) + 2;
-	    valid = validCoordinates(level, swordStartX, swordStartY);
-	    sword.setPositionX(valid[0]);
-	    sword.setPositionY(valid[1]);
-        gui.md_addSprite(sword.getId(), sword.getImage(), true);
-//        gui.md_setSpriteVisible(sword.getId(), true);
-        gui.md_moveSprite(sword.getId(), sword.getPositionX(), sword.getPositionY());
-	    
-	    
+        sword = sword.giveMeAnSword(level, gui);
 	    
 	    
 	    // Declaring enemies. Three pawns and one of each for the rest of the pieces.
@@ -331,16 +253,17 @@ public class Main {
                             if (coolHero.getPositionX()-1 == enemies[i].getPositionX() &&
                                     coolHero.getPositionY() == enemies[i].getPositionY()) {
                                 if (!killedEnemies[i]) {
-                                    int enemyHealth = enemies[i].getHealth();
-                                    int damage = coolHero.getStrength();
-                                    enemies[i].setHealth(enemyHealth - damage);
-                                    if (enemyHealth == 0) {
-                                        if (enemies[i].getId() == enemies[8].getId())
-                                            gui.md_showMessageDialog(enemies[8].getSecretMessage());
-                                        gui.md_setSpriteVisible(enemies[i].getId(), false);
-                                        killedEnemies[i] = true;
-                                        enemies[i].setDead(true);
-                                    }
+                                    fight(enemies, killedEnemies, i);
+//                                    int enemyHealth = enemies[i].getHealth();
+//                                    int damage = coolHero.getStrength();
+//                                    enemies[i].setHealth(enemyHealth - damage);
+//                                    if (enemyHealth == 0) {
+//                                        if (enemies[i].getId() == enemies[8].getId())
+//                                            gui.md_showMessageDialog(enemies[8].getSecretMessage());
+//                                        gui.md_setSpriteVisible(enemies[i].getId(), false);
+//                                        killedEnemies[i] = true;
+//                                        enemies[i].setDead(true);
+//                                    }
                                     break moveLeft;
                                 }
                             }
@@ -373,16 +296,18 @@ public class Main {
                             if (coolHero.getPositionX()+1 == enemies[i].getPositionX() &&
                                     coolHero.getPositionY() == enemies[i].getPositionY()) {
                                 if (!killedEnemies[i]) {
-                                    int enemyHealth = enemies[i].getHealth();
-                                    int damage = coolHero.getStrength();
-                                    enemies[i].setHealth(enemyHealth - damage);
-                                    if (enemyHealth == 0) {
-                                        if (enemies[i].getId() == enemies[8].getId())
-                                            gui.md_showMessageDialog(enemies[8].getSecretMessage());
-                                        gui.md_setSpriteVisible(enemies[i].getId(), false);
-                                        killedEnemies[i] = true;
-                                        enemies[i].setDead(true);
-                                    }
+                                    fight(enemies, killedEnemies, i);
+
+//                                    int enemyHealth = enemies[i].getHealth();
+//                                    int damage = coolHero.getStrength();
+//                                    enemies[i].setHealth(enemyHealth - damage);
+//                                    if (enemyHealth == 0) {
+//                                        if (enemies[i].getId() == enemies[8].getId())
+//                                            gui.md_showMessageDialog(enemies[8].getSecretMessage());
+//                                        gui.md_setSpriteVisible(enemies[i].getId(), false);
+//                                        killedEnemies[i] = true;
+//                                        enemies[i].setDead(true);
+//                                    }
                                     break moveRight;
                                 }
                             }
@@ -414,16 +339,17 @@ public class Main {
                             if (coolHero.getPositionX() == enemies[i].getPositionX() &&
                                     coolHero.getPositionY()+1 == enemies[i].getPositionY()) {
                                 if (!killedEnemies[i]) {
-                                    int enemyHealth = enemies[i].getHealth();
-                                    int damage = coolHero.getStrength();
-                                    enemies[i].setHealth(enemyHealth - damage);
-                                    if (enemyHealth == 0) {
-                                        if (enemies[i].getId() == enemies[8].getId())
-                                            gui.md_showMessageDialog(enemies[8].getSecretMessage());
-                                        gui.md_setSpriteVisible(enemies[i].getId(), false);
-                                        killedEnemies[i] = true;
-                                        enemies[i].setDead(true);
-                                    }
+                                    fight(enemies, killedEnemies, i);
+//                                    int enemyHealth = enemies[i].getHealth();
+//                                    int damage = coolHero.getStrength();
+//                                    enemies[i].setHealth(enemyHealth - damage);
+//                                    if (enemyHealth == 0) {
+//                                        if (enemies[i].getId() == enemies[8].getId())
+//                                            gui.md_showMessageDialog(enemies[8].getSecretMessage());
+//                                        gui.md_setSpriteVisible(enemies[i].getId(), false);
+//                                        killedEnemies[i] = true;
+//                                        enemies[i].setDead(true);
+//                                    }
                                     break moveDown;
                                 }
                             }
@@ -456,16 +382,18 @@ public class Main {
                             if (coolHero.getPositionX() == enemies[i].getPositionX() &&
                                     coolHero.getPositionY()-1 == enemies[i].getPositionY()) {
                                 if (!killedEnemies[i]) {
-                                    int enemyHealth = enemies[i].getHealth();
-                                    int damage = coolHero.getStrength();
-                                    enemies[i].setHealth(enemyHealth - damage);
-                                    if (enemyHealth == 0) {
-                                        if (enemies[i].getId() == enemies[8].getId())
-                                            gui.md_showMessageDialog(enemies[8].getSecretMessage());
-                                        gui.md_setSpriteVisible(enemies[i].getId(), false);
-                                        killedEnemies[i] = true;
-                                        enemies[i].setDead(true);
-                                    }
+                                    fight(enemies, killedEnemies, i);
+
+//                                    int enemyHealth = enemies[i].getHealth();
+//                                    int damage = coolHero.getStrength();
+//                                    enemies[i].setHealth(enemyHealth - damage);
+//                                    if (enemyHealth == 0) {
+//                                        if (enemies[i].getId() == enemies[8].getId())
+//                                            gui.md_showMessageDialog(enemies[8].getSecretMessage());
+//                                        gui.md_setSpriteVisible(enemies[i].getId(), false);
+//                                        killedEnemies[i] = true;
+//                                        enemies[i].setDead(true);
+//                                    }
                                     break moveUp;
                                 }
                             }
@@ -858,6 +786,19 @@ public class Main {
 		validated[1] = y;
 		return validated;
 	}
+
+	static void fight(Enemy[] enemies, boolean[] killedEnemies, int i){
+        int enemyHealth = enemies[i].getHealth();
+        int damage = coolHero.getStrength();
+        enemies[i].setHealth(enemyHealth - damage);
+        if (enemyHealth == 0) {
+            if (enemies[i].getId() == enemies[8].getId())
+                gui.md_showMessageDialog(enemies[8].getSecretMessage());
+            gui.md_setSpriteVisible(enemies[i].getId(), false);
+            killedEnemies[i] = true;
+            enemies[i].setDead(true);
+        }
+    }
 
 	static void movePerception(Space[][] level, int p, int x, int y, int xDoor, int yDoor){
 	    while(p >= 1){

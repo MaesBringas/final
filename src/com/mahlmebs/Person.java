@@ -4,17 +4,17 @@ package com.mahlmebs;
 	* @version 1.0
 	* */
 
-public class Person {
+public abstract class Person {
     
-    public int positionX;
-    public int positionY;
-    public int health;
-    public int maxHealth;
-    public int strength;
-    public String image;
-    public int id;
-    public String getImage() { return image; }
-    public void setImage(String image) { this.image = image; }
+    protected int positionX;
+    protected int positionY;
+    protected int health;
+    protected int maxHealth;
+    protected int strength;
+    protected String image;
+    protected int id;
+    protected String getImage() { return image; }
+    protected void setImage(String image) { this.image = image; }
     
     public int getStrength() {
         return strength;
@@ -65,6 +65,7 @@ public class Person {
     public void setMaxHealth(int maxHealth) {
         this.maxHealth = maxHealth;
     }
+
 
 
 }

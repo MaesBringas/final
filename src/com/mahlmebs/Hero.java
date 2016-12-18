@@ -4,8 +4,6 @@ package com.mahlmebs;
 	* @version 1.0
 	* */
 
-import com.mahlmebs.Person;
-
 public class Hero extends Person {
     
     private int food = 500;
@@ -100,7 +98,5 @@ public class Hero extends Person {
     public void addSword(){
         this.strength = this.strength + 1;
     }
-    
-    
-    
+
 }
