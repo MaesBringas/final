@@ -110,6 +110,15 @@ public class Enemy extends Person {
         }
     }
     
+    public void attack(Hero coolHero){
+        Random ran = new Random();
+        int ran2 = ran.nextInt(100);
+        if (ran2 == 50) {
+            int heroHealth = coolHero.getHealth();
+            coolHero.setHealth(heroHealth - this.strength);
+        }
+    }
+    
     
     }
     
