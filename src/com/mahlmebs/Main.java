@@ -196,88 +196,100 @@ public class Main {
 				}
             
             if (lastAction.length() > 0){
-                int x = coolHero.getPositionX(); int y = coolHero.getPositionY();
-	            
-	            moveLeft:
-                if (lastAction.equals("left") && !level[x-1][y].isWall()){
-	                for (int i = 0; i < enemies.length; i++){
-		                if (coolHero.getPositionX()-1 == enemies[i].getPositionX() &&
-			                coolHero.getPositionY() == enemies[i].getPositionY()) {
-			                fight(enemies[i].getHealth(), coolHero.getStrength(), enemies, i);
-			                break moveLeft;
-		                }
-	                }
-	                coolHero.setPositionX(x-1);
-	                gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
-                }
-                
-                moveRight:
-                if (lastAction.equals("right") && !level[x+1][y].isWall()) {
-	                for (int i = 0; i < enemies.length; i++){
-		                if (coolHero.getPositionX()+1 == enemies[i].getPositionX() &&
-			                coolHero.getPositionY() == enemies[i].getPositionY()) {
-							fight(enemies[i].getHealth(), coolHero.getStrength(), enemies, i);
-							break moveRight;
-		                }
-	                }
-                    coolHero.setPositionX(x+1);
-                    gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
-                }
-                
-                moveDown:
-                if (lastAction.equals("down") && !level[x][y+1].isWall() ) {
-	                for (int i = 0; i < enemies.length; i++){
-		                if (coolHero.getPositionX() == enemies[i].getPositionX() &&
-			                coolHero.getPositionY()+1 == enemies[i].getPositionY()) {
-							fight(enemies[i].getHealth(), coolHero.getStrength(), enemies, i);
-							break moveDown;
-		                }
-	                }
-                    coolHero.setPositionY(y+1);
-                    gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
-                }
-                
-                moveUp:
-                if (lastAction.equals("up") && !level[x][y-1].isWall()) {
-	                for (int i = 0; i < enemies.length; i++){
-		                if (coolHero.getPositionX() == enemies[i].getPositionX() &&
-			                coolHero.getPositionY()-1 == enemies[i].getPositionY()) {
-							fight(enemies[i].getHealth(), coolHero.getStrength(), enemies, i);
-							break moveUp;
-		                }
-	                }
-                    coolHero.setPositionY(y-1);
-                    gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
-                }
-                
+
+				try{
+					int x = coolHero.getPositionX(); int y = coolHero.getPositionY();
+
+					moveLeft:
+					if (lastAction.equals("left") && !level[x-1][y].isWall()){
+						for (int i = 0; i < enemies.length; i++){
+							if (coolHero.getPositionX()-1 == enemies[i].getPositionX() &&
+									coolHero.getPositionY() == enemies[i].getPositionY()) {
+								fight(enemies[i].getHealth(), coolHero.getStrength(), enemies, i);
+								break moveLeft;
+							}
+						}
+						coolHero.setPositionX(x-1);
+						gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
+					}
+
+					moveRight:
+					if (lastAction.equals("right") && !level[x+1][y].isWall()) {
+						for (int i = 0; i < enemies.length; i++){
+							if (coolHero.getPositionX()+1 == enemies[i].getPositionX() &&
+									coolHero.getPositionY() == enemies[i].getPositionY()) {
+								fight(enemies[i].getHealth(), coolHero.getStrength(), enemies, i);
+								break moveRight;
+							}
+						}
+						coolHero.setPositionX(x+1);
+						gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
+					}
+
+					moveDown:
+					if (lastAction.equals("down") && !level[x][y+1].isWall()) {
+						for (int i = 0; i < enemies.length; i++){
+							if (coolHero.getPositionX() == enemies[i].getPositionX() &&
+									coolHero.getPositionY()+1 == enemies[i].getPositionY()) {
+								fight(enemies[i].getHealth(), coolHero.getStrength(), enemies, i);
+								break moveDown;
+							}
+						}
+						coolHero.setPositionY(y+1);
+						gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
+					}
+
+					moveUp:
+					if (lastAction.equals("up") && !level[x][y-1].isWall()) {
+						for (int i = 0; i < enemies.length; i++){
+							if (coolHero.getPositionX() == enemies[i].getPositionX() &&
+									coolHero.getPositionY()-1 == enemies[i].getPositionY()) {
+								fight(enemies[i].getHealth(), coolHero.getStrength(), enemies, i);
+								break moveUp;
+							}
+						}
+						coolHero.setPositionY(y-1);
+						gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
+					}
+
+				} catch (ArrayIndexOutOfBoundsException e){
+					int magic = random.nextInt(25-7+1)+7;
+					if(!level[magic][magic+5].isWall()){
+						coolHero.setPositionX(magic);
+						coolHero.setPositionY(magic+5);
+						gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
+					}
+
+				}
+
 				if (lastAction.equals("new game")) {
                 	// force loop exit to reassign objects in the new map generated
 					break;
 				}
 				if (lastAction.equals("command kebab")) {
 
-                	gui.md_showMessageDialog("lucky! you get 2x1 offer! :) ");
+                	gui.md_showMessageDialog("Lucky you! You get a 2x1 offer! :) ");
                 	int offer = coolHero.getFood()*2;
                 	coolHero.setFood(offer);
 				}
 				gui.md_println(lastAction);
-	
+
 	            // Checking if the user is in the same cell as an item and activating the item function if true.
 	            // Brief explanation inside the code for goldCoins. It can be used to explain code for the rest of the items too.
-	
+
 	            for (int i = 0; i < goldCoins.length; i++) {
 		            // Here we check if the hero's position coincides with an item position.
 		            if (coolHero.getPositionX() == goldCoins[i].getPositionX() &&
 			            coolHero.getPositionY() == goldCoins[i].getPositionY()) {
-			
+
 			            // Checking if that item has not yet been achieved, using the gotItemsLocation matrix.
 			            if (gotItemsLocation[goldCoins[i].getId()][0] != coolHero.getPositionX() &&
 				            gotItemsLocation[goldCoins[i].getId()][1] != coolHero.getPositionY()) {
-				
+
 				            // Marking the object as achieved, using the gotItemsLocation matrix.
 				            gotItemsLocation[goldCoins[i].getId()][0] = coolHero.getPositionX();
 				            gotItemsLocation[goldCoins[i].getId()][1] = coolHero.getPositionY();
-				
+
 				            // Activating the function of the object.
 				            coolHero.addGold();
 				            // Making the already used item disappear.
@@ -286,97 +298,97 @@ public class Main {
 			            }
 		            }
 	            }
-	
+
 	            for (int i = 0; i < apples.length; i++) {
 		            if (coolHero.getPositionX() == apples[i].getPositionX() &&
 			            coolHero.getPositionY() == apples[i].getPositionY()) {
-			
+
 			            if (gotItemsLocation[apples[i].getId()][0] != coolHero.getPositionX() &&
 				            gotItemsLocation[apples[i].getId()][1] != coolHero.getPositionY()) {
-				
+
 				            gotItemsLocation[apples[i].getId()][0] = coolHero.getPositionX();
 				            gotItemsLocation[apples[i].getId()][1] = coolHero.getPositionY();
-				
+
 				            coolHero.addApple();
 				            gui.md_setSpriteVisible(apples[i].getId(), false);
 				            gui.md_setTextFood(coolHero.getFood());
 			            }
 		            }
 	            }
-	
+
 	            for (int i = 0; i < potions.length; i++) {
 		            if (coolHero.getPositionX() == potions[i].getPositionX() &&
 			            coolHero.getPositionY() == potions[i].getPositionY()) {
-			
+
 			            if (gotItemsLocation[potions[i].getId()][0] != coolHero.getPositionX() &&
 				            gotItemsLocation[potions[i].getId()][1] != coolHero.getPositionY()) {
-				
+
 				            gotItemsLocation[potions[i].getId()][0] = coolHero.getPositionX();
 				            gotItemsLocation[potions[i].getId()][1] = coolHero.getPositionY();
-				
+
 				            coolHero.addPotion();
 				            gui.md_setSpriteVisible(potions[i].getId(), false);
 				            gui.md_setTextHealthCurrent(coolHero.getHealth());
 			            }
-			
+
 		            }
 	            }
-	
+
 	            // Here we check if the hero's position coincides with the HEART item position
 	            if (coolHero.getPositionX() == heart.getPositionX() &&
 		            coolHero.getPositionY() == heart.getPositionY()) {
-		
+
 		            if (gotItemsLocation[heart.getId()][0] != coolHero.getPositionX() &&
 			            gotItemsLocation[heart.getId()][1] != coolHero.getPositionY()) {
-			
+
 			            gotItemsLocation[heart.getId()][0] = coolHero.getPositionX();
 			            gotItemsLocation[heart.getId()][1] = coolHero.getPositionY();
-			
+
 			            coolHero.addHeart();
 			            gui.md_setSpriteVisible(17, false);
 			            gui.md_setTextHealthCurrent(coolHero.getHealth());
 		            }
 	            }
-	
+
 	            // Here we check if the hero's position coincides with the EYE position
 	            if (coolHero.getPositionX() == eye.getPositionX() &&
 		            coolHero.getPositionY() == eye.getPositionY()) {
-		
+
 		            if (gotItemsLocation[eye.getId()][0] != coolHero.getPositionX() &&
 			            gotItemsLocation[eye.getId()][1] != coolHero.getPositionY()) {
-			
+
 			            gotItemsLocation[eye.getId()][0] = coolHero.getPositionX();
 			            gotItemsLocation[eye.getId()][1] = coolHero.getPositionY();
-			
+
 			            coolHero.addEye();
 			            gui.md_setSpriteVisible(18, false);
 			            gui.md_setTextPerception(coolHero.getPerception());
 		            }
 	            }
-	
+
 	            // Here we check if the hero's position coincides with the SWORD position
 	            if (coolHero.getPositionX() == sword.getPositionX() &&
 		            coolHero.getPositionY() == sword.getPositionY()) {
-		
+
 		            if (gotItemsLocation[sword.getId()][0] != coolHero.getPositionX() &&
 			            gotItemsLocation[sword.getId()][1] != coolHero.getPositionY()) {
-			
+
 			            gotItemsLocation[sword.getId()][0] = coolHero.getPositionX();
 			            gotItemsLocation[sword.getId()][1] = coolHero.getPositionY();
-			
+
 			            coolHero.addSword();
 			            gui.md_setSpriteVisible(19, false);
 			            gui.md_setTextStrength(coolHero.getStrength());
 		            }
 	            }
-	
-	
+
+
 	            // Reducing food after each movement (only if food is not already 0)
 	            if (coolHero.getFood() > 0) {
 		            coolHero.lessFood();
 		            gui.md_setTextFood(coolHero.getFood());
 	            }
-	
+
 	            // Reducing perception and strength if food = 0,
 	            else {
 		            if (coolHero.getPerception() > 1) {
