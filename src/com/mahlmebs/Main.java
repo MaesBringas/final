@@ -20,7 +20,10 @@ public class Main {
     
     public static void main(String[] args) throws InterruptedException {
 
-        // Printing the rooms
+	    
+	    
+        // Printing the rooms.
+	    
         Room room = new Room();
         Space[][] level = room.generateRooms(max, gui);
 		int xDoor = random.nextInt((max-1) - 1 + 1) + 1;
@@ -38,15 +41,19 @@ public class Main {
         coolHero.setPositionX(valid[0]);
         coolHero.setPositionY(valid[1]);
         
-        // Setting the hero in the correct place and
-        // printing some values that should be visible for the user.
-    
+	    
+	    
         // Printing the hero
+	    
 	    coolHero.setImage("cool.png");
         gui.md_addSprite(coolHero.getId(), coolHero.getImage(), true);
         gui.md_setSpriteVisible(coolHero.getId(), true);
         gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
+	    
+	    
+	    
         // Printing important info about the hero
+	    
         gui.md_setTextGold(coolHero.getGold());
         gui.md_setTextFood(coolHero.getFood());
         gui.md_setTextHealthCurrent(coolHero.getHealth());
@@ -57,10 +64,15 @@ public class Main {
         gui.md_setPortraitPlayer("herohd.png");
     
     
+	    
         // Creating the Items
         // If there are more than one item of the same type,
         // they will be considered an array of that item.
     
+	    
+	    
+	    // Creating the gold.
+	    
         Gold[] goldCoins = new Gold[8];
         for (int i = 0; i < goldCoins.length; i++) {
             goldCoins[i] = new Gold();
@@ -77,6 +89,10 @@ public class Main {
             gui.md_moveSprite(goldCoins[i].getId(), goldCoins[i].getPositionX(), goldCoins[i].getPositionY());
         }
     
+        
+        
+        // Creating the potions.
+	    
         Potion[] potions = new Potion[3];
         for (int i = 0; i < potions.length; i++) {
             potions[i] = new Potion();
@@ -91,6 +107,10 @@ public class Main {
             gui.md_moveSprite(potions[i].getId(), potions[i].getPositionX(), potions[i].getPositionY());
         }
     
+        
+        
+        // Creating the apples.
+	    
         Apple[] apples = new Apple[5];
         for (int i = 0; i < apples.length; i++) {
             apples[i] = new Apple();
@@ -102,9 +122,12 @@ public class Main {
 	        apples[i].setPositionY(valid[1]);
             gui.md_addSprite(apples[i].getId(), apples[i].getImage(), true);
             gui.md_setSpriteVisible(apples[i].getId(), true);
-            gui.md_moveSprite(apples[i].getId(), apples[i].getPositionX(), apples[i].getPositionY());
-        }
+            gui.md_moveSprite(apples[i].getId(), apples[i].getPositionX(), apples[i].getPositionY()); }
     
+        
+        
+        // Creating the hearts.
+	    
         Heart heart = new Heart();
         heart.setId(17); // id=1 to id=16 are avoided 'cause they are already in use.
 	    int heartStartX = random.nextInt(10 - 5 + 1) + 5;
@@ -116,6 +139,10 @@ public class Main {
         gui.md_setSpriteVisible(heart.getId(), true);
         gui.md_moveSprite(heart.getId(), heart.getPositionX(), heart.getPositionY());
     
+	    
+	    
+	    // Creating the eyes.
+	    
         Eye eye = new Eye();
         eye.setId(18); // id=1 to id=17 are avoided 'cause they are already in use.
 	    int eyeStartX = random.nextInt(10 - 5 + 1) + 5;
@@ -127,6 +154,10 @@ public class Main {
         gui.md_setSpriteVisible(eye.getId(), true);
         gui.md_moveSprite(eye.getId(), eye.getPositionX(), eye.getPositionY());
     
+	    
+	    
+	    // Creating the swords.
+	    
         Sword sword = new Sword();
         sword.setId(19); // id=1 to id=18 are avoided 'cause they are already in use.
 	    int swordStartX = random.nextInt(10 - 5 + 1) + 5;
@@ -137,6 +168,9 @@ public class Main {
         gui.md_addSprite(sword.getId(), sword.getImage(), true);
         gui.md_setSpriteVisible(sword.getId(), true);
         gui.md_moveSprite(sword.getId(), sword.getPositionX(), sword.getPositionY());
+	    
+	    
+	    
 	    
 	    // Declaring enemies. Three pawns and one of each for the rest of the pieces.
 	    
@@ -159,18 +193,25 @@ public class Main {
 		    enemies[i].setPositionY(valid[1]);
 		    gui.md_addSprite(enemies[i].getId(), enemies[i].getImage(), true);
 		    gui.md_setSpriteVisible(enemies[i].getId(), true);
-		    gui.md_moveSprite(enemies[i].getId(), enemies[i].getPositionX(), enemies[i].getPositionY());
-	    }
+		    gui.md_moveSprite(enemies[i].getId(), enemies[i].getPositionX(), enemies[i].getPositionY()); }
+	    
+	    
+	    
+	    // Creating a list of killed enemies, to ease the process of making them disappear when their health gets 0.
+	    
 	    boolean[] killedEnemies = new boolean[9];
 	    
-        // Here we make our hero move when the arrow keys are pressed,
-        // taking into account to reduce its food each time he moves
-        // and dividing his perception and strength by two when food = 0.
         
+	    
+	    
+	    
         while(true){
             // TODO limit the max
 
+	        
+	        
 	        // Killing the player if health < 1
+	        
 	        if (coolHero.getHealth() < 1) {
 		        gui.md_showMessageDialog("Sad news... CoolHero27 was murdered!");
 		        int newHealth = coolHero.getMaxHealth();
@@ -178,7 +219,11 @@ public class Main {
 		        coolHero.setHealth(newHealth);
 		        main(args);
 	        }
+	        
+	        
+	        
 	        // Killing the player if food = 0
+	        
 	       if (coolHero.getFood() == 0) {
 		       gui.md_showMessageDialog("CoolHero27 starved!");
 		       int newHealth = coolHero.getMaxHealth();
@@ -187,15 +232,23 @@ public class Main {
 		       main(args);
 	       }
 		
-		
-		        String lastAction = gui.md_getLastAction();
+	       
+	       
+	        String lastAction = gui.md_getLastAction();
 
+	        
+	        
+	        // Checking if the player has arrived to a trapdoor.
+	        
             if(coolHero.getPositionX() == xDoor && coolHero.getPositionY() == yDoor){
             	break;
 			}
 			
+			
+			
 			// Parkour easter egg!!
 	        // Hero and enemies are suddenly free-running masters and are allowed to run on the roof.
+	        
 			if (lastAction.equals("command parkour")){
 				gui.md_showMessageDialog("Omg! You have just entered the parkour mode!");
 				for(int i = 0; i < level.length; i++){
@@ -204,8 +257,21 @@ public class Main {
 						}
 					}
 				}
-			
+	
+				
+	
+				
+	        /*
+	        
+	        Here we make our hero move when the arrow keys are pressed
+	        and the next cell is not a wall or an enemy.
+	        If it is a enemy, damage will be caused to the enemy,
+	        which will die if his health gets 0.
+	        Hero's food field is reduced each time he moves,
+	        
+		    */
             
+	        
             if (lastAction.length() > 0){
                 int x = coolHero.getPositionX(); int y = coolHero.getPositionY();
 	            
@@ -301,16 +367,35 @@ public class Main {
                     gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
                 }
                 
+                
+                
+                // Creating new game if player introduces the command.
+	            
 				if (lastAction.equals("new game")) {
-                	// force loop exit to reassign objects in the new map generated
+                	// Forcing loop exit to reassign objects in the new map generated
 					break;
 				}
+				
+				
+				
+				// Printing last action.
+	            
 				gui.md_println(lastAction);
 	
-	            // Checking if the user is in the same cell as an item and activating the item function if true.
-	            // Brief explanation inside the code for goldCoins. It can be used to explain code for the rest of the items too.
+	            
+	            
+	            /*
+	            
+	            Checking if the user is in the same cell as an item,
+	            and activating the item function if true.
+	            Brief explanation inside the code for goldCoins.
+	            It can be used to explain code for the rest of the items too.
+	            
+	            */
 	
+	            
 	            for (int i = 0; i < goldCoins.length; i++) {
+		            
 		            // Here we check if the hero's position coincides with an item position.
 		            if (coolHero.getPositionX() == goldCoins[i].getPositionX() &&
 			            coolHero.getPositionY() == goldCoins[i].getPositionY()) {
@@ -332,6 +417,10 @@ public class Main {
 		            }
 	            }
 	
+	            
+	            
+	            // Code for activating APPLES.
+	            
 	            for (int i = 0; i < apples.length; i++) {
 		            if (coolHero.getPositionX() == apples[i].getPositionX() &&
 			            coolHero.getPositionY() == apples[i].getPositionY()) {
@@ -349,6 +438,10 @@ public class Main {
 		            }
 	            }
 	
+	            
+	            
+	            // Code for activating POTIONS.
+	            
 	            for (int i = 0; i < potions.length; i++) {
 		            if (coolHero.getPositionX() == potions[i].getPositionX() &&
 			            coolHero.getPositionY() == potions[i].getPositionY()) {
@@ -367,7 +460,10 @@ public class Main {
 		            }
 	            }
 	
-	            // Here we check if the hero's position coincides with the HEART item position
+	            
+	            
+	            // Code for activating HEARTS.
+	            
 	            if (coolHero.getPositionX() == heart.getPositionX() &&
 		            coolHero.getPositionY() == heart.getPositionY()) {
 		
@@ -383,7 +479,10 @@ public class Main {
 		            }
 	            }
 	
-	            // Here we check if the hero's position coincides with the EYE position
+	
+	
+	            // Code for activating EYES.
+	            
 	            if (coolHero.getPositionX() == eye.getPositionX() &&
 		            coolHero.getPositionY() == eye.getPositionY()) {
 		
@@ -399,7 +498,10 @@ public class Main {
 		            }
 	            }
 	
-	            // Here we check if the hero's position coincides with the SWORD position
+	
+	
+	            // Code for activating SWORDS.
+	            
 	            if (coolHero.getPositionX() == sword.getPositionX() &&
 		            coolHero.getPositionY() == sword.getPositionY()) {
 		
@@ -416,13 +518,18 @@ public class Main {
 	            }
 	
 	
-	            // Reducing food after each movement (only if food is not already 0)
+	            
+	            // Reducing food after each movement (only if food is not already 0).
+	            
 	            if (coolHero.getFood() > 0) {
 		            coolHero.lessFood();
 		            gui.md_setTextFood(coolHero.getFood());
 	            }
 	
-	            // Reducing perception and strength if food = 0,
+	            
+	            
+	            // Reducing perception and strength if food = 0
+	            
 	            else {
 		            if (coolHero.getPerception() > 1) {
 			            coolHero.setPerception(coolHero.getPerception() / 2);
@@ -439,13 +546,13 @@ public class Main {
 	        Thread.sleep(5);
 	        
 	        
+	        
 	        // Moving enemies, randomly.
 	        
 	        for(int i = 0; i < 9; i++){
-			        
 		        Random ran = new Random();
 		        int ranNum = ran.nextInt(4);
-				        
+		        
 		        // Randomly choosing between moving right, left, down or up, and checking if possible.
 			        
 		        if (ranNum == 0) {
@@ -513,6 +620,10 @@ public class Main {
         main(args);
     }
     
+    
+    
+    // Code for validating positions of items and characters.
+	
 	static int[] validCoordinates(Space[][]level, int x, int y){
 		Random random = new Random();
 		int[] validated = new int[2];
