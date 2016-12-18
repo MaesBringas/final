@@ -170,16 +170,25 @@ public class Main {
         while(true){
             // TODO limit the max
 
-	        // Killing the player if food or health = 0
-	        if (coolHero.getFood() == 0 || coolHero.getHealth() < 1) {
-		        gui.md_showMessageDialog("Omg! What a cool death!");
+	        // Killing the player if health < 1
+	        if (coolHero.getHealth() < 1) {
+		        gui.md_showMessageDialog("Sad news... CoolHero27 was murdered!");
 		        int newHealth = coolHero.getMaxHealth();
 		        coolHero.setFood(500);
 		        coolHero.setHealth(newHealth);
 		        main(args);
 	        }
-	        
-            String lastAction = gui.md_getLastAction();
+	        // Killing the player if food = 0
+	       if (coolHero.getFood() == 0) {
+		       gui.md_showMessageDialog("CoolHero27 starved!");
+		       int newHealth = coolHero.getMaxHealth();
+		       coolHero.setFood(500);
+		       coolHero.setHealth(newHealth);
+		       main(args);
+	       }
+		
+		
+		        String lastAction = gui.md_getLastAction();
 
             if(coolHero.getPositionX() == xDoor && coolHero.getPositionY() == yDoor){
             	break;
@@ -210,6 +219,8 @@ public class Main {
 				                int damage = coolHero.getStrength();
 				                enemies[i].setHealth(enemyHealth - damage);
 				                if (enemyHealth == 0) {
+					                if (enemies[i].getId() == enemies[8].getId())
+						                gui.md_showMessageDialog(enemies[8].getSecretMessage());
 					                gui.md_setSpriteVisible(enemies[i].getId(), false);
 					                killedEnemies[i] = true;
 				                }
@@ -231,6 +242,8 @@ public class Main {
 				                int damage = coolHero.getStrength();
 				                enemies[i].setHealth(enemyHealth - damage);
 				                if (enemyHealth == 0) {
+					                if (enemies[i].getId() == enemies[8].getId())
+						                gui.md_showMessageDialog(enemies[8].getSecretMessage());
 					                gui.md_setSpriteVisible(enemies[i].getId(), false);
 					                killedEnemies[i] = true;
 				                }
@@ -252,6 +265,8 @@ public class Main {
 				                int damage = coolHero.getStrength();
 				                enemies[i].setHealth(enemyHealth - damage);
 				                if (enemyHealth == 0) {
+					                if (enemies[i].getId() == enemies[8].getId())
+						                gui.md_showMessageDialog(enemies[8].getSecretMessage());
 					                gui.md_setSpriteVisible(enemies[i].getId(), false);
 					                killedEnemies[i] = true;
 				                }
@@ -273,6 +288,8 @@ public class Main {
 				                int damage = coolHero.getStrength();
 				                enemies[i].setHealth(enemyHealth - damage);
 				                if (enemyHealth == 0) {
+					                if (enemies[i].getId() == enemies[8].getId())
+						                gui.md_showMessageDialog(enemies[8].getSecretMessage());
 					                gui.md_setSpriteVisible(enemies[i].getId(), false);
 					                killedEnemies[i] = true;
 				                }

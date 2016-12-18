@@ -110,6 +110,14 @@ public class Enemy extends Person {
         }
     }
     
+    public String getSecretMessage() {
+        return secretMessage;
+    }
+    
+    public void setSecretMessage(String secretMessage) {
+        this.secretMessage = secretMessage;
+    }
+    
     public void attack(Hero coolHero){
         Random ran = new Random();
         int ran2 = ran.nextInt(100);
