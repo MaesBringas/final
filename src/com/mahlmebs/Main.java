@@ -255,13 +255,48 @@ public class Main {
 				for(int i = 0; i < level.length; i++){
 					for(int u = 0; u < level[0].length; u++){
 							level[i][u].setWall(false);
-						}
-					}
+                    }
 				}
-	
-				
-	
-				
+            }
+
+            if (lastAction.equals("command floo")){
+                gui.md_showMessageDialog("(Floo Podwers) > 'Diagonally!'");
+                int magic = random.nextInt(25-7+1)+7;
+                if(!level[magic][magic+5].isWall()){
+                    coolHero.setPositionX(magic);
+                    coolHero.setPositionY(magic+5);
+                    gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
+                }
+            }
+
+            if (lastAction.equals("command god")){
+                coolHero.setHealth(999);
+            }
+
+            if (lastAction.equals("command legolas")){
+                gui.md_showMessageDialog(coolHero.getName() + "! What do your elf eyes see?");
+                coolHero.setPerception(3);
+            }
+            if (lastAction.equals("command map")){
+
+                for(int i = 0; i < max; i++){
+                    for(int u = 0; u < max; u++){
+                        if(level[i][u].isWall()){
+                            gui.md_setSquareColor(i, u, 70, 70, 70);
+                        } else{
+                        gui.md_setSquareColor(i, u, 150, 133, 102);
+                        }
+                        gui.md_setSquareColor(xDoor, yDoor, 153, 76, 0);
+                    }
+                }
+            }
+
+
+
+
+
+
+
 	        /*
 	        
 	        Here we make our hero move when the arrow keys are pressed
@@ -279,6 +314,9 @@ public class Main {
                 try{
                     moveLeft:
                     if (lastAction.equals("left") && !level[x-1][y].isWall()){
+                        movePerception(level,coolHero.getPerception(), x,y);
+                        gui.md_setSquareColor(xDoor, yDoor, 153, 76, 0);
+
                         for (int i = 0; i < enemies.length; i++){
                             if (coolHero.getPositionX()-1 == enemies[i].getPositionX() &&
                                     coolHero.getPositionY() == enemies[i].getPositionY()) {
@@ -302,6 +340,8 @@ public class Main {
 
                     moveRight:
                     if (lastAction.equals("right") && !level[x+1][y].isWall()) {
+                        movePerception(level,coolHero.getPerception(), x,y);
+                        gui.md_setSquareColor(xDoor, yDoor, 153, 76, 0);
                         for (int i = 0; i < enemies.length; i++){
                             if (coolHero.getPositionX()+1 == enemies[i].getPositionX() &&
                                     coolHero.getPositionY() == enemies[i].getPositionY()) {
@@ -325,6 +365,9 @@ public class Main {
 
                     moveDown:
                     if (lastAction.equals("down") && !level[x][y+1].isWall() ) {
+                        movePerception(level,coolHero.getPerception(), x,y);
+                        gui.md_setSquareColor(xDoor, yDoor, 153, 76, 0);
+
                         for (int i = 0; i < enemies.length; i++){
                             if (coolHero.getPositionX() == enemies[i].getPositionX() &&
                                     coolHero.getPositionY()+1 == enemies[i].getPositionY()) {
@@ -348,6 +391,9 @@ public class Main {
 
                     moveUp:
                     if (lastAction.equals("up") && !level[x][y-1].isWall()) {
+                        movePerception(level,coolHero.getPerception(), x,y);
+                        gui.md_setSquareColor(xDoor, yDoor, 153, 76, 0);
+
                         for (int i = 0; i < enemies.length; i++){
                             if (coolHero.getPositionX() == enemies[i].getPositionX() &&
                                     coolHero.getPositionY()-1 == enemies[i].getPositionY()) {
@@ -651,5 +697,42 @@ public class Main {
 		validated[1] = y;
 		return validated;
 	}
-	
+
+	static void movePerception(Space[][] level, int perception, int x, int y){
+	    if(perception < 1){}
+	    else{
+            if (!level[x][y].isWall()) {
+                gui.md_setSquareColor(x, y, 150, 133, 102);
+            }
+            if(!level[x + perception][y].isWall()) {
+                gui.md_setSquareColor(x + perception, y, 150, 133, 102);
+            }
+            if(!level[x - perception][y].isWall()) {
+                gui.md_setSquareColor(x - perception, y, 150, 133, 102);
+            }
+
+            if(!level[x][y+perception].isWall()) {
+                gui.md_setSquareColor(x, y + perception, 150, 133, 102);
+            }
+            if(!level[x][y-perception].isWall()) {
+                gui.md_setSquareColor(x, y - perception, 150, 133, 102);
+            }
+            if(!level[x+perception][y+perception].isWall()) {
+                gui.md_setSquareColor(x + perception, y + perception, 150, 133, 102);
+            }
+
+            if(!level[x-perception][y-perception].isWall()) {
+                gui.md_setSquareColor(x - perception, y -perception, 150, 133, 102);
+            }
+            if(!level[x+perception][y+perception].isWall()) {
+                gui.md_setSquareColor(x + perception, y + perception, 150, 133, 102);
+            }
+            if(!level[x-perception][y-perception].isWall()) {
+                gui.md_setSquareColor(x - perception, y -perception, 150, 133, 102);
+            }
+            perception = perception-1;
+            movePerception(level,perception,x,y);
+        }
+
+    }
 }

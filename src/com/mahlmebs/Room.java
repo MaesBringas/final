@@ -141,11 +141,11 @@ public class Room extends Space{
 
         for(int i = 0; i < max; i++){
             for(int u = 0; u < max; u++){
-                if(level[i][u].isWall()){
+//                if(level[i][u].isWall()){
                     gui.md_setSquareColor(i, u, 70, 70, 70);
-                } else{
-                    gui.md_setSquareColor(i, u, 150, 133, 102);
-                }
+//                } else{
+//                    gui.md_setSquareColor(i, u, 150, 133, 102);
+//                }
             }
         }
         return level;
