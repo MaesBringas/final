@@ -195,6 +195,7 @@ public class Main {
 						}
 					}
 				}
+			
             
             if (lastAction.length() > 0){
                 int x = coolHero.getPositionX(); int y = coolHero.getPositionY();
@@ -283,81 +284,9 @@ public class Main {
                     gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
                 }
                 
-
-				try{
-					int x = coolHero.getPositionX(); int y = coolHero.getPositionY();
-
-					moveLeft:
-					if (lastAction.equals("left") && !level[x-1][y].isWall()){
-						for (int i = 0; i < enemies.length; i++){
-							if (coolHero.getPositionX()-1 == enemies[i].getPositionX() &&
-									coolHero.getPositionY() == enemies[i].getPositionY()) {
-								fight(enemies[i].getHealth(), coolHero.getStrength(), enemies, i);
-								break moveLeft;
-							}
-						}
-						coolHero.setPositionX(x-1);
-						gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
-					}
-
-					moveRight:
-					if (lastAction.equals("right") && !level[x+1][y].isWall()) {
-						for (int i = 0; i < enemies.length; i++){
-							if (coolHero.getPositionX()+1 == enemies[i].getPositionX() &&
-									coolHero.getPositionY() == enemies[i].getPositionY()) {
-								fight(enemies[i].getHealth(), coolHero.getStrength(), enemies, i);
-								break moveRight;
-							}
-						}
-						coolHero.setPositionX(x+1);
-						gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
-					}
-
-					moveDown:
-					if (lastAction.equals("down") && !level[x][y+1].isWall()) {
-						for (int i = 0; i < enemies.length; i++){
-							if (coolHero.getPositionX() == enemies[i].getPositionX() &&
-									coolHero.getPositionY()+1 == enemies[i].getPositionY()) {
-								fight(enemies[i].getHealth(), coolHero.getStrength(), enemies, i);
-								break moveDown;
-							}
-						}
-						coolHero.setPositionY(y+1);
-						gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
-					}
-
-					moveUp:
-					if (lastAction.equals("up") && !level[x][y-1].isWall()) {
-						for (int i = 0; i < enemies.length; i++){
-							if (coolHero.getPositionX() == enemies[i].getPositionX() &&
-									coolHero.getPositionY()-1 == enemies[i].getPositionY()) {
-								fight(enemies[i].getHealth(), coolHero.getStrength(), enemies, i);
-								break moveUp;
-							}
-						}
-						coolHero.setPositionY(y-1);
-						gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
-					}
-
-				} catch (ArrayIndexOutOfBoundsException e){
-					int magic = random.nextInt(25-7+1)+7;
-					if(!level[magic][magic+5].isWall()){
-						coolHero.setPositionX(magic);
-						coolHero.setPositionY(magic+5);
-						gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
-					}
-
-				}
-
 				if (lastAction.equals("new game")) {
                 	// force loop exit to reassign objects in the new map generated
 					break;
-				}
-				if (lastAction.equals("command kebab")) {
-
-                	gui.md_showMessageDialog("Lucky you! You get a 2x1 offer! :) ");
-                	int offer = coolHero.getFood()*2;
-                	coolHero.setFood(offer);
 				}
 				gui.md_println(lastAction);
 	
