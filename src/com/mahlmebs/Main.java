@@ -68,6 +68,7 @@ public class Main {
         // Creating the Items
         // If there are more than one item of the same type,
         // they will be considered an array of that item.
+        // TODO: unified creation
     
 	    
 	    
@@ -115,8 +116,8 @@ public class Main {
         for (int i = 0; i < apples.length; i++) {
             apples[i] = new Apple();
             apples[i].setId(12 + i); // id=1 to id=11 are avoided 'cause they are already in use.
-	        int applesStartX = random.nextInt(10 - 5 + 1) + 5;
-	        int applesStartY = random.nextInt(15 - 2 + 1) + 2;
+	        int applesStartX = random.nextInt(35 - 2 + 1) + 2;
+	        int applesStartY = random.nextInt(35 - 2 + 1) + 2;
 	        valid = validCoordinates(level, applesStartX, applesStartY);
 	        apples[i].setPositionX(valid[0]);
 	        apples[i].setPositionY(valid[1]);
@@ -274,97 +275,106 @@ public class Main {
 	        
             if (lastAction.length() > 0){
                 int x = coolHero.getPositionX(); int y = coolHero.getPositionY();
-	            
-	            moveLeft:
-                if (lastAction.equals("left") && !level[x-1][y].isWall()){
-	                for (int i = 0; i < enemies.length; i++){
-		                if (coolHero.getPositionX()-1 == enemies[i].getPositionX() &&
-			                coolHero.getPositionY() == enemies[i].getPositionY()) {
-			                if (!killedEnemies[i]) {
-				                int enemyHealth = enemies[i].getHealth();
-				                int damage = coolHero.getStrength();
-				                enemies[i].setHealth(enemyHealth - damage);
-				                if (enemyHealth == 0) {
-					                if (enemies[i].getId() == enemies[8].getId())
-						                gui.md_showMessageDialog(enemies[8].getSecretMessage());
-					                gui.md_setSpriteVisible(enemies[i].getId(), false);
-					                killedEnemies[i] = true;
-				                }
-				                break moveLeft;
-			                }
-		                }
-	                }
-	                coolHero.setPositionX(x-1);
-	                gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
-                }
-                
-                moveRight:
-                if (lastAction.equals("right") && !level[x+1][y].isWall()) {
-	                for (int i = 0; i < enemies.length; i++){
-		                if (coolHero.getPositionX()+1 == enemies[i].getPositionX() &&
-			                coolHero.getPositionY() == enemies[i].getPositionY()) {
-			                if (!killedEnemies[i]) {
-				                int enemyHealth = enemies[i].getHealth();
-				                int damage = coolHero.getStrength();
-				                enemies[i].setHealth(enemyHealth - damage);
-				                if (enemyHealth == 0) {
-					                if (enemies[i].getId() == enemies[8].getId())
-						                gui.md_showMessageDialog(enemies[8].getSecretMessage());
-					                gui.md_setSpriteVisible(enemies[i].getId(), false);
-					                killedEnemies[i] = true;
-				                }
-				                break moveRight;
-			                }
-		                }
-	                }
-                    coolHero.setPositionX(x+1);
-                    gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
-                }
-                
-                moveDown:
-                if (lastAction.equals("down") && !level[x][y+1].isWall() ) {
-	                for (int i = 0; i < enemies.length; i++){
-		                if (coolHero.getPositionX() == enemies[i].getPositionX() &&
-			                coolHero.getPositionY()+1 == enemies[i].getPositionY()) {
-			                if (!killedEnemies[i]) {
-				                int enemyHealth = enemies[i].getHealth();
-				                int damage = coolHero.getStrength();
-				                enemies[i].setHealth(enemyHealth - damage);
-				                if (enemyHealth == 0) {
-					                if (enemies[i].getId() == enemies[8].getId())
-						                gui.md_showMessageDialog(enemies[8].getSecretMessage());
-					                gui.md_setSpriteVisible(enemies[i].getId(), false);
-					                killedEnemies[i] = true;
-				                }
-				                break moveDown;
-			                }
-		                }
-	                }
-                    coolHero.setPositionY(y+1);
-                    gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
-                }
-                
-                moveUp:
-                if (lastAction.equals("up") && !level[x][y-1].isWall()) {
-	                for (int i = 0; i < enemies.length; i++){
-		                if (coolHero.getPositionX() == enemies[i].getPositionX() &&
-			                coolHero.getPositionY()-1 == enemies[i].getPositionY()) {
-			                if (!killedEnemies[i]) {
-				                int enemyHealth = enemies[i].getHealth();
-				                int damage = coolHero.getStrength();
-				                enemies[i].setHealth(enemyHealth - damage);
-				                if (enemyHealth == 0) {
-					                if (enemies[i].getId() == enemies[8].getId())
-						                gui.md_showMessageDialog(enemies[8].getSecretMessage());
-					                gui.md_setSpriteVisible(enemies[i].getId(), false);
-					                killedEnemies[i] = true;
-				                }
-				                break moveUp;
-			                }
-		                }
-	                }
-                    coolHero.setPositionY(y-1);
-                    gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
+
+                try{
+                    moveLeft:
+                    if (lastAction.equals("left") && !level[x-1][y].isWall()){
+                        for (int i = 0; i < enemies.length; i++){
+                            if (coolHero.getPositionX()-1 == enemies[i].getPositionX() &&
+                                    coolHero.getPositionY() == enemies[i].getPositionY()) {
+                                if (!killedEnemies[i]) {
+                                    int enemyHealth = enemies[i].getHealth();
+                                    int damage = coolHero.getStrength();
+                                    enemies[i].setHealth(enemyHealth - damage);
+                                    if (enemyHealth == 0) {
+                                        if (enemies[i].getId() == enemies[8].getId())
+                                            gui.md_showMessageDialog(enemies[8].getSecretMessage());
+                                        gui.md_setSpriteVisible(enemies[i].getId(), false);
+                                        killedEnemies[i] = true;
+                                    }
+                                    break moveLeft;
+                                }
+                            }
+                        }
+                        coolHero.setPositionX(x-1);
+                        gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
+                    }
+
+                    moveRight:
+                    if (lastAction.equals("right") && !level[x+1][y].isWall()) {
+                        for (int i = 0; i < enemies.length; i++){
+                            if (coolHero.getPositionX()+1 == enemies[i].getPositionX() &&
+                                    coolHero.getPositionY() == enemies[i].getPositionY()) {
+                                if (!killedEnemies[i]) {
+                                    int enemyHealth = enemies[i].getHealth();
+                                    int damage = coolHero.getStrength();
+                                    enemies[i].setHealth(enemyHealth - damage);
+                                    if (enemyHealth == 0) {
+                                        if (enemies[i].getId() == enemies[8].getId())
+                                            gui.md_showMessageDialog(enemies[8].getSecretMessage());
+                                        gui.md_setSpriteVisible(enemies[i].getId(), false);
+                                        killedEnemies[i] = true;
+                                    }
+                                    break moveRight;
+                                }
+                            }
+                        }
+                        coolHero.setPositionX(x+1);
+                        gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
+                    }
+
+                    moveDown:
+                    if (lastAction.equals("down") && !level[x][y+1].isWall() ) {
+                        for (int i = 0; i < enemies.length; i++){
+                            if (coolHero.getPositionX() == enemies[i].getPositionX() &&
+                                    coolHero.getPositionY()+1 == enemies[i].getPositionY()) {
+                                if (!killedEnemies[i]) {
+                                    int enemyHealth = enemies[i].getHealth();
+                                    int damage = coolHero.getStrength();
+                                    enemies[i].setHealth(enemyHealth - damage);
+                                    if (enemyHealth == 0) {
+                                        if (enemies[i].getId() == enemies[8].getId())
+                                            gui.md_showMessageDialog(enemies[8].getSecretMessage());
+                                        gui.md_setSpriteVisible(enemies[i].getId(), false);
+                                        killedEnemies[i] = true;
+                                    }
+                                    break moveDown;
+                                }
+                            }
+                        }
+                        coolHero.setPositionY(y+1);
+                        gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
+                    }
+
+                    moveUp:
+                    if (lastAction.equals("up") && !level[x][y-1].isWall()) {
+                        for (int i = 0; i < enemies.length; i++){
+                            if (coolHero.getPositionX() == enemies[i].getPositionX() &&
+                                    coolHero.getPositionY()-1 == enemies[i].getPositionY()) {
+                                if (!killedEnemies[i]) {
+                                    int enemyHealth = enemies[i].getHealth();
+                                    int damage = coolHero.getStrength();
+                                    enemies[i].setHealth(enemyHealth - damage);
+                                    if (enemyHealth == 0) {
+                                        if (enemies[i].getId() == enemies[8].getId())
+                                            gui.md_showMessageDialog(enemies[8].getSecretMessage());
+                                        gui.md_setSpriteVisible(enemies[i].getId(), false);
+                                        killedEnemies[i] = true;
+                                    }
+                                    break moveUp;
+                                }
+                            }
+                        }
+                        coolHero.setPositionY(y-1);
+                        gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
+                    }
+                } catch (ArrayIndexOutOfBoundsException e){
+                    int magic = random.nextInt(25-7+1)+7;
+                    if(!level[magic][magic+5].isWall()){
+                        coolHero.setPositionX(magic);
+                        coolHero.setPositionY(magic+5);
+                        gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
+                    }
                 }
                 
                 
@@ -375,7 +385,13 @@ public class Main {
                 	// Forcing loop exit to reassign objects in the new map generated
 					break;
 				}
-				
+
+
+                if (lastAction.equals("command kebab")) {
+                    gui.md_showMessageDialog("Lucky you! You get a 2x1 offer! :) ");
+                    int offer = coolHero.getFood()*2;
+                    coolHero.setFood(offer);
+                }
 				
 				
 				// Printing last action.
@@ -627,19 +643,10 @@ public class Main {
 	static int[] validCoordinates(Space[][]level, int x, int y){
 		Random random = new Random();
 		int[] validated = new int[2];
-		if(x+1 == max || y+1 == max){
-			x = random.nextInt(30 - 5 + 1) + 5;
-			y = random.nextInt(25 - 2 + 1) + 2;
-		}
-		while(level[x][y].isWall()){
-			if(x+1 == max || y+1 == max){
-				x = random.nextInt(30 - 5 + 1) + 5;
-				y = random.nextInt(25 - 2 + 1) + 2;
-			} else{
-				x++;
-				y++;
-			}
-		}
+		do{
+            x = random.nextInt(35 - 2 + 1) + 2;
+            y = random.nextInt(35 - 2 + 1) + 2;
+        } while(level[x][y].isWall());
 		validated[0] = x;
 		validated[1] = y;
 		return validated;
