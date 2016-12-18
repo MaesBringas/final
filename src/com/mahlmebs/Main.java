@@ -181,13 +181,24 @@ public class Main {
 		        coolHero.setHealth(newHealth);
 		        main(args);
 	        }
-	            
 	        
-            String lastAction = gui.md_getLastAction().trim();
+            String lastAction = gui.md_getLastAction();
 
             if(coolHero.getPositionX() == xDoor && coolHero.getPositionY() == yDoor){
             	break;
 			}
+			
+			// Parkour easter egg!!
+	        // Hero and enemies are suddenly free-running masters and are allowed to run on the roof.
+			if (lastAction.equals("command parkour")){
+				gui.md_showMessageDialog("Omg! You have just entered the parkour mode!");
+				for(int i = 0; i < level.length; i++){
+					for(int u = 0; u < level[0].length; u++){
+							level[i][u].setWall(false);
+						}
+					}
+				}
+			
             
             if (lastAction.length() > 0){
                 int x = coolHero.getPositionX(); int y = coolHero.getPositionY();

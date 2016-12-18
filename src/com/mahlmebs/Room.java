@@ -117,9 +117,9 @@ public class Room extends Space{
         for(int i = 0; i < max; i++){
             for(int u = 0; u < max; u++){
                 if(level[i][u].isWall()){
-                    gui.md_setSquareColor(i, u, 96, 96, 96);
+                    gui.md_setSquareColor(i, u, 70, 70, 70);
                 } else{
-                    gui.md_setSquareColor(i, u, 178, 255, 102);
+                    gui.md_setSquareColor(i, u, 150, 133, 102);
                 }
 
             }

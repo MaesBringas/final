@@ -5,6 +5,9 @@ import com.mahlmebs.Person;
 import java.util.Random;
 
 public class Enemy extends Person {
+    
+    String secretMessage;
+    
     public Enemy(String piece){
         
         Random ran = new Random();
@@ -64,6 +67,9 @@ public class Enemy extends Person {
             this.maxHealth = 50;
             this.health = 50;
             this.strength = 7;
+            String newline = System.getProperty("line.separator");
+            secretMessage = "You killed the big one! Hey, he was holding a paper..." +newline
+                            + " ''To enter PARKOUR mode, just type parkour''";
         }
     }
     
