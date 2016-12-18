@@ -6,7 +6,6 @@ package com.mahlmebs;
 * */
 
 import minidungeon.MiniDungeonGUI;
-
 import java.util.Random;
 
 public class Main {
