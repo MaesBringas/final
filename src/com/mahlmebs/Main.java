@@ -288,6 +288,12 @@ public class Main {
                 	// force loop exit to reassign objects in the new map generated
 					break;
 				}
+				if (lastAction.equals("command kebab")) {
+
+                	gui.md_showMessageDialog("lucky! you get 2x1 offer! :) ");
+                	int offer = coolHero.getFood()*2;
+                	coolHero.setFood(offer);
+				}
 				gui.md_println(lastAction);
 	
 	            // Checking if the user is in the same cell as an item and activating the item function if true.
