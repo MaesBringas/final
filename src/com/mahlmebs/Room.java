@@ -2,8 +2,8 @@
 package com.mahlmebs;
 
 /* @authors mahl && mebs
-	* @version 1.0
-	* */
+ * @version 1.0
+ * */
 
 import minidungeon.MiniDungeonGUI;
 import java.util.Random;
@@ -54,9 +54,7 @@ public class Room extends Space{
     Space[][] generateRooms(int max, MiniDungeonGUI gui) {
 
         Random random = new Random();
-        int roomsGenerated = random.nextInt(30 - 7 + 1) + 7;
-        System.out.println("Rooms created " + roomsGenerated);
-        Room[] validRooms = new Room[16];
+        Room[] validRooms = new Room[12];
 
         // Before set the rooms, we generate values randomly inside the max length
         // Initializes all the space
@@ -68,18 +66,16 @@ public class Room extends Space{
         }
         int index= 0;
 
-        // With this array, we filter and choose 5 of them with no conflicts
-        // acts on each room individually
         while(index != validRooms.length-1 ){
-
-            int lengthX = random.nextInt((max / 3) - 3 + 1) + 3;
+            int lengthX = random.nextInt((max / 4) - 3 + 1) + 3;
             int lengthY = lengthX;
             int startPointX = random.nextInt((max - 1 + 1) + 1);
             int startPointY = random.nextInt((max - 1 + 1) + 1);
             int sumX = lengthX + startPointX;
             int sumY = lengthY + startPointY;
+
             // first check to adjust to the maximum dimensions
-            while (sumX > max || sumY > max) {
+            while (sumX > max - 2 || sumY > max - 2) {
                 System.out.println("Discarded " + sumX + " " + sumY);
                 lengthX = random.nextInt((max / 4) - 3 + 1) + 3;
                 lengthY = lengthX;
@@ -95,10 +91,9 @@ public class Room extends Space{
                 for(int u = startPointY; u < sumY; u++){
                     if(!level[i][u].isWall()){
                         add = false;
-                        System.out.println("Ya está pillao");
+//                        System.out.println("Ya está pillao");
                         i = sumX-1;
                         u = sumY-1;
-                        // break;
                     } else {
                         level[i][u].setWall(false);
                     }
@@ -113,6 +108,36 @@ public class Room extends Space{
                 index++;
             }
         }
+        for(int b = 0; b < index; b++){
+            int sumX = validRooms[b].getStartPointX() + validRooms[b].getLengthX();
+            int sumY = validRooms[b].getStartPointY() + validRooms[b].getLengthY();
+            System.out.println("X final " + sumX + " in " + b);
+            System.out.println("Y final " + sumY + " in " + b);
+            if(sumX < (max/2)) {
+                do {
+                    level[sumX][sumY].setWall(false);
+                    sumX++;
+                } while (sumX < 38);
+            } else if(sumX > (max/2)) {
+                do {
+                    level[sumX][sumY].setWall(false);
+                    sumX--;
+                } while (sumX > 1);
+            } else {
+                System.err.println("Error corridor creation");
+            }
+
+        }
+
+        // final check for dead corridors
+        for(int y = 1; y < max-2; y++){
+            for(int x = 1; x < max-2; x++){
+                if(!level[x][y].isWall() && level[x][y+1].isWall() && level[x][y+1].isWall() && !level[x+1][y+1].isWall()){
+                    level[x][y+1].setWall(false);
+                }
+            }
+        }
+
 
         for(int i = 0; i < max; i++){
             for(int u = 0; u < max; u++){
@@ -121,10 +146,8 @@ public class Room extends Space{
                 } else{
                     gui.md_setSquareColor(i, u, 150, 133, 102);
                 }
-
             }
         }
-
         return level;
     }
 
