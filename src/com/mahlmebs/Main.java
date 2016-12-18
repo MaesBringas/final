@@ -41,7 +41,8 @@ public class Main {
         coolHero.setPositionX(valid[0]);
         coolHero.setPositionY(valid[1]);
         
-
+	    
+	    
         // Printing the hero
 	    
 	    coolHero.setImage("cool.png");
@@ -81,15 +82,15 @@ public class Main {
         // Creating the apples.
 	    Apple mac = new Apple();
         Apple[] apples = mac.giveMeMacs(level,3,gui);
-        
+
         // Creating the heart.
         Heart heart = new Heart();
         heart = heart.giveMeAHeart(level, gui);
-	    
+
 	    // Creating the eye.
         Eye eye = new Eye();
         eye = eye.giveMeAnEye(level,gui);
-	    
+
 	    // Creating the sword.
         Sword sword = new Sword();
         sword = sword.giveMeAnSword(level, gui);
@@ -210,12 +211,6 @@ public class Main {
                 }
             }
 
-
-
-
-
-
-
 	        /*
 	        
 	        Here we make our hero move when the arrow keys are pressed
@@ -233,81 +228,28 @@ public class Main {
                 try{
                     moveLeft:
                     if (lastAction.equals("left") && !level[x-1][y].isWall()){
-
+                        movePerception(level,coolHero.getPerception(), x,y, xDoor, yDoor, enemies, apples, eye, goldCoins, heart, potions, sword);
                         for (int i = 0; i < enemies.length; i++){
-                            int j = coolHero.getPositionX();
-                            int k = coolHero.getPositionY();
-                            if(j == enemies[i].getPositionX() && k == goldCoins[i].getPositionY() ||
-                                    j+1 == enemies[i].getPositionX() && k == enemies[i].getPositionY() ||
-                                    j == enemies[i].getPositionX() && k+1 == enemies[i].getPositionY() ||
-                                    j-1 == enemies[i].getPositionX() && k == enemies[i].getPositionY() ||
-                                    j == enemies[i].getPositionX() && k-1 == enemies[i].getPositionY() ||
-                                    j+1 == enemies[i].getPositionX() && k+1 == enemies[i].getPositionY() ||
-                                    j+1 == enemies[i].getPositionX() && k-1 == enemies[i].getPositionY() ||
-                                    j-1 == enemies[i].getPositionX() && k+1 == enemies[i].getPositionY() ||
-                                    j-1 == enemies[i].getPositionX() && k-1 == enemies[i].getPositionY()) {
-                                if (!enemies[i].isDead()) {
-                                    gui.md_setSpriteVisible(enemies[i].getId(), true);
-                                }
-                            }
                             if (coolHero.getPositionX()-1 == enemies[i].getPositionX() &&
                                     coolHero.getPositionY() == enemies[i].getPositionY()) {
                                 if (!killedEnemies[i]) {
                                     fight(enemies, killedEnemies, i);
-//                                    int enemyHealth = enemies[i].getHealth();
-//                                    int damage = coolHero.getStrength();
-//                                    enemies[i].setHealth(enemyHealth - damage);
-//                                    if (enemyHealth == 0) {
-//                                        if (enemies[i].getId() == enemies[8].getId())
-//                                            gui.md_showMessageDialog(enemies[8].getSecretMessage());
-//                                        gui.md_setSpriteVisible(enemies[i].getId(), false);
-//                                        killedEnemies[i] = true;
-//                                        enemies[i].setDead(true);
-//                                    }
                                     break moveLeft;
                                 }
                             }
                         }
                         coolHero.setPositionX(x-1);
-                        movePerception(level,coolHero.getPerception(), x,y, xDoor, yDoor);
                         gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
                     }
 
                     moveRight:
                     if (lastAction.equals("right") && !level[x+1][y].isWall()) {
-                        movePerception(level,coolHero.getPerception(), x,y, xDoor, yDoor);
-//                        gui.md_setSquareColor(xDoor, yDoor, 153, 76, 0);
+                        movePerception(level,coolHero.getPerception(), x,y, xDoor, yDoor, enemies, apples, eye, goldCoins, heart, potions, sword);
                         for (int i = 0; i < enemies.length; i++){
-                            int j = coolHero.getPositionX();
-                            int k = coolHero.getPositionY();
-                            if(j == enemies[i].getPositionX() && k == goldCoins[i].getPositionY() ||
-                                    j+1 == enemies[i].getPositionX() && k == enemies[i].getPositionY() ||
-                                    j == enemies[i].getPositionX() && k+1 == enemies[i].getPositionY() ||
-                                    j-1 == enemies[i].getPositionX() && k == enemies[i].getPositionY() ||
-                                    j == enemies[i].getPositionX() && k-1 == enemies[i].getPositionY() ||
-                                    j+1 == enemies[i].getPositionX() && k+1 == enemies[i].getPositionY() ||
-                                    j+1 == enemies[i].getPositionX() && k-1 == enemies[i].getPositionY() ||
-                                    j-1 == enemies[i].getPositionX() && k+1 == enemies[i].getPositionY() ||
-                                    j-1 == enemies[i].getPositionX() && k-1 == enemies[i].getPositionY()) {
-                                if (!enemies[i].isDead()) {
-                                    gui.md_setSpriteVisible(enemies[i].getId(), true);
-                                }
-                            }
                             if (coolHero.getPositionX()+1 == enemies[i].getPositionX() &&
                                     coolHero.getPositionY() == enemies[i].getPositionY()) {
                                 if (!killedEnemies[i]) {
                                     fight(enemies, killedEnemies, i);
-
-//                                    int enemyHealth = enemies[i].getHealth();
-//                                    int damage = coolHero.getStrength();
-//                                    enemies[i].setHealth(enemyHealth - damage);
-//                                    if (enemyHealth == 0) {
-//                                        if (enemies[i].getId() == enemies[8].getId())
-//                                            gui.md_showMessageDialog(enemies[8].getSecretMessage());
-//                                        gui.md_setSpriteVisible(enemies[i].getId(), false);
-//                                        killedEnemies[i] = true;
-//                                        enemies[i].setDead(true);
-//                                    }
                                     break moveRight;
                                 }
                             }
@@ -318,38 +260,13 @@ public class Main {
 
                     moveDown:
                     if (lastAction.equals("down") && !level[x][y+1].isWall() ) {
-                        movePerception(level,coolHero.getPerception(), x,y, xDoor, yDoor);
+                        movePerception(level,coolHero.getPerception(), x,y, xDoor, yDoor, enemies, apples, eye, goldCoins, heart, potions, sword);
 
                         for (int i = 0; i < enemies.length; i++){
-                            int j = coolHero.getPositionX();
-                            int k = coolHero.getPositionY();
-                            if(j == enemies[i].getPositionX() && k == goldCoins[i].getPositionY() ||
-                                    j+1 == enemies[i].getPositionX() && k == enemies[i].getPositionY() ||
-                                    j == enemies[i].getPositionX() && k+1 == enemies[i].getPositionY() ||
-                                    j-1 == enemies[i].getPositionX() && k == enemies[i].getPositionY() ||
-                                    j == enemies[i].getPositionX() && k-1 == enemies[i].getPositionY() ||
-                                    j+1 == enemies[i].getPositionX() && k+1 == enemies[i].getPositionY() ||
-                                    j+1 == enemies[i].getPositionX() && k-1 == enemies[i].getPositionY() ||
-                                    j-1 == enemies[i].getPositionX() && k+1 == enemies[i].getPositionY() ||
-                                    j-1 == enemies[i].getPositionX() && k-1 == enemies[i].getPositionY()) {
-                                if (!enemies[i].isDead()) {
-                                gui.md_setSpriteVisible(enemies[i].getId(), true);
-                                }
-                            }
                             if (coolHero.getPositionX() == enemies[i].getPositionX() &&
                                     coolHero.getPositionY()+1 == enemies[i].getPositionY()) {
                                 if (!killedEnemies[i]) {
                                     fight(enemies, killedEnemies, i);
-//                                    int enemyHealth = enemies[i].getHealth();
-//                                    int damage = coolHero.getStrength();
-//                                    enemies[i].setHealth(enemyHealth - damage);
-//                                    if (enemyHealth == 0) {
-//                                        if (enemies[i].getId() == enemies[8].getId())
-//                                            gui.md_showMessageDialog(enemies[8].getSecretMessage());
-//                                        gui.md_setSpriteVisible(enemies[i].getId(), false);
-//                                        killedEnemies[i] = true;
-//                                        enemies[i].setDead(true);
-//                                    }
                                     break moveDown;
                                 }
                             }
@@ -360,40 +277,12 @@ public class Main {
 
                     moveUp:
                     if (lastAction.equals("up") && !level[x][y-1].isWall()) {
-                        movePerception(level,coolHero.getPerception(), x,y, xDoor, yDoor);
-//                        gui.md_setSquareColor(xDoor, yDoor, 153, 76, 0);
-
+                        movePerception(level, coolHero.getPerception(), x, y, xDoor, yDoor, enemies, apples, eye, goldCoins, heart, potions, sword);
                         for (int i = 0; i < enemies.length; i++){
-                            int j = coolHero.getPositionX();
-                            int k = coolHero.getPositionY();
-                            if(j == enemies[i].getPositionX() && k == goldCoins[i].getPositionY() ||
-                                    j+1 == enemies[i].getPositionX() && k == enemies[i].getPositionY() ||
-                                    j == enemies[i].getPositionX() && k+1 == enemies[i].getPositionY() ||
-                                    j-1 == enemies[i].getPositionX() && k == enemies[i].getPositionY() ||
-                                    j == enemies[i].getPositionX() && k-1 == enemies[i].getPositionY() ||
-                                    j+1 == enemies[i].getPositionX() && k+1 == enemies[i].getPositionY() ||
-                                    j+1 == enemies[i].getPositionX() && k-1 == enemies[i].getPositionY() ||
-                                    j-1 == enemies[i].getPositionX() && k+1 == enemies[i].getPositionY() ||
-                                    j-1 == enemies[i].getPositionX() && k-1 == enemies[i].getPositionY()) {
-                                if (!enemies[i].isDead()) {
-                                    gui.md_setSpriteVisible(enemies[i].getId(), true);
-                                }
-                            }
                             if (coolHero.getPositionX() == enemies[i].getPositionX() &&
                                     coolHero.getPositionY()-1 == enemies[i].getPositionY()) {
                                 if (!killedEnemies[i]) {
                                     fight(enemies, killedEnemies, i);
-
-//                                    int enemyHealth = enemies[i].getHealth();
-//                                    int damage = coolHero.getStrength();
-//                                    enemies[i].setHealth(enemyHealth - damage);
-//                                    if (enemyHealth == 0) {
-//                                        if (enemies[i].getId() == enemies[8].getId())
-//                                            gui.md_showMessageDialog(enemies[8].getSecretMessage());
-//                                        gui.md_setSpriteVisible(enemies[i].getId(), false);
-//                                        killedEnemies[i] = true;
-//                                        enemies[i].setDead(true);
-//                                    }
                                     break moveUp;
                                 }
                             }
@@ -402,6 +291,7 @@ public class Main {
                         gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
                     }
                 } catch (ArrayIndexOutOfBoundsException e){
+                    System.out.println(e.getCause());
                     int magic = random.nextInt(25-7+1)+7;
                     if(!level[magic][magic+5].isWall()){
                         coolHero.setPositionX(magic);
@@ -444,23 +334,6 @@ public class Main {
 	
 	            
 	            for (int i = 0; i < goldCoins.length; i++) {
-
-                    int j = coolHero.getPositionX();
-                    int k = coolHero.getPositionY();
-
-                    if(j == goldCoins[i].getPositionX() && k == goldCoins[i].getPositionY() ||
-                            j+1 == goldCoins[i].getPositionX() && k == goldCoins[i].getPositionY() ||
-                            j == goldCoins[i].getPositionX() && k+1 == goldCoins[i].getPositionY() ||
-                            j-1 == goldCoins[i].getPositionX() && k == goldCoins[i].getPositionY() ||
-                            j == goldCoins[i].getPositionX() && k-1 == goldCoins[i].getPositionY() ||
-                            j+1 == goldCoins[i].getPositionX() && k+1 == goldCoins[i].getPositionY() ||
-                            j+1 == goldCoins[i].getPositionX() && k-1 == goldCoins[i].getPositionY() ||
-                            j-1 == goldCoins[i].getPositionX() && k+1 == goldCoins[i].getPositionY() ||
-                            j-1 == goldCoins[i].getPositionX() && k-1 == goldCoins[i].getPositionY()) {
-                        if (!goldCoins[i].isTaken()) {
-                            gui.md_setSpriteVisible(goldCoins[i].getId(), true);
-                        }
-                    }
 		            
 		            // Here we check if the hero's position coincides with an item position.
 		            if (coolHero.getPositionX() == goldCoins[i].getPositionX() &&
@@ -489,22 +362,6 @@ public class Main {
 	            // Code for activating APPLES.
 	            
 	            for (int i = 0; i < apples.length; i++) {
-                    int j = coolHero.getPositionX();
-                    int k = coolHero.getPositionY();
-
-                    if(j == apples[i].getPositionX() && k == apples[i].getPositionY() ||
-                            j+1 == apples[i].getPositionX() && k == apples[i].getPositionY() ||
-                            j == apples[i].getPositionX() && k+1 == apples[i].getPositionY() ||
-                            j-1 == apples[i].getPositionX() && k == apples[i].getPositionY() ||
-                            j == apples[i].getPositionX() && k-1 == apples[i].getPositionY() ||
-                            j+1 == apples[i].getPositionX() && k+1 == apples[i].getPositionY() ||
-                            j+1 == apples[i].getPositionX() && k-1 == apples[i].getPositionY() ||
-                            j-1 == apples[i].getPositionX() && k+1 == apples[i].getPositionY() ||
-                            j-1 == apples[i].getPositionX() && k-1 == apples[i].getPositionY()) {
-                        if (!apples[i].isTaken()) {
-                            gui.md_setSpriteVisible(apples[i].getId(), true);
-                        }
-                    }
 		            if (coolHero.getPositionX() == apples[i].getPositionX() &&
 			            coolHero.getPositionY() == apples[i].getPositionY()) {
 			
@@ -527,23 +384,6 @@ public class Main {
 	            // Code for activating POTIONS.
 	            
 	            for (int i = 0; i < potions.length; i++) {
-                    int j = coolHero.getPositionX();
-                    int k = coolHero.getPositionY();
-
-                    if(j == potions[i].getPositionX() && k == potions[i].getPositionY() ||
-                            j+1 == potions[i].getPositionX() && k == potions[i].getPositionY() ||
-                            j == potions[i].getPositionX() && k+1 == potions[i].getPositionY() ||
-                            j-1 == potions[i].getPositionX() && k == potions[i].getPositionY() ||
-                            j == potions[i].getPositionX() && k-1 == potions[i].getPositionY() ||
-                            j+1 == potions[i].getPositionX() && k+1 == potions[i].getPositionY() ||
-                            j+1 == potions[i].getPositionX() && k-1 == potions[i].getPositionY() ||
-                            j-1 == potions[i].getPositionX() && k+1 == potions[i].getPositionY() ||
-                            j-1 == potions[i].getPositionX() && k-1 == potions[i].getPositionY()) {
-                        if (!potions[i].isTaken()) {
-                            gui.md_setSpriteVisible(potions[i].getId(), true);
-                        }
-                    }
-
 
 		            if (coolHero.getPositionX() == potions[i].getPositionX() &&
 			            coolHero.getPositionY() == potions[i].getPositionY()) {
@@ -567,23 +407,6 @@ public class Main {
 	            
 	            // Code for activating HEARTS.
 
-
-                int j = coolHero.getPositionX();
-                int k = coolHero.getPositionY();
-
-                if(j == heart.getPositionX() && k == heart.getPositionY() ||
-                        j+1 == heart.getPositionX() && k == heart.getPositionY() ||
-                        j == heart.getPositionX() && k+1 == heart.getPositionY() ||
-                        j-1 == heart.getPositionX() && k == heart.getPositionY() ||
-                        j == heart.getPositionX() && k-1 == heart.getPositionY() ||
-                        j+1 == heart.getPositionX() && k+1 == heart.getPositionY() ||
-                        j+1 == heart.getPositionX() && k-1 == heart.getPositionY() ||
-                        j-1 == heart.getPositionX() && k+1 == heart.getPositionY() ||
-                        j-1 == heart.getPositionX() && k-1 == heart.getPositionY()) {
-                    if (!heart.isTaken()) {
-                        gui.md_setSpriteVisible(heart.getId(), true);
-                    }
-                }
 	            if (coolHero.getPositionX() == heart.getPositionX() &&
 		            coolHero.getPositionY() == heart.getPositionY()) {
 		
@@ -604,20 +427,6 @@ public class Main {
 	
 	            // Code for activating EYES.
 
-                if(j == eye.getPositionX() && k == eye.getPositionY() ||
-                        j+1 == eye.getPositionX() && k == eye.getPositionY() ||
-                        j == eye.getPositionX() && k+1 == eye.getPositionY() ||
-                        j-1 == eye.getPositionX() && k == eye.getPositionY() ||
-                        j == eye.getPositionX() && k-1 == eye.getPositionY() ||
-                        j+1 == eye.getPositionX() && k+1 == eye.getPositionY() ||
-                        j+1 == eye.getPositionX() && k-1 == eye.getPositionY() ||
-                        j-1 == eye.getPositionX() && k+1 == eye.getPositionY() ||
-                        j-1 == eye.getPositionX() && k-1 == eye.getPositionY()) {
-                    if (!eye.isTaken()) {
-                        gui.md_setSpriteVisible(eye.getId(), true);
-                    }
-                }
-	            
 	            if (coolHero.getPositionX() == eye.getPositionX() &&
 		            coolHero.getPositionY() == eye.getPositionY()) {
 		
@@ -637,20 +446,6 @@ public class Main {
 	
 	
 	            // Code for activating SWORDS.
-
-                if(j == sword.getPositionX() && k == sword.getPositionY() ||
-                        j+1 == sword.getPositionX() && k == sword.getPositionY() ||
-                        j == sword.getPositionX() && k+1 == sword.getPositionY() ||
-                        j-1 == sword.getPositionX() && k == sword.getPositionY() ||
-                        j == sword.getPositionX() && k-1 == sword.getPositionY() ||
-                        j+1 == sword.getPositionX() && k+1 == sword.getPositionY() ||
-                        j+1 == sword.getPositionX() && k-1 == sword.getPositionY() ||
-                        j-1 == sword.getPositionX() && k+1 == sword.getPositionY() ||
-                        j-1 == sword.getPositionX() && k-1 == sword.getPositionY()) {
-                    if (!sword.isTaken()) {
-                        gui.md_setSpriteVisible(sword.getId(), true);
-                    }
-                }
 	            
 	            if (coolHero.getPositionX() == sword.getPositionX() &&
 		            coolHero.getPositionY() == sword.getPositionY()) {
@@ -787,7 +582,7 @@ public class Main {
 		return validated;
 	}
 
-	static void fight(Enemy[] enemies, boolean[] killedEnemies, int i){
+    static void fight(Enemy[] enemies, boolean[] killedEnemies, int i){
         int enemyHealth = enemies[i].getHealth();
         int damage = coolHero.getStrength();
         enemies[i].setHealth(enemyHealth - damage);
@@ -799,48 +594,66 @@ public class Main {
             enemies[i].setDead(true);
         }
     }
+	static void movePerception(Space[][] level, int p, int x, int y, int xDoor, int yDoor, Enemy[] enemies,
+                               Apple[] apples, Eye eye, Gold[] goldCoins, Heart heart, Potion[] potions, Sword sword){
 
-	static void movePerception(Space[][] level, int p, int x, int y, int xDoor, int yDoor){
-	    while(p >= 1){
+        for(int a = x-p; a < x+p; a++){
+	        for(int b = y-p; b < y+p; b++){
+	            if(a == xDoor && b == yDoor){
+                    gui.md_setSquareColor(xDoor, yDoor, 153, 76, 0);
+                }
+                if (!level[a][b].isWall()) {
+                    gui.md_setSquareColor(x, y, 150, 133, 102);
+                }
+                if(a == heart.getPositionX() && b == heart.getPositionY() && !heart.isTaken()) {
+                    gui.md_setSpriteVisible(heart.getId(), true);
+                }
+                if(a == eye.getPositionX() && b == eye.getPositionY() && !eye.isTaken()) {
+                    gui.md_setSpriteVisible(eye.getId(), true);
+                }
+                if(a == sword.getPositionX() && b == sword.getPositionY() && !sword.isTaken()) {
+                    gui.md_setSpriteVisible(sword.getId(), true);
+                }
+                for(int coin = 0; coin < goldCoins.length; coin++){
+                    if(a == goldCoins[coin].getPositionX() && b == goldCoins[coin].getPositionY() && !goldCoins[coin].isTaken()) {
+                        gui.md_setSpriteVisible(goldCoins[coin].getId(), true);
+                    }
+                }
+                for(int potion = 0; potion < potions.length; potion++){
+                    if(a == potions[potion].getPositionX() && b == potions[potion].getPositionY() && !potions[potion].isTaken()) {
+                        gui.md_setSpriteVisible(potions[potion].getId(), true);
+                    }
+                }
+                for(int apple = 0; apple < apples.length; apple++){
+                    if(a == apples[apple].getPositionX() && b == apples[apple].getPositionY() && !apples[apple].isTaken()) {
+                        gui.md_setSpriteVisible(apples[apple].getId(), true);
+                    }
+                }
+                for(int enemy = 0; enemy < enemies.length; enemy++){
+                    if(a == enemies[enemy].getPositionX() && b == enemies[enemy].getPositionY() && !enemies[enemy].isDead()) {
+                        gui.md_setSpriteVisible(enemies[enemy].getId(), true);
+                    }
+                }
 
-            if(x == xDoor && y == yDoor || x+p == xDoor && y == yDoor || x == xDoor && y+p == yDoor ||
-                    x-p == xDoor && y == yDoor || x == xDoor && y-p == yDoor || x+p == xDoor &&
-                    y + p == yDoor || x+p == xDoor && y+-p == yDoor || x-p == xDoor &&
-                    y + p== yDoor ||  x-p == xDoor && y-p == yDoor ){
-                gui.md_setSquareColor(xDoor, yDoor, 153, 76, 0);
+                /*
+                int j = coolHero.getPositionX();
+                int k = coolHero.getPositionY();
+                if(j == enemies[i].getPositionX() && k == goldCoins[i].getPositionY() ||
+                j+1 == enemies[i].getPositionX() && k == enemies[i].getPositionY() ||
+                j == enemies[i].getPositionX() && k+1 == enemies[i].getPositionY() ||
+                j-1 == enemies[i].getPositionX() && k == enemies[i].getPositionY() ||
+                j == enemies[i].getPositionX() && k-1 == enemies[i].getPositionY() ||
+                j+1 == enemies[i].getPositionX() && k+1 == enemies[i].getPositionY() ||
+                j+1 == enemies[i].getPositionX() && k-1 == enemies[i].getPositionY() ||
+                j-1 == enemies[i].getPositionX() && k+1 == enemies[i].getPositionY() ||
+                j-1 == enemies[i].getPositionX() && k-1 == enemies[i].getPositionY()) {
+                if (!enemies[i].isDead()) {
+                gui.md_setSpriteVisible(enemies[i].getId(), true);
+                }
+                }
+                */
+
             }
-	        if (!level[x][y].isWall()) {
-                gui.md_setSquareColor(x, y, 150, 133, 102);
-            }
-            if(!level[x+p][y].isWall()) {
-                gui.md_setSquareColor(x + p, y, 150, 133, 102);
-            }
-            if(!level[x][y+p].isWall()) {
-                gui.md_setSquareColor(x, y + p, 150, 133, 102);
-            }
-            if(!level[x - p][y].isWall()) {
-                gui.md_setSquareColor(x - p, y, 150, 133, 102);
-            }
-            if(!level[x][y-p].isWall()) {
-                gui.md_setSquareColor(x, y - p, 150, 133, 102);
-            }
-            if(!level[x+p][y+p].isWall()) {
-                gui.md_setSquareColor(x + p, y + p, 150, 133, 102);
-            }
-            if(!level[x+p][y-p].isWall()) {
-                gui.md_setSquareColor(x + p, y -p, 150, 133, 102);
-            }
-            if(!level[x-p][y+p].isWall()) {
-                gui.md_setSquareColor(x + p, y + p, 150, 133, 102);
-            }
-            if(!level[x-p][y-p].isWall()) {
-                gui.md_setSquareColor(x - p, y -p, 150, 133, 102);
-            }
-//            if(!level[x-p][y-p].isWall()) {
-//                gui.md_setSquareColor(x - p, y -p, 150, 133, 102);
-//            }
-            p = p-1;
-//            movePerception(level,perception,x,y);
         }
 
     }

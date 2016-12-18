@@ -37,5 +37,5 @@ public class Gold extends Item {
 		}
 		return goldCoins;
 	}
-	
+
 }

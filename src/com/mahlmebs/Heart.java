@@ -9,7 +9,6 @@ import minidungeon.MiniDungeonGUI;
 import java.util.Random;
 
 
-
 public class Heart extends Item {
 
 	Random random = new Random();
@@ -32,5 +31,5 @@ public class Heart extends Item {
 		gui.md_moveSprite(heart.getId(), heart.getPositionX(), heart.getPositionY());
 		return heart;
 	}
-	
+
 }
