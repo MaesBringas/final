@@ -15,6 +15,7 @@ public class Main {
     static Random random = new Random();
     static Hero coolHero = new Hero();
     static int[][] gotItemsLocation = new int[21][2];
+    static int counter = 0;
 
 
     public static void main(String[] args) throws InterruptedException {
@@ -23,6 +24,13 @@ public class Main {
         // TODO: doors 2 states
         // TODO: debug set color and perception when > 1
         // TODO: debug messages ArrayIndexOutOfBoundsException cases
+
+        if(counter == 0){
+            gui.md_showMessageDialog("Welcome to D&D 1.0 \n" +
+                    "Your main aim is to reach the -3 floor and get as much gold as possible. \n" +
+                    "You have tricks to do it: map, floo and many others you can discovered here...\n" +
+                    "Good luck!");
+        }
 
         // Printing the rooms.
 
@@ -60,6 +68,7 @@ public class Main {
         gui.md_setTextPerception(coolHero.getPerception());
         gui.md_setTextPlayerName(coolHero.getName());
         gui.md_setPortraitPlayer("herohd.png");
+        gui.md_setTextFloor(counter);
 
 
         // Creating the Items
@@ -149,10 +158,11 @@ public class Main {
 
 
             // Checking if the player has arrived to a trapdoor.
-	
-	        if(coolHero.getPositionX() == xDoor && coolHero.getPositionY() == yDoor){
-		        break;
-	        }
+
+            if (coolHero.getPositionX() == xDoor && coolHero.getPositionY() == yDoor) {
+                counter--;
+                break;
+            }
 
 
             // Parkour easter egg!!
@@ -197,7 +207,8 @@ public class Main {
                         gui.md_setSquareColor(xDoor, yDoor, 153, 76, 0);
                     }
                 }
-                gui.md_setSpriteVisible(1, true);
+                gui.md_setSpriteVisible(coolHero.getId(), true);
+
             }
 
 	        /*
@@ -281,7 +292,7 @@ public class Main {
                         gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
                     }
                 } catch (ArrayIndexOutOfBoundsException e) {
-                    System.out.println(e.getMessage());
+                    System.out.println("x > " + coolHero.getPositionX() + " y > " + coolHero.getPositionY() + e.getMessage());
                     int magic = random.nextInt(25 - 7 + 1) + 7;
                     if (!level[magic][magic + 5].isWall()) {
                         coolHero.setPositionX(magic);
@@ -539,6 +550,16 @@ public class Main {
                     }
                 }
             }
+        }
+        for(int i = 0; i < max; i++){
+            for(int u = 0; u < max; u++){
+                gui.md_setSquareColor(i, u, 70, 70, 70);
+            }
+        }
+        if(counter == -3){
+            gui.md_showMessageDialog(" You win! \n See our project in \n" +
+                    "> https://github.com/MaesBringas/final");
+            System.exit(0);
         }
         main(args);
     }
