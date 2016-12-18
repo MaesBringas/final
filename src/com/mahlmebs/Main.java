@@ -202,23 +202,75 @@ public class Main {
             
             if (lastAction.length() > 0){
                 int x = coolHero.getPositionX(); int y = coolHero.getPositionY();
-
+	            
+	            moveLeft:
                 if (lastAction.equals("left") && !level[x-1][y].isWall()){
-                        coolHero.setPositionX(x-1);
-                        gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
+	                for (int i = 0; i < enemies.length; i++){
+		                if (coolHero.getPositionX()-1 == enemies[i].getPositionX() &&
+			                coolHero.getPositionY() == enemies[i].getPositionY()) {
+			                int enemyHealth = enemies[i].getHealth();
+			                int damage = coolHero.getStrength();
+			                enemies[i].setHealth(enemyHealth-damage);
+			                if (enemyHealth == 0)
+				                gui.md_setSpriteVisible(enemies[i].getId(), false);
+			                break moveLeft;
+		                }
+	                }
+	                coolHero.setPositionX(x-1);
+	                gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
                 }
+                
+                moveRight:
                 if (lastAction.equals("right") && !level[x+1][y].isWall()) {
+	                for (int i = 0; i < enemies.length; i++){
+		                if (coolHero.getPositionX()+1 == enemies[i].getPositionX() &&
+			                coolHero.getPositionY() == enemies[i].getPositionY()) {
+			                int enemyHealth = enemies[i].getHealth();
+			                int damage = coolHero.getStrength();
+			                enemies[i].setHealth(enemyHealth-damage);
+			                if (enemyHealth == 0)
+				                gui.md_setSpriteVisible(enemies[i].getId(), false);
+			                break moveRight;
+		                }
+	                }
                     coolHero.setPositionX(x+1);
                     gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
                 }
-                if (lastAction.equals("down") && !level[x][y+1].isWall()) {
+                
+                moveDown:
+                if (lastAction.equals("down") && !level[x][y+1].isWall() ) {
+	                for (int i = 0; i < enemies.length; i++){
+		                if (coolHero.getPositionX() == enemies[i].getPositionX() &&
+			                coolHero.getPositionY()+1 == enemies[i].getPositionY()) {
+			                int enemyHealth = enemies[i].getHealth();
+			                int damage = coolHero.getStrength();
+			                enemies[i].setHealth(enemyHealth-damage);
+			                if (enemyHealth == 0)
+				                gui.md_setSpriteVisible(enemies[i].getId(), false);
+			                break moveDown;
+		                }
+	                }
                     coolHero.setPositionY(y+1);
                     gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
                 }
+                
+                moveUp:
                 if (lastAction.equals("up") && !level[x][y-1].isWall()) {
+	                for (int i = 0; i < enemies.length; i++){
+		                if (coolHero.getPositionX() == enemies[i].getPositionX() &&
+			                coolHero.getPositionY()-1 == enemies[i].getPositionY()) {
+			                int enemyHealth = enemies[i].getHealth();
+			                int damage = coolHero.getStrength();
+			                enemies[i].setHealth(enemyHealth-damage);
+			                if (enemyHealth == 0)
+			                	gui.md_setSpriteVisible(enemies[i].getId(), false);
+			                break moveUp;
+		                }
+	                }
                     coolHero.setPositionY(y-1);
                     gui.md_moveSprite(coolHero.getId(), coolHero.getPositionX(), coolHero.getPositionY());
                 }
+                
 				if (lastAction.equals("new game")) {
                 	main(args);
 				}
