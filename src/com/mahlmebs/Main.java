@@ -14,26 +14,22 @@ public class Main {
     static int max = 40;
     static MiniDungeonGUI gui = new MiniDungeonGUI(max,max);
 	static Random random = new Random();
-
-
 	static Hero coolHero = new Hero();
     static int[][] gotItemsLocation = new int[21][2];
     
     
     public static void main(String[] args) throws InterruptedException {
 
-
         // Printing the rooms
         Room room = new Room();
         Space[][] level = room.generateRooms(max, gui);
-		int xDoor = random.nextInt(40 - 1 + 1) + 1;
-		int yDoor = random.nextInt(40 - 1 + 1) + 1;
+		int xDoor = random.nextInt((max-1) - 1 + 1) + 1;
+		int yDoor = random.nextInt((max-1) - 1 + 1) + 1;
 		while(level[xDoor][yDoor].isWall()){
-			xDoor = random.nextInt(40 - 1 + 1) + 1;
-			yDoor = random.nextInt(40 - 1 + 1) + 1;
+			xDoor = random.nextInt((max-1) - 1 + 1) + 1;
+			yDoor = random.nextInt((max-1) - 1 + 1) + 1;
 		}
 		gui.md_setSquareColor(xDoor, yDoor, 153, 76, 0);
-
 
 		gui.setVisible(true);
         int heroStartX = random.nextInt(15 - 2 + 1) + 2;
@@ -272,7 +268,8 @@ public class Main {
                 }
                 
 				if (lastAction.equals("new game")) {
-                	main(args);
+                	// force loop exit to reassign objects in the new map generated
+					break;
 				}
 				gui.md_println(lastAction);
 	
