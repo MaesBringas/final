@@ -149,10 +149,10 @@ public class Main {
 
 
             // Checking if the player has arrived to a trapdoor.
-
-            if (coolHero.getPositionX() == xDoor && coolHero.getPositionY() == yDoor) {
-                break;
-            }
+	
+	        if(coolHero.getPositionX() == xDoor && coolHero.getPositionY() == yDoor){
+		        break;
+	        }
 
 
             // Parkour easter egg!!
@@ -197,6 +197,7 @@ public class Main {
                         gui.md_setSquareColor(xDoor, yDoor, 153, 76, 0);
                     }
                 }
+                gui.md_setSpriteVisible(1, true);
             }
 
 	        /*
